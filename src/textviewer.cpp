@@ -32,10 +32,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "report.h"
 
 
-TextViewer::TextViewer(QWidget *parent)
+TextViewer::TextViewer(const QString &title, QWidget *parent)
   : QDialog(parent), ui(new Ui::TextViewer), m_FindDialog(NULL)
 {
   ui->setupUi(this);
+  setWindowTitle(title);
   m_EditorTabs = findChild<QTabWidget*>("editorTabs");
 
 }

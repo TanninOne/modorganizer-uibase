@@ -48,7 +48,7 @@ public:
    * @brief constructor
    * @param parent parent widget
    **/
-  explicit TextViewer(QWidget *parent = 0);
+  explicit TextViewer(const QString &title, QWidget *parent = 0);
 
   ~TextViewer();
 

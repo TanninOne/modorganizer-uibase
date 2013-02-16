@@ -82,5 +82,4 @@ DSTDIR ~= s,/,$$QMAKE_DIR_SEP,g
 
 LIBS += -luser32 -lshell32
 
-QMAKE_POST_LINK += mkdir -p $$quote($$DSTDIR) $$escape_expand(\\n)
-QMAKE_POST_LINK += xcopy /y /s /i $$quote($$OUTDIR\\uibase.dll) $$quote($$DSTDIR) $$escape_expand(\\n)
+QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.dll*) $$quote($$DSTDIR) $$escape_expand(\\n)
