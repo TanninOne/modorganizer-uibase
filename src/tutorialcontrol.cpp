@@ -34,6 +34,8 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 #include "utility.h"
 #include "tutorialmanager.h"
 
+namespace MOBase {
+
 
 TutorialControl::TutorialControl(const TutorialControl &reference)
   : QObject(reference.parent()), m_TargetControl(reference.m_TargetControl), m_Name(reference.m_Name),
@@ -264,3 +266,4 @@ bool TutorialControl::waitForTabOpen(const QString &tabControlName, int tab)
     return false;
   }
 }
+} // namespace MOBase

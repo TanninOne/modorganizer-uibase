@@ -19,6 +19,8 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "tutorabledialog.h"
 
+namespace MOBase {
+
 TutorableDialog::TutorableDialog(const QString &name, QWidget *parent)
   : QDialog(parent), m_Tutorial(this, name)
 {
@@ -35,3 +37,4 @@ void TutorableDialog::resizeEvent(QResizeEvent *event)
   m_Tutorial.resize(event->size());
   QDialog::resizeEvent(event);
 }
+} // namespace MOBase

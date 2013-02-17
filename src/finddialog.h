@@ -28,6 +28,8 @@ namespace Ui {
     class FindDialog;
 }
 
+namespace MOBase {
+
 /**
  * @brief Find dialog used in the TextView dialog
  **/
@@ -71,5 +73,7 @@ private slots:
 private:
     Ui::FindDialog *ui;
 };
+
+} // namespace MOBase
 
 #endif // FINDDIALOG_H

@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <iplugininstaller.h>
 
+namespace MOBase {
+
 
 class IInstallationManager {
 
@@ -61,5 +63,7 @@ public:
   virtual IPluginInstaller::EInstallResult installArchive(const QString &modName, const QString &archiveFile) = 0;
 
 };
+
+} // namespace MOBase
 
 #endif // IINSTALLATIONMANAGER_H

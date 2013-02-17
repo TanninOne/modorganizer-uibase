@@ -19,6 +19,8 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "directorytree.h"
 
+namespace MOBase {
+
 bool operator<(const FileTreeInformation &LHS, const FileTreeInformation &RHS) {
   return LHS.m_Name < RHS.m_Name;
 }
@@ -30,3 +32,4 @@ bool operator<(const DirectoryTreeInformation &LHS, const DirectoryTreeInformati
 }
 
 
+} // namespace MOBase

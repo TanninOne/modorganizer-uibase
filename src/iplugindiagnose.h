@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <vector>
 
+namespace MOBase {
+
 
 /**
  * brief A plugin that creates problem reports to be displayed in the UI.
@@ -74,7 +76,8 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(IPluginDiagnose, "com.tannin.ModOrganizer.PluginDiagnose/1.0")
+} // namespace MOBase
 
+Q_DECLARE_INTERFACE(MOBase::IPluginDiagnose, "com.tannin.ModOrganizer.PluginDiagnose/1.0")
 
 #endif // IPLUGINDIAGNOSE_H

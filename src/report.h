@@ -25,10 +25,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QString>
 #include <wchar.h>
 
+namespace MOBase {
+
 /**
  * Convenience function displaying an error message box. This function uses WinAPI if no Qt Window is available
  * yet or QMessageBox otherwise.
  */
 QDLLEXPORT void reportError(const QString &message);
+
+} // namespace MOBase
 
 #endif // REPORT_H

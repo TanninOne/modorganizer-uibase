@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "iplugininstaller.h"
 
+namespace MOBase {
+
 /**
  * Simple installer for mods. Simple installers only deal with an in-memory structure
  * representing the archive and can modify what to install where by editing this structure.
@@ -51,6 +53,8 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(IPluginInstallerSimple, "com.tannin.ModOrganizer.PluginInstallerSimple/1.0")
+} // namespace MOBase
+
+Q_DECLARE_INTERFACE(MOBase::IPluginInstallerSimple, "com.tannin.ModOrganizer.PluginInstallerSimple/1.0")
 
 #endif // IPLUGININSTALLERSIMPLE_H

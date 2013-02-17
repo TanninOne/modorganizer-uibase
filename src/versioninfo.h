@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "dllimport.h"
 #include <QString>
 
+namespace MOBase {
+
 
 /**
  * @brief represents the version of a mod or plugin
@@ -109,5 +111,7 @@ private:
 
 };
 
+
+} // namespace MOBase
 
 #endif // MODVERSION_H

@@ -24,6 +24,8 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 #include <QString>
 #include <QDebug>
 
+namespace MOBase {
+
 
 TutorialManager *TutorialManager::s_Instance = NULL;
 
@@ -101,3 +103,4 @@ void TutorialManager::unregisterControl(const QString &windowName)
     qCritical() << "failed to remove tutorial control " << windowName;
   }
 }
+} // namespace MOBase

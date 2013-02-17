@@ -21,6 +21,8 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QFileInfo>
 
+namespace MOBase {
+
 
 InstallationTester::InstallationTester()
 {
@@ -87,3 +89,4 @@ bool InstallationTester::isSuffixAcceptable(const QString &fileName) {
   return false;
 }
 */
+} // namespace MOBase

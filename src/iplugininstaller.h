@@ -27,6 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "directorytree.h"
 #include <set>
 
+namespace MOBase {
+
 
 class IInstallationManager;
 
@@ -96,6 +98,8 @@ private:
 
 };
 
-Q_DECLARE_INTERFACE(IPluginInstaller, "com.tannin.ModOrganizer.PluginInstaller/1.0")
+} // namespace MOBase
+
+Q_DECLARE_INTERFACE(MOBase::IPluginInstaller, "com.tannin.ModOrganizer.PluginInstaller/1.0")
 
 #endif // IPLUGININSTALLER_H

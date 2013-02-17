@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <QString>
 
+namespace MOBase {
+
 
 /**
  * @brief report for a single problem reported by a plugin
@@ -42,5 +44,7 @@ struct ProblemReport
   QString longDescription;  //
 };
 
+
+} // namespace MOBase
 
 #endif // DIAGNOSISREPORT_H

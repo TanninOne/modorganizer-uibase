@@ -29,6 +29,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QString>
 #include <QVariant>
 
+namespace MOBase {
+
 
 /**
  * @brief Interface to class that provides information about the running session
@@ -100,5 +102,7 @@ public:
 
 };
 
+
+} // namespace MOBase
 
 #endif // IMOINFO_H

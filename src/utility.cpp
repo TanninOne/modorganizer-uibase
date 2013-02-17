@@ -29,6 +29,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <Windows.h>
 #include <ShlObj.h>
 
+namespace MOBase {
+
 
 MyException::MyException(const QString &text)
   : std::exception(), m_Message(text.toLocal8Bit())
@@ -186,3 +188,4 @@ QString getStartMenuDirectory()
   SHGetSpecialFolderPathW(NULL, desktop, CSIDL_STARTMENU, 0);
   return QString::fromUtf16(desktop);
 }
+} // namespace MOBase

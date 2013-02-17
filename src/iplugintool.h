@@ -26,6 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "iplugin.h"
 #include <QIcon>
 
+namespace MOBase {
+
 
 class IPluginTool : public QObject, public IPlugin {
   Q_INTERFACES(IPlugin)
@@ -71,7 +73,9 @@ private:
 
 };
 
-Q_DECLARE_INTERFACE(IPluginTool, "com.tannin.ModOrganizer.PluginTool/1.0")
 
+} // namespace MOBase
+
+Q_DECLARE_INTERFACE(MOBase::IPluginTool, "com.tannin.ModOrganizer.PluginTool/1.0")
 
 #endif // IPLUGINTOOL_H

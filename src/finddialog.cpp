@@ -22,9 +22,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "finddialog.h"
 #include "ui_finddialog.h"
 
-FindDialog::FindDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::FindDialog)
+namespace MOBase {
+
+FindDialog::FindDialog(QWidget *parent)
+  : QDialog(parent), ui(new Ui::FindDialog)
 {
     ui->setupUi(this);
 }
@@ -48,3 +49,4 @@ void FindDialog::on_closeBtn_clicked()
 {
   this->close();
 }
+} // namespace MOBase

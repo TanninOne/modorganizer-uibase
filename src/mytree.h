@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <set>
 
+namespace MOBase {
+
 
 /**
  * a tree container using seperate structures for leafs and inner nodes
@@ -280,5 +282,7 @@ bool MyTree<LeafT, NodeData>::addNode(Node *node, bool merge)
   return false;
 }
 
+
+} // namespace MOBase
 
 #endif // MYTREE_H

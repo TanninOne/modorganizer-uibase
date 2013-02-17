@@ -12,6 +12,8 @@
 #include <QToolButton>
 #include <QStyle>
 
+namespace MOBase {
+
 
 LineEditClear::LineEditClear(QWidget *parent)
   : QLineEdit(parent)
@@ -46,3 +48,4 @@ void LineEditClear::updateCloseButton(const QString& text)
   clearButton->setVisible(!text.isEmpty());
 }
 
+} // namespace MOBase

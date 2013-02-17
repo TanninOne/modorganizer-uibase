@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "dllimport.h"
 #include <QMetaType>
 
+namespace MOBase {
+
 
 class FileTreeInformation {
   friend QDLLEXPORT bool operator<(const FileTreeInformation &LHS, const FileTreeInformation &RHS);
@@ -67,5 +69,7 @@ QDLLEXPORT bool operator<(const DirectoryTreeInformation &LHS, const DirectoryTr
  * and files as the leafs
  */
 typedef MyTree<FileTreeInformation, DirectoryTreeInformation> DirectoryTree;
+
+} // namespace MOBase
 
 #endif // DIRECTORYTREE_H

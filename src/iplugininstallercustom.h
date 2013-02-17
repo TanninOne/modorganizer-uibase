@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "iplugininstaller.h"
 
+namespace MOBase {
+
 /**
  * Custom installer for mods. Custom installers receive the archive name and have to go
  * from there. They have to be able to extract the archive themself.
@@ -62,6 +64,8 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(IPluginInstallerCustom, "com.tannin.ModOrganizer.PluginInstallerCustom/1.0")
+} // namespace MOBase
+
+Q_DECLARE_INTERFACE(MOBase::IPluginInstallerCustom, "com.tannin.ModOrganizer.PluginInstallerCustom/1.0")
 
 #endif // IPLUGININSTALLERCUSTOM_H

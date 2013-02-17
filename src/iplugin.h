@@ -29,6 +29,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QString>
 #include <QObject>
 
+namespace MOBase {
+
 
 class IPlugin {
 public:
@@ -75,6 +77,8 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(IPlugin, "com.tannin.ModOrganizer.Plugin/1.0")
+} // namespace MOBase
+
+Q_DECLARE_INTERFACE(MOBase::IPlugin, "com.tannin.ModOrganizer.Plugin/1.0")
 
 #endif // IPLUGIN_H

@@ -27,6 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QObject>
 #include <map>
 
+namespace MOBase {
+
 
 class TutorialControl;
 
@@ -102,5 +104,7 @@ private:
 
 };
 
+
+} // namespace MOBase
 
 #endif // TUTORIALMANAGER_H

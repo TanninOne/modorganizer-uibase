@@ -26,6 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QString>
 #include <QVariant>
 
+namespace MOBase {
+
 
 /**
  * @brief struct to hold the user-configurable parameters a plugin accepts. The purpose of this
@@ -41,5 +43,7 @@ struct PluginSetting
   QVariant defaultValue;
 
 };
+
+} // namespace MOBase
 
 #endif // PLUGINSETTING_H

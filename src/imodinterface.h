@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "versioninfo.h"
 
+namespace MOBase {
+
 
 class IModInterface
 {
@@ -56,5 +58,7 @@ public:
 
 };
 
+
+} // namespace MOBase
 
 #endif // IMODINTERFACE_H

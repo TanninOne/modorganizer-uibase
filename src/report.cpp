@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QApplication>
 #include <Windows.h>
 
+namespace MOBase {
+
 
 void reportError(const QString &message)
 {
@@ -35,3 +37,4 @@ void reportError(const QString &message)
     ::MessageBoxW(NULL, ToWString(message).c_str(), ToWString(QObject::tr("Error")).c_str(), MB_ICONERROR | MB_OK);
   }
 }
+} // namespace MOBase

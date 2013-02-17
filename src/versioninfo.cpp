@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "versioninfo.h"
 #include <QRegExp>
 
+namespace MOBase {
+
 
 VersionInfo::VersionInfo()
   : m_Valid(false), m_ReleaseType(RELEASE_FINAL), m_Major(0), m_Minor(0), m_SubMinor(0), m_Rest()
@@ -163,3 +165,4 @@ QDLLEXPORT bool operator<=(const VersionInfo &LHS, const VersionInfo &RHS)
   return LHS.m_Rest <= RHS.m_Rest;
 }
 
+} // namespace MOBase

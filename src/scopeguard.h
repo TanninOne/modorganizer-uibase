@@ -342,5 +342,9 @@ inline ObjScopeGuardImpl2<Obj1,Ret(Obj2::*)(P1a,P2a),P1b,P2b> MakeGuard(Ret(Obj2
 
 #define UNUSED_VAR(VAR) VAR
 
+namespace MOBase {
+
+
+} // namespace MOBase
 
 #endif //SCOPEGUARD_H

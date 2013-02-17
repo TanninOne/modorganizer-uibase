@@ -15,6 +15,8 @@
 
 class QToolButton;
 
+namespace MOBase {
+
 class QDLLEXPORT LineEditClear : public QLineEdit
 {
     Q_OBJECT
@@ -32,5 +34,7 @@ private:
     QToolButton *clearButton;
 };
 
+
+} // namespace MOBase
 
 #endif // LINEEDITCLEAR_H

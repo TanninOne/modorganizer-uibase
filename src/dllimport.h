@@ -24,11 +24,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <QtCore/QtGlobal>
 
+namespace MOBase {
+
 #if defined(_WINDLL)
 #define QDLLEXPORT Q_DECL_EXPORT
 #else
 #undef DLLEXPORT
 #define QDLLEXPORT Q_DECL_IMPORT
 #endif
+
+} // namespace MOBase
 
 #endif // DLLIMPORT_H

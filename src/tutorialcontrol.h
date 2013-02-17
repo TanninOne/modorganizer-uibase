@@ -29,6 +29,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QScriptEngine>
 #include <utility>
 
+namespace MOBase {
+
 class TutorialManager;
 
 class QDLLEXPORT TutorialControl : public QObject
@@ -74,5 +76,7 @@ private:
   QWidget *m_CurrentClickControl;
 
 };
+
+} // namespace MOBase
 
 #endif // TUTORIALCONTROL_H

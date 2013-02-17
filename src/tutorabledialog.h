@@ -28,6 +28,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QShowEvent>
 #include <QResizeEvent>
 
+namespace MOBase {
+
 /**
  * @brief A dialog for which a tutorial can be displayed. Dialogs should derive from this
  * instead of QDialog and delegate all showEvent- and resizeEvent-calls to TutorableDialog
@@ -60,5 +62,7 @@ private:
   TutorialControl m_Tutorial;
 
 };
+
+} // namespace MOBase
 
 #endif // TUTORABLEDIALOG_H

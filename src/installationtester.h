@@ -26,6 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "dllimport.h"
 #include <QString>
 
+namespace MOBase {
+
 
 /**
  * @brief Various convenience functions used to determine if a mod directory fulfills certain criteria
@@ -73,5 +75,7 @@ private:
   InstallationTester();
 
 };
+
+} // namespace MOBase
 
 #endif // INSTALLATIONTESTER_H

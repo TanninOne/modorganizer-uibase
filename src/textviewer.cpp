@@ -31,6 +31,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "utility.h"
 #include "report.h"
 
+namespace MOBase {
+
 
 TextViewer::TextViewer(const QString &title, QWidget *parent)
   : QDialog(parent), ui(new Ui::TextViewer), m_FindDialog(NULL)
@@ -187,3 +189,4 @@ void TextViewer::addFile(const QString &fileName, bool writable)
   page->setLayout(layout);
   m_EditorTabs->addTab(page, QFileInfo(fileName).fileName());
 }
+} // namespace MOBase
