@@ -165,4 +165,10 @@ QDLLEXPORT bool operator<=(const VersionInfo &LHS, const VersionInfo &RHS)
   return LHS.m_Rest <= RHS.m_Rest;
 }
 
+
+QDLLEXPORT bool operator>=(const VersionInfo &LHS, const VersionInfo &RHS)
+{
+  return RHS <= LHS;
+}
+
 } // namespace MOBase
