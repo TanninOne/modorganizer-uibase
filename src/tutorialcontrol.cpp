@@ -33,6 +33,7 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 #include <QTableWidget>
 #include "utility.h"
 #include "tutorialmanager.h"
+#include "report.h"
 
 namespace MOBase {
 
@@ -101,7 +102,10 @@ void TutorialControl::startTutorial(const QString &tutorial)
     }
     m_TutorialView->show();
     m_TutorialView->raise();
-    QMetaObject::invokeMethod(m_TutorialView->rootObject(), "init");
+    if (!QMetaObject::invokeMethod(m_TutorialView->rootObject(), "init")) {
+      reportError(tr("Tutorial failed to start, please check \"mo_interface.log\" for details."));
+      m_TutorialView->close();
+    }
   }
 }
 
