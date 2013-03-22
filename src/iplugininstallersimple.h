@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #define IPLUGININSTALLERSIMPLE_H
 
 #include "iplugininstaller.h"
+#include "guessedvalue.h"
 
 namespace MOBase {
 
@@ -49,7 +50,7 @@ public:
    *         installers will work with the modified tree. This may be useful when implementing a sort
    *         of filter, but usually tree should remain unchanged in that case.
    */
-  virtual EInstallResult install(QString &modName, DirectoryTree &tree) = 0;
+  virtual EInstallResult install(GuessedValue<QString> &modName,  DirectoryTree &tree) = 0;
 
 };
 

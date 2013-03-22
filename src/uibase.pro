@@ -33,7 +33,8 @@ SOURCES += \
     pluginsetting.cpp \
     diagnosisreport.cpp \
     directorytree.cpp \
-    iplugininstaller.cpp
+    iplugininstaller.cpp \
+    guessedvalue.cpp
 
 HEADERS +=\
     utility.h \
@@ -61,7 +62,8 @@ HEADERS +=\
     scopeguard.h \
     pluginsetting.h \
     iplugindiagnose.h \
-    diagnosisreport.h
+    diagnosisreport.h \
+    guessedvalue.h
 
 FORMS += \
     textviewer.ui \

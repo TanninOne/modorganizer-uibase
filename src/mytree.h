@@ -74,6 +74,13 @@ public:
 
   ~MyTree();
 
+  MyTree(const MyTree<LeafT, NodeData> &reference);
+
+  /**
+   * @brief assignment operator
+   */
+  MyTree &operator=(const MyTree<LeafT, NodeData> &reference);
+
   /**
    * @return a deep copy of this tree including all subnodes
    */
@@ -221,7 +228,7 @@ public:
 
 private:
 
-  MyTree<LeafT, NodeData> *m_Parent;
+  const MyTree<LeafT, NodeData> *m_Parent;
   NodeData m_Data;
 
   std::set<LeafT> m_Leafs;
@@ -241,6 +248,40 @@ MyTree<LeafT, NodeData>::~MyTree()
 
 
 template <typename LeafT, typename NodeData>
+MyTree<LeafT, NodeData>::MyTree(const MyTree<LeafT, NodeData> &reference)
+  : m_Data(reference.m_Data), m_Leafs(reference.m_Leafs)
+{
+  for (auto iter = reference.m_Nodes.begin(); iter != reference.m_Nodes.end(); ++iter) {
+    auto temp = iter->copy();
+    temp->m_Parent(this);
+    addNode(temp, false);
+  }
+}
+
+
+template <typename LeafT, typename NodeData>
+MyTree<LeafT, NodeData> &MyTree<LeafT, NodeData>::operator=(const MyTree<LeafT, NodeData> &reference)
+{
+  if (this != &reference) {
+    m_Data = reference.m_Data;
+    m_Leafs = reference.m_Leafs;
+
+    for (std::set<Node*, ByNodeData>::iterator iter = m_Nodes.begin(); iter != m_Nodes.end(); ++iter) {
+      delete *iter;
+    }
+    m_Nodes.clear();
+
+    for (auto iter = reference.m_Nodes.begin(); iter != reference.m_Nodes.end(); ++iter) {
+      Node *temp = (*iter)->copy();
+      temp->m_Parent = this;
+      addNode(temp, false);
+    }
+  }
+  return *this;
+}
+
+
+template <typename LeafT, typename NodeData>
 MyTree<LeafT, NodeData> *MyTree<LeafT, NodeData>::copy() const
 {
   MyTree<LeafT, NodeData> *result = new MyTree<LeafT, NodeData>();
@@ -248,9 +289,9 @@ MyTree<LeafT, NodeData> *MyTree<LeafT, NodeData>::copy() const
   result->m_Data = this->m_Data;
   result->m_Leafs = this->m_Leafs;
   for (auto iter = this->m_Nodes.begin(); iter != this->m_Nodes.end(); ++iter) {
-    auto temp = iter->copy();
-    temp->m_Parent(this);
-    addNode(temp, false);
+    Node *temp = (*iter)->copy();
+    temp->m_Parent = this;
+    result->addNode(temp, false);
   }
 
   return result;
