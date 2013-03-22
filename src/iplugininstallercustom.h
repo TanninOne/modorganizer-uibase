@@ -22,7 +22,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef IPLUGININSTALLERCUSTOM_H
 #define IPLUGININSTALLERCUSTOM_H
 
+
 #include "iplugininstaller.h"
+#include "guessedvalue.h"
+
 
 namespace MOBase {
 
@@ -60,7 +63,7 @@ public:
    * @param filename of the archive
    * @return result of the installation process
    */
-  virtual EInstallResult install(QString &modName, const QString &archiveName) = 0;
+  virtual EInstallResult install(GuessedValue<QString> &modName, const QString &archiveName) = 0;
 
 };
 

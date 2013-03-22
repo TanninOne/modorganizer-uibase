@@ -45,10 +45,10 @@ Q_DECLARE_METATYPE(FileTreeInformation)
 
 
 struct DirectoryTreeInformation {
-  DirectoryTreeInformation() : name(), index(-1) {}
+  DirectoryTreeInformation() : name(), index(-1) { }
   DirectoryTreeInformation(const DirectoryTreeInformation &reference) : name(reference.name), index(reference.index) { }
-  DirectoryTreeInformation(const QString &name) : name(name), index(-1) {}
-  DirectoryTreeInformation(const QString &name, int index) : name(name), index(index) {}
+  DirectoryTreeInformation(const QString &name) : name(name), index(-1) { }
+  DirectoryTreeInformation(const QString &name, int index) : name(name), index(index) { }
   DirectoryTreeInformation &operator=(const DirectoryTreeInformation &reference) {
     if (this != &reference) {
       name = reference.name;

@@ -200,6 +200,12 @@ QDLLEXPORT QString getDesktopDirectory();
  **/
 QDLLEXPORT QString getStartMenuDirectory();
 
+/**
+ * @brief fix a directory name so it can be dealt with by windows explorer
+ * @return false if there was no way to convert the name into a valid one
+ **/
+QDLLEXPORT bool fixDirectoryName(QString &name);
+
 
 } // namespace MOBase
 

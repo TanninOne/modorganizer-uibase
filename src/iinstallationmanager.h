@@ -28,6 +28,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 namespace MOBase {
 
 
+template <typename T> class GuessedValue;
+
+
 class IInstallationManager {
 
 public:
@@ -60,7 +63,7 @@ public:
    * @param archiveFile path to the archive to install
    * @return the installation result
    */
-  virtual IPluginInstaller::EInstallResult installArchive(const QString &modName, const QString &archiveFile) = 0;
+  virtual IPluginInstaller::EInstallResult installArchive(MOBase::GuessedValue<QString> &modName, const QString &archiveFile) = 0;
 
 };
 
