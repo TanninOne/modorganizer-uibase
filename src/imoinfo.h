@@ -58,6 +58,11 @@ public:
   virtual QString profilePath() const = 0;
 
   /**
+   * @return the (absolute) path to the download directory
+   */
+  virtual QString downloadsPath() const = 0;
+
+  /**
    * @return the running version of Mod Organizer
    */
   virtual VersionInfo appVersion() const = 0;
