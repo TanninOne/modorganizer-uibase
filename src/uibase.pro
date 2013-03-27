@@ -15,6 +15,8 @@ contains(QT_VERSION, "^5.*") {
 	QT += widgets
 }
 
+INCLUDEPATH += "$(BOOSTPATH)"
+
 QT += declarative script
 
 SOURCES += \

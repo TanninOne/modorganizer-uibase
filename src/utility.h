@@ -30,9 +30,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #define WIN32_MEAN_AND_LEAN
 #include <Windows.h>
 
+
 namespace MOBase {
 
-
+QDLLEXPORT QString windowsErrorString(DWORD errorCode);
 
 /**
  * @brief remove the specified directory including all sub-directories
@@ -69,6 +70,45 @@ QDLLEXPORT bool moveFileRecursive(const QString &source, const QString &baseDir,
  */
 QDLLEXPORT bool copyFileRecursive(const QString &source, const QString &baseDir, const QString &destination);
 
+/**
+ * @brief copy one or multiple files using a shell operation (this will ask the user for confirmation on overwrite
+ *        or elevation requirement)
+ * @param sourceNames names of files to be copied. This can include wildcards
+ * @param destinationNames names of the files in the destination location or the destination directory to copy to.
+ *                         There has to be one destination name for each source name or a single directory
+ * @param dialog a dialog to be the parent of possible confirmation dialogs
+ * @return true on success, false on error. Call ::GetLastError() to retrieve error code
+ **/
+QDLLEXPORT bool shellCopy(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog = NULL);
+
+/**
+ * @brief move one or multiple files using a shell operation (this will ask the user for confirmation on overwrite
+ *        or elevation requirement)
+ * @param sourceNames names of files to be moved. This can include wildcards
+ * @param destinationNames names of the files in the destination location or the destination directory to move to.
+ *                         There has to be one destination name for each source name or a single directory
+ * @param dialog a dialog to be the parent of possible confirmation dialogs
+ * @return true on success, false on error. Call ::GetLastError() to retrieve error code
+ **/
+QDLLEXPORT bool shellMove(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog = NULL);
+
+/**
+ * @brief rename a file using a shell operation (this will ask the user for confirmation on overwrite
+ *        or elevation requirement)
+ * @param oldName old name of file to be renamed
+ * @param newName new name of the file
+ * @param dialog a dialog to be the parent of possible confirmation dialogs
+ * @return true on success, false on error. Call ::GetLastError() to retrieve error code
+ **/
+QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, QWidget *dialog = NULL);
+
+/**
+ * @brief delete files using a shell operation (this will ask the user for confirmation on overwrite
+ *        or elevation requirement)
+ * @param fileNames names of files to be deleted
+ * @return true on success, false on error. Call ::GetLastError() to retrieve error code
+ **/
+QDLLEXPORT bool shellDelete(const QStringList &fileNames, QWidget *dialog);
 
 /**
  * @brief construct a string containing the elements of a vector concatenated
