@@ -217,6 +217,12 @@ std::vector<T> MakeVector(int count, ...)
  * @brief convert QString to std::wstring (utf-16 encoding)
  **/
 QDLLEXPORT std::wstring ToWString(const QString &source);
+
+/**
+ * @brief convert QString to std::string (utf-8 encoding)
+ **/
+QDLLEXPORT std::string ToString(const QString &source);
+
 /**
  * @brief convert std::wstring to QString (assuming the wstring to be utf-16 encoded)
  **/

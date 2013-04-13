@@ -297,6 +297,12 @@ std::wstring ToWString(const QString &source)
   return result;
 }
 
+std::string ToString(const QString &source)
+{
+  QByteArray utf8Array = source.toUtf8();
+  return std::string(utf8Array.constData());
+}
+
 QString ToQString(const std::wstring &source)
 {
   return QString::fromUtf16(source.c_str());
@@ -328,6 +334,8 @@ bool fixDirectoryName(QString &name)
     }
   }
 
+  temp = temp.simplified();
+
   if (temp.length() > 1) {
     name = temp;
     return true;
@@ -349,4 +357,5 @@ QString getStartMenuDirectory()
   SHGetSpecialFolderPathW(NULL, desktop, CSIDL_STARTMENU, 0);
   return QString::fromUtf16(desktop);
 }
+
 } // namespace MOBase

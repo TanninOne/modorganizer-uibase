@@ -48,12 +48,12 @@ public:
   virtual IGameInfo &gameInfo() const = 0;
 
   /**
-   * @return name of the active profile
+   * @return name of the active profile or an empty string if no profile is loaded (yet)
    */
   virtual QString profileName() const = 0;
 
   /**
-   * @return the (absolute) path to the active profile
+   * @return the (absolute) path to the active profile or an empty string if no profile is loaded (yet)
    */
   virtual QString profilePath() const = 0;
 
@@ -104,6 +104,11 @@ public:
    * @throw an exception is thrown if the specified setting hasn't been declared
    */
   virtual QVariant pluginSetting(const QString &pluginName, const QString &key) const = 0;
+
+  /**
+   * @return path to a directory where plugin data should be stored.
+   */
+  virtual QString pluginDataPath() const = 0;
 
 };
 

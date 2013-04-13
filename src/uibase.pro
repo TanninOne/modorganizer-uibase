@@ -65,7 +65,8 @@ HEADERS +=\
     pluginsetting.h \
     iplugindiagnose.h \
     diagnosisreport.h \
-    guessedvalue.h
+    guessedvalue.h \
+    ipluginproxy.h
 
 FORMS += \
     textviewer.ui \

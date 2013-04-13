@@ -28,6 +28,8 @@ namespace MOBase {
 
 #if defined(_WINDLL)
 #define QDLLEXPORT Q_DECL_EXPORT
+#elif defined(_NODLL)
+#define QDLLEXPORT
 #else
 #undef DLLEXPORT
 #define QDLLEXPORT Q_DECL_IMPORT
