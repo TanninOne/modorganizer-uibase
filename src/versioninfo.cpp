@@ -66,6 +66,9 @@ QString VersionInfo::canonicalString() const
     case RELEASE_CANDIDATE: {
       result.append("rc");
     } break;
+    case RELEASE_DATE: {
+      result.prepend("d");
+    } break;
     default: {
       // nop
     } break;
@@ -117,6 +120,11 @@ void VersionInfo::parse(const QString &versionString)
   if (temp.startsWith('v', Qt::CaseInsensitive)) {
     temp.remove(0, 1);
   }
+  if (temp.startsWith('d', Qt::CaseInsensitive) &&
+      (m_ReleaseType == RELEASE_FINAL)) {
+    m_ReleaseType = RELEASE_DATE;
+    temp.remove(0, 1);
+  }
 
   if (temp.length() == 0) {
     m_Valid = false;
@@ -140,6 +148,9 @@ void VersionInfo::parse(const QString &versionString)
     }
     temp.remove(index, exp.matchedLength());
   }
+  if ((m_ReleaseType == RELEASE_DATE)  && (m_Major < 1900)) {
+    m_ReleaseType = RELEASE_FINAL;
+  }
 
   m_Rest = temp.trimmed();
   m_Valid = true;
@@ -148,6 +159,15 @@ void VersionInfo::parse(const QString &versionString)
 
 QDLLEXPORT bool operator<(const VersionInfo &LHS, const VersionInfo &RHS)
 {
+  if (!LHS.isValid() && RHS.isValid()) return true;
+  if (!RHS.isValid() && LHS.isValid()) return false;
+
+  // date-releases are lower than regular versions
+  if ((LHS.m_ReleaseType == VersionInfo::RELEASE_DATE) &&
+      (RHS.m_ReleaseType != VersionInfo::RELEASE_DATE)) return true;
+  else if ((LHS.m_ReleaseType != VersionInfo::RELEASE_DATE) &&
+           (RHS.m_ReleaseType == VersionInfo::RELEASE_DATE)) return false;
+
   if (LHS.m_Major != RHS.m_Major)             return LHS.m_Major < RHS.m_Major;
   if (LHS.m_Minor != RHS.m_Minor)             return LHS.m_Minor < RHS.m_Minor;
   if (LHS.m_SubMinor != RHS.m_SubMinor)       return LHS.m_SubMinor < RHS.m_SubMinor;
@@ -158,6 +178,15 @@ QDLLEXPORT bool operator<(const VersionInfo &LHS, const VersionInfo &RHS)
 
 QDLLEXPORT bool operator<=(const VersionInfo &LHS, const VersionInfo &RHS)
 {
+  if (!LHS.isValid() && RHS.isValid()) return true;
+  if (!RHS.isValid() && LHS.isValid()) return false;
+
+  // date-releases are lower than regular versions
+  if ((LHS.m_ReleaseType == VersionInfo::RELEASE_DATE) &&
+      (RHS.m_ReleaseType != VersionInfo::RELEASE_DATE)) return true;
+  else if ((LHS.m_ReleaseType != VersionInfo::RELEASE_DATE) &&
+           (RHS.m_ReleaseType == VersionInfo::RELEASE_DATE)) return false;
+
   if (LHS.m_Major != RHS.m_Major)             return LHS.m_Major < RHS.m_Major;
   if (LHS.m_Minor != RHS.m_Minor)             return LHS.m_Minor < RHS.m_Minor;
   if (LHS.m_SubMinor != RHS.m_SubMinor)       return LHS.m_SubMinor < RHS.m_SubMinor;

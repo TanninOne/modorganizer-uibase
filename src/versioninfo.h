@@ -47,7 +47,8 @@ public:
     RELEASE_ALPHA,
     RELEASE_BETA,
     RELEASE_CANDIDATE,
-    RELEASE_FINAL
+    RELEASE_FINAL,
+    RELEASE_DATE
   };
 
 public:
