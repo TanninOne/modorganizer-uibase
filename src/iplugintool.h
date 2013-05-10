@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 namespace MOBase {
 
 
-class IPluginTool : public QObject, public virtual IPlugin {
+class IPluginTool : public QObject, public IPlugin {
   Q_INTERFACES(IPlugin)
 public:
 
@@ -53,7 +53,7 @@ public:
    *        it creates a new modal dialog
    * @param widget the new parent widget
    */
-  void setParentWidget(QWidget *widget) { m_ParentWidget = widget; }
+  virtual void setParentWidget(QWidget *widget) { m_ParentWidget = widget; }
 
 public slots:
 
@@ -65,6 +65,10 @@ public slots:
 
 protected:
 
+  /**
+   * @brief getter for the parent widget
+   * @return parent widget
+   */
   QWidget *parentWidget() const { return m_ParentWidget; }
 
 private:

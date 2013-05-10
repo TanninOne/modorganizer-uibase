@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "versioninfo.h"
 #include "imodinterface.h"
 #include "igameinfo.h"
+#include "imodrepositorybridge.h"
 #include <QString>
 #include <QVariant>
 
@@ -46,6 +47,11 @@ public:
    * @return information structure holding information about the game being managed
    */
   virtual IGameInfo &gameInfo() const = 0;
+
+  /**
+   * @return create a new nexus interface class
+   */
+  virtual IModRepositoryBridge *createNexusBridge() const = 0;
 
   /**
    * @return name of the active profile or an empty string if no profile is loaded (yet)
@@ -111,7 +117,6 @@ public:
   virtual QString pluginDataPath() const = 0;
 
 };
-
 
 } // namespace MOBase
 

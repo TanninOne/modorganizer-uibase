@@ -77,7 +77,7 @@ public:
    *        it creates a new modal dialog
    * @param widget the new parent widget
    */
-  void setParentWidget(QWidget *widget) { m_ParentWidget = widget; }
+  virtual void setParentWidget(QWidget *widget) { m_ParentWidget = widget; }
 
   /**
    * brief sets the installation manager responsible for the installation process

@@ -36,7 +36,9 @@ SOURCES += \
     diagnosisreport.cpp \
     directorytree.cpp \
     iplugininstaller.cpp \
-    guessedvalue.cpp
+		guessedvalue.cpp \
+    json.cpp \
+    imodrepositorybridge.cpp
 
 HEADERS +=\
     utility.h \
@@ -66,11 +68,13 @@ HEADERS +=\
     iplugindiagnose.h \
     diagnosisreport.h \
     guessedvalue.h \
-    ipluginproxy.h
+    ipluginproxy.h \
+    json.h \
+    imodrepositorybridge.h
 
 FORMS += \
     textviewer.ui \
-    finddialog.ui
+		finddialog.ui
 
 
 CONFIG(debug, debug|release) {

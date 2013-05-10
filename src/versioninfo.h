@@ -92,6 +92,11 @@ public:
    */
   bool isValid() const { return m_Valid; }
 
+  /**
+   * @return true if the version is a date
+   */
+  bool isVersionDate() const { return m_ReleaseType == RELEASE_DATE; }
+
 private:
 
   /**

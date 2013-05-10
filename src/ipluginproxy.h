@@ -3,11 +3,10 @@
 
 #include "iplugin.h"
 
+
 namespace MOBase {
 
-
-class IPluginProxy : public QObject, public IPlugin {
-  Q_INTERFACES(IPlugin)
+class IPluginProxy : public IPlugin {
 public:
 
   /**
@@ -21,7 +20,7 @@ public:
    * @param pluginName name of the proxied plugin to instantiate
    * @return plugin object
    */
-  virtual QObject *instantiate(const QString &pluginName) const = 0;
+  virtual QObject *instantiate(const QString &pluginName) = 0;
 
   /**
    * @brief sets the widget that the tool should use as the parent whenever
