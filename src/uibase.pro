@@ -70,7 +70,8 @@ HEADERS +=\
     guessedvalue.h \
     ipluginproxy.h \
     json.h \
-    imodrepositorybridge.h
+    imodrepositorybridge.h \
+    idownloadmanager.h
 
 FORMS += \
     textviewer.ui \

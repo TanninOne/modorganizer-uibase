@@ -1,8 +1,7 @@
 #include "imodrepositorybridge.h"
 #include "json.h"
 
-MOBase::ModRepositoryFileInfo::ModRepositoryFileInfo(const QString &data, QObject *parent)
-  : QObject(parent)
+MOBase::ModRepositoryFileInfo::ModRepositoryFileInfo(const QString &data)
 {
   QVariantList result = QtJson::Json::parse(data).toList();
 

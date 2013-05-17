@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "imodinterface.h"
 #include "igameinfo.h"
 #include "imodrepositorybridge.h"
+#include "idownloadmanager.h"
 #include <QString>
 #include <QVariant>
 
@@ -115,6 +116,17 @@ public:
    * @return path to a directory where plugin data should be stored.
    */
   virtual QString pluginDataPath() const = 0;
+
+  /**
+   * @brief install a mod archive at the specified location
+   * @param fileName absolute file name of the mod to install
+   */
+  virtual void installMod(const QString &fileName) = 0;
+
+  /**
+   * @return interface to the download manager
+   */
+  virtual MOBase::IDownloadManager *downloadManager() = 0;
 
 };
 

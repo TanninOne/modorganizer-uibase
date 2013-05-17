@@ -10,14 +10,12 @@
 namespace MOBase {
 
 
-class QDLLEXPORT ModRepositoryFileInfo : public QObject {
-
-  Q_OBJECT
+class QDLLEXPORT ModRepositoryFileInfo {
 
 public:
 
-  ModRepositoryFileInfo(QObject *parent = NULL) : QObject(parent) {}
-  ModRepositoryFileInfo(const QString &data, QObject *parent = NULL);
+  ModRepositoryFileInfo() {}
+  ModRepositoryFileInfo(const QString &data);
   QString toString() const;
 
   QString name;
@@ -28,11 +26,6 @@ public:
   int fileID;
   size_t fileSize;
 
-private:
-
-  ModRepositoryFileInfo(const ModRepositoryFileInfo&); // not implemented
-  ModRepositoryFileInfo &operator=(const ModRepositoryFileInfo&); // not implemented
-
 };
 
 
@@ -40,6 +33,8 @@ class QDLLEXPORT IModRepositoryBridge : public QObject
 {
   Q_OBJECT
 public:
+
+  IModRepositoryBridge(QObject *parent = NULL) : QObject(parent) {}
 
   /**
    * @brief request description for a mod
@@ -82,10 +77,14 @@ public:
    */
   virtual void requestToggleEndorsement(int modID, bool endorse, QVariant userData) = 0;
 
+private:
+
+  Q_DISABLE_COPY(IModRepositoryBridge)
+
 signals:
 
   void descriptionAvailable(int modID, QVariant userData, QVariant resultData);
-  void filesAvailable(int modID, QVariant userData, const QList<ModRepositoryFileInfo*> &resultData);
+  void filesAvailable(int modID, QVariant userData, const QList<ModRepositoryFileInfo> &resultData);
   void fileInfoAvailable(int modID, int fileID, QVariant userData, QVariant resultData);
   void downloadURLsAvailable(int modID, int fileID, QVariant userData, QVariant resultData);
   void endorsementToggled(int modID, QVariant userData, QVariant resultData);
