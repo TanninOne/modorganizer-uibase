@@ -56,6 +56,12 @@ public:
    */
   virtual void setNexusID(int nexusID) = 0;
 
+  /**
+   * @brief delete the mod from the disc. This does not update the global ModInfo structure or indices
+   * @return true on success
+   */
+  virtual bool remove() = 0;
+
 };
 
 

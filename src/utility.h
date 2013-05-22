@@ -106,9 +106,10 @@ QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, QWid
  * @brief delete files using a shell operation (this will ask the user for confirmation on overwrite
  *        or elevation requirement)
  * @param fileNames names of files to be deleted
+ * @param recycle if true, the file goes to the recycle bin instead of being permanently deleted
  * @return true on success, false on error. Call ::GetLastError() to retrieve error code
  **/
-QDLLEXPORT bool shellDelete(const QStringList &fileNames, QWidget *dialog);
+QDLLEXPORT bool shellDelete(const QStringList &fileNames, bool recycle = false, QWidget *dialog = NULL);
 
 /**
  * @brief construct a string containing the elements of a vector concatenated

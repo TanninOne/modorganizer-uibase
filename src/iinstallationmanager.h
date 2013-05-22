@@ -57,6 +57,8 @@ public:
    */
   virtual QStringList extractFiles(const QStringList &files) = 0;
 
+
+
   /**
    * @brief installs an archive
    * @param modName suggested name of the mod

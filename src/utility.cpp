@@ -30,12 +30,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <Windows.h>
 #include <ShlObj.h>
 
+
+#define FO_RECYCLE 0x1003
+
+
 namespace MOBase {
 
 
 MyException::MyException(const QString &text)
   : std::exception(), m_Message(text.toLocal8Bit())
 {
+qDebug("exception : %s", qPrintable(text));
 }
 
 
@@ -170,6 +175,12 @@ static bool shellOp(const QStringList &sourceNames, const QStringList &destinati
     fromBuffer.push_back(L'\0');
   }
 
+  bool recycle = operation == FO_RECYCLE;
+
+  if (recycle) {
+    operation = FO_DELETE;
+  }
+
   if ((destinationNames.count() == sourceNames.count()) ||
       (destinationNames.count() == 1)) {
     foreach (const QString &to, destinationNames) {
@@ -201,6 +212,9 @@ static bool shellOp(const QStringList &sourceNames, const QStringList &destinati
 
   if (operation == FO_DELETE) {
     op.fFlags = FOF_NOCONFIRMATION;
+    if (recycle) {
+      op.fFlags |= FOF_ALLOWUNDO;
+    }
   } else {
     op.fFlags = FOF_NOCOPYSECURITYATTRIBS |  // always use security of target directory
                 FOF_SILENT |                 // don't show a progress bar
@@ -235,9 +249,9 @@ bool shellRename(const QString &oldName, const QString &newName, QWidget *dialog
   return shellOp(QStringList(oldName), QStringList(newName), dialog, FO_RENAME);
 }
 
-bool shellDelete(const QStringList &fileNames, QWidget *dialog)
+bool shellDelete(const QStringList &fileNames, bool recycle, QWidget *dialog)
 {
-  return shellOp(fileNames, QStringList(), dialog, FO_DELETE);
+  return shellOp(fileNames, QStringList(), dialog, recycle ? FO_RECYCLE : FO_DELETE);
 }
 
 bool moveFileRecursive(const QString &source, const QString &baseDir, const QString &destination)
