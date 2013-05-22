@@ -40,7 +40,6 @@ namespace MOBase {
 MyException::MyException(const QString &text)
   : std::exception(), m_Message(text.toLocal8Bit())
 {
-qDebug("exception : %s", qPrintable(text));
 }
 
 
