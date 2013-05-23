@@ -56,6 +56,8 @@ public:
 
   GuessedValue();
 
+  GuessedValue(const T &reference, EGuessQuality quality = GUESS_USER);
+
   GuessedValue<T> &operator=(const GuessedValue &reference);
 
   /**
@@ -98,6 +100,11 @@ GuessedValue<T>::GuessedValue()
 {
 }
 
+template <typename T>
+GuessedValue<T>::GuessedValue(const T &reference, EGuessQuality quality)
+  : m_Value(reference), m_Quality(quality), m_Filter(nullFilter<T>)
+{
+}
 
 template <typename T>
 GuessedValue<T> &GuessedValue<T>::operator=(const GuessedValue<T> &reference)

@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 #include "versioninfo.h"
+#include "guessedvalue.h"
 #include "imodinterface.h"
 #include "igameinfo.h"
 #include "imodrepositorybridge.h"
@@ -32,7 +33,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QVariant>
 
 namespace MOBase {
-
 
 /**
  * @brief Interface to class that provides information about the running session
@@ -84,11 +84,11 @@ public:
   /**
    * @brief create a new mod with the specified name
    * @param name name of the new mod
-   * @return an interface that can be used to modify the mod
+   * @return an interface that can be used to modify the mod. NULL if the user canceled
    * @note an exception is thrown if the mod already exists. Use "getMod" to verify
    *       the mod-name is unused first
    */
-  virtual IModInterface *createMod(const QString &name) = 0;
+  virtual IModInterface *createMod(GuessedValue<QString> &name) = 0;
 
   /**
    * @brief remove a mod (from disc and from the ui)
