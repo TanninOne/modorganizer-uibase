@@ -57,6 +57,18 @@ public:
   virtual void setNexusID(int nexusID) = 0;
 
   /**
+   * @brief set the name of this mod
+   *
+   * set the name of this mod. This will also update the name of the
+   * directory that contains this mod
+   *
+   * @param name new name of the mod
+   * @return true on success, false if the new name can't be used (i.e. because the new
+   *         directory name wouldn't be valid)
+   **/
+  virtual bool setName(const QString &name) = 0;
+
+  /**
    * @brief delete the mod from the disc. This does not update the global ModInfo structure or indices
    * @return true on success
    */

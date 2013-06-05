@@ -46,11 +46,15 @@ public:
    * @param modName name of the mod to install. As an input parameter this is the suggested name
    *        (i.e. from meta data) The installer may change this parameter to rename the mod)
    * @param tree in-memory representation of the archive content
+   * @param version version of the mod. May be empty if the version is not yet known. Can be updated if the
+   *        plugin can determine the version
+   * @param nexusID id of the mod or -1 if unknown. May be updated if the plugin can determine the mod id
    * @return the result of the installation process. If "ERROR_NOTATTEMPTED" is returned, further
    *         installers will work with the modified tree. This may be useful when implementing a sort
    *         of filter, but usually tree should remain unchanged in that case.
    */
-  virtual EInstallResult install(GuessedValue<QString> &modName,  DirectoryTree &tree) = 0;
+  virtual EInstallResult install(GuessedValue<QString> &modName,  DirectoryTree &tree,
+                                 QString &version, int &nexusID) = 0;
 
 };
 

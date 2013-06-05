@@ -61,9 +61,13 @@ public:
    * @param modName name of the mod to install. As an input parameter this is the suggested name
    *        (i.e. from meta data) The installer may change this parameter to rename the mod)
    * @param filename of the archive
+   * @param version version of the mod. May be empty if the version is not yet known. The plugin is responsible
+   *                for setting the version on the created mod
+   * @param nexusID id of the mod or -1 if unknown. The plugin is responsible for setting the mod id for the created mod
    * @return result of the installation process
    */
-  virtual EInstallResult install(GuessedValue<QString> &modName, const QString &archiveName) = 0;
+  virtual EInstallResult install(GuessedValue<QString> &modName, const QString &archiveName,
+                                 const QString &version, int nexusID) = 0;
 
 };
 
