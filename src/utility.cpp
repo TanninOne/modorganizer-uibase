@@ -201,7 +201,7 @@ static bool shellOp(const QStringList &sourceNames, const QStringList &destinati
 
   SHFILEOPSTRUCTW op;
   if (dialog != NULL) {
-    op.hwnd = dialog->winId();
+    op.hwnd = (HWND)dialog->winId();
   } else {
     op.hwnd = NULL;
   }
@@ -318,7 +318,11 @@ std::string ToString(const QString &source)
 
 QString ToQString(const std::wstring &source)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
+  return QString::fromWCharArray(source.c_str());
+#else
   return QString::fromUtf16(source.c_str());
+#endif
 }
 
 
@@ -361,14 +365,22 @@ QString getDesktopDirectory()
 {
   wchar_t desktop[32768];
   SHGetSpecialFolderPathW(NULL, desktop, CSIDL_DESKTOPDIRECTORY, 0);
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
+  return QString::fromWCharArray(desktop);
+#else
   return QString::fromUtf16(desktop);
+#endif
 }
 
 QString getStartMenuDirectory()
 {
   wchar_t desktop[32768];
   SHGetSpecialFolderPathW(NULL, desktop, CSIDL_STARTMENU, 0);
+#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
+  return QString::fromWCharArray(desktop);
+#else
   return QString::fromUtf16(desktop);
+#endif
 }
 
 } // namespace MOBase
