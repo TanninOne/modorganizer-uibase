@@ -115,6 +115,11 @@ void VersionInfo::parse(const QString &versionString)
   m_Major = m_Minor = m_SubMinor = 0;
   m_Rest.clear();
 
+  if (QString::compare(versionString, "final", Qt::CaseInsensitive) == 0) {
+    m_Major = 1;
+    return;
+  }
+
   QString temp = parseReleaseType(versionString);
 
   if (temp.startsWith('v', Qt::CaseInsensitive)) {

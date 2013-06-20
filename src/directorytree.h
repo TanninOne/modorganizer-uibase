@@ -36,6 +36,7 @@ public:
   FileTreeInformation(const FileTreeInformation &reference) : m_Name(reference.m_Name), m_Index(reference.m_Index) {}
   FileTreeInformation(const QString &name, int index) : m_Name(name), m_Index(index) {}
   const QString &getName() const { return m_Name; }
+  void setName(const QString &name) { m_Name = name; }
   int getIndex() const { return m_Index; }
 private:
   QString m_Name;

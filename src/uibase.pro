@@ -38,7 +38,8 @@ SOURCES += \
     iplugininstaller.cpp \
 		guessedvalue.cpp \
     json.cpp \
-    imodrepositorybridge.cpp
+    imodrepositorybridge.cpp \
+    nxmurl.cpp
 
 HEADERS +=\
     utility.h \
@@ -71,7 +72,8 @@ HEADERS +=\
     ipluginproxy.h \
     json.h \
     imodrepositorybridge.h \
-    idownloadmanager.h
+    idownloadmanager.h \
+    nxmurl.h
 
 FORMS += \
     textviewer.ui \
