@@ -41,6 +41,8 @@ public:
 
   /**
    * @return a list of keys of active problems
+   * @note a plugin must be able to report problems even if it isn't active (i.e. it may want to
+   *       report WHY it's inactive)
    */
   virtual std::vector<unsigned int> activeProblems() const = 0;
 

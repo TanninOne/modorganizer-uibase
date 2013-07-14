@@ -124,6 +124,13 @@ public:
   virtual void installMod(const QString &fileName) = 0;
 
   /**
+   * @brief resolves a path relative to the virtual data directory to its absolute real path
+   * @param fileName path to resolve
+   * @return the absolute real path or an empty string
+   */
+  virtual QString resolvePath(const QString &fileName) const = 0;
+
+  /**
    * @return interface to the download manager
    */
   virtual MOBase::IDownloadManager *downloadManager() = 0;
