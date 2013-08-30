@@ -48,14 +48,15 @@ public:
 
   /**
    * @brief extract the specified files from the currently open archive to a temporary location
-   * @param (relative) names of files within the archive
+   * @param files (relative) names of files within the archive
+   * @param flatten if true (default) all files go to the same same directory, no subdirectories.
    * @return the absolute names of the temporary files
    * @note the call will fail with an exception if no archive is open (plugins deriving
    *       from IPluginInstallerSimple can rely on that, custom installers shouldn't)
    * @note the temporary file is automatically cleaned up after the installation
    * @note This call can be very slow if the archive is large and "solid"
    */
-  virtual QStringList extractFiles(const QStringList &files) = 0;
+  virtual QStringList extractFiles(const QStringList &files, bool flatten) = 0;
 
 
 
