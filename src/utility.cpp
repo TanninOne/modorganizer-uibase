@@ -310,10 +310,15 @@ std::wstring ToWString(const QString &source)
   return result;
 }
 
-std::string ToString(const QString &source)
+std::string ToString(const QString &source, bool utf8)
 {
-  QByteArray utf8Array = source.toUtf8();
-  return std::string(utf8Array.constData());
+  QByteArray array8bit;
+  if (utf8) {
+    array8bit = source.toUtf8();
+  } else {
+    array8bit = source.toLocal8Bit();
+  }
+  return std::string(array8bit.constData());
 }
 
 QString ToQString(const std::wstring &source)
