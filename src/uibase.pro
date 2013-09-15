@@ -39,7 +39,8 @@ SOURCES += \
 		guessedvalue.cpp \
     json.cpp \
     imodrepositorybridge.cpp \
-    nxmurl.cpp
+    nxmurl.cpp \
+    modrepositoryfileinfo.cpp
 
 HEADERS +=\
     utility.h \
@@ -73,7 +74,9 @@ HEADERS +=\
     json.h \
     imodrepositorybridge.h \
     idownloadmanager.h \
-    nxmurl.h
+    nxmurl.h \
+    ipluginmodpage.h \
+    modrepositoryfileinfo.h
 
 FORMS += \
     textviewer.ui \
