@@ -100,8 +100,14 @@ QString VersionInfo::parseReleaseType(QString versionString)
     m_ReleaseType = RELEASE_BETA;
     versionString.chop(1);
   } else if (versionString.contains("rc", Qt::CaseInsensitive)) {
-    m_ReleaseType = RELEASE_CANDIDATE;
-    versionString.replace("rc", "");
+    // rc is usually followed by the number of the candidate. need to extract that now, otherwise
+    // the outer parser will think it's the subminor version and then 1.0.0rc1 would be interpreted as newer than 1.0.0
+    int idx = versionString.indexOf("rc");
+    if (idx > 1) { // make sure rc is now somehow part of the mod name
+      m_Rest = versionString.mid(idx + 2);
+      m_ReleaseType = RELEASE_CANDIDATE;
+      versionString.remove(idx, versionString.length());
+    }
   } else {
     m_ReleaseType = RELEASE_FINAL;
   }
