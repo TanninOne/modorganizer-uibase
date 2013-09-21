@@ -9,6 +9,8 @@ namespace MOBase {
 class IPluginProxy : public IPlugin {
 public:
 
+  IPluginProxy() : m_ParentWidget(NULL) {}
+
   /**
    * @param pluginPath path to plugins
    * @return list of plugins that supported by this proxy

@@ -45,6 +45,8 @@ public:
 
   /**
    * @return name of this plugin (used for example in the settings menu)
+   * @note Please ensure you use a name that will not change. Do NOT include a version number in the name.
+   * Settings for example are tied to this name, if you rename your plugin you lose settings users made
    */
   virtual QString name() const = 0;
 

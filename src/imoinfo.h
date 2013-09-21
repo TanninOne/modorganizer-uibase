@@ -105,12 +105,46 @@ public:
 
   /**
    * @brief retrieve the specified setting for a plugin
-   * @param pluginName name of the plugin for which to retrieve a setting
+   * @param pluginName name of the plugin for which to retrieve a setting. This should always be IPlugin::name() unless you have a really good reason
+   *                   to access settings of another mod. You can not access settings for a plugin that isn't installed.
    * @param key identifier of the setting
    * @return the setting
-   * @throw an exception is thrown if the specified setting hasn't been declared
+   * @note an invalid qvariant is returned if the setting has not been declared
    */
   virtual QVariant pluginSetting(const QString &pluginName, const QString &key) const = 0;
+
+  /**
+   * @brief set the specified setting for a plugin
+   * @param pluginName name of the plugin for which to change a value. This should always be IPlugin::name() unless you have a really good reason
+   *                   to access data of another mod AND if you can verify that plugin is actually installed
+   * @param key identifier of the setting
+   * @param value value to set
+   * @throw an exception is thrown if pluginName doesn't refer to an installed plugin
+   */
+  virtual void setPluginSetting(const QString &pluginName, const QString &key, const QVariant &value) = 0;
+
+  /**
+   * @brief retrieve the specified persistent value for a plugin
+   * @param pluginName name of the plugin for which to retrieve a value. This should always be IPlugin::name() unless you have a really good reason
+   *                   to access data of another mod.
+   * @param key identifier of the value
+   * @param def default value to return if the key is not (yet) set
+   * @return the value
+   * @note A persistent is an arbitrary value that the plugin can set and retrieve that is persistently stored by the
+   *       main application. There is no UI for the user to change this value but (s)he can directly access the storage
+   */
+  virtual QVariant persistent(const QString &pluginName, const QString &key, const QVariant &def = QVariant()) const = 0;
+
+  /**
+   * @brief set the specified persistent value for a plugin
+   * @param pluginName name of the plugin for which to change a value. This should always be IPlugin::name() unless you have a really good reason
+   *                   to access data of another mod AND if you can verify that plugin is actually installed
+   * @param key identifier of the value
+   * @param value value to set
+   * @param sync if true the storage is immediately written to disc. This costs performance but is safer against data loss
+   * @throw an exception is thrown if pluginName doesn't refer to an installed plugin
+   */
+  virtual void setPersistent(const QString &pluginName, const QString &key, const QVariant &value, bool sync = true) = 0;
 
   /**
    * @return path to a directory where plugin data should be stored.

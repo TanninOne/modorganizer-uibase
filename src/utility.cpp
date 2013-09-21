@@ -85,7 +85,7 @@ bool removeDir(const QString &dirName)
       }
     }
 
-    if (!dir.rmdir(".")) {
+    if (!dir.rmdir(dirName)) {
       reportError(QObject::tr("removal of \"%1\" failed").arg(dir.absolutePath()));
       return false;
     }
