@@ -39,7 +39,8 @@ SOURCES += \
 		guessedvalue.cpp \
     json.cpp \
     imodrepositorybridge.cpp \
-    nxmurl.cpp
+    nxmurl.cpp \
+    taskprogressmanager.cpp
 
 HEADERS +=\
     utility.h \
@@ -73,7 +74,8 @@ HEADERS +=\
     json.h \
     imodrepositorybridge.h \
     idownloadmanager.h \
-    nxmurl.h
+    nxmurl.h \
+    taskprogressmanager.h
 
 FORMS += \
     textviewer.ui \
@@ -92,6 +94,6 @@ OUTDIR ~= s,/,$$QMAKE_DIR_SEP,g
 DSTDIR ~= s,/,$$QMAKE_DIR_SEP,g
 
 
-LIBS += -luser32 -lshell32
+LIBS += -luser32 -lshell32 -lole32
 
 QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.dll*) $$quote($$DSTDIR) $$escape_expand(\\n)

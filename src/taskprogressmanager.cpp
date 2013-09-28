@@ -1,0 +1,113 @@
+#include "taskprogressmanager.h"
+#include <QApplication>
+#include <QWidget>
+#include <QMainWindow>
+
+namespace MOBase {
+
+TaskProgressManager &TaskProgressManager::instance()
+{
+  static TaskProgressManager s_Instance;
+  return s_Instance;
+}
+
+void TaskProgressManager::forgetMe(quint32 id)
+{
+  auto iter = m_Percentages.find(id);
+  if (iter != m_Percentages.end()) {
+    m_Percentages.erase(iter);
+  }
+  showProgress();
+}
+
+void TaskProgressManager::updateProgress(quint32 id, qint64 value, qint64 max)
+{
+  QMutexLocker lock(&m_Mutex);
+  if (m_Taskbar == NULL) {
+    return;
+  }
+
+  if (value == max) {
+    auto iter = m_Percentages.find(id);
+    if (iter != m_Percentages.end()) {
+      m_Percentages.erase(iter);
+    }
+  } else {
+    m_Percentages[id] = std::make_pair(QTime::currentTime(), (value * 100) / max);
+  }
+
+  showProgress();
+}
+
+quint32 TaskProgressManager::getId()
+{
+  QMutexLocker lock(&m_Mutex);
+  return m_NextId++;
+}
+
+
+void TaskProgressManager::showProgress()
+{
+  if (m_Percentages.size() > 0) {
+    m_Taskbar->SetProgressState(m_WinId, TBPF_NORMAL);
+
+    QTime now = QTime::currentTime();
+    qint64 total = 0;
+    int count = 0;
+
+    for (auto iter = m_Percentages.begin(); iter != m_Percentages.end();) {
+      if (iter->second.first.secsTo(now) < 15) {
+        total += iter->second.second;
+        ++iter;
+        ++count;
+      } else {
+        // if there was no progress in 15 seconds remove this progress
+        qDebug("no progress in 15 seconds (%d)", iter->second.first.secsTo(now));
+        iter = m_Percentages.erase(iter);
+      }
+    }
+
+    m_Taskbar->SetProgressValue(m_WinId, total, count * 100);
+  } else {
+    m_Taskbar->SetProgressState(m_WinId, TBPF_NOPROGRESS);
+  }
+}
+
+
+bool TaskProgressManager::tryCreateTaskbar()
+{
+  // try to find our main window
+  foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+    QMainWindow *mainWin = qobject_cast<QMainWindow*>(widget);
+    if (mainWin != NULL) {
+      m_WinId = mainWin->winId();
+    }
+  }
+
+  if (m_WinId != NULL) {
+    HRESULT result = CoCreateInstance(CLSID_TaskbarList, 0, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_Taskbar));
+    if (result == S_OK) {
+      return true;
+    }
+  }
+
+  // if we got here we got no connection to the taskbar
+
+  m_Taskbar = NULL;
+  if (m_CreateTries-- > 0) {
+    QTimer::singleShot(1000, this, SLOT(tryCreateTaskbar()));
+    qWarning("failed to create taskbar connection");
+  }
+  return false;
+}
+
+TaskProgressManager::TaskProgressManager()
+  : m_NextId(1), m_CreateTries(10), m_WinId(NULL), m_Taskbar(NULL)
+{
+  // using a timer to create the taskbar connection. The correct way would be to register for the "TaskbarButtonCreated"
+  // event and create afterwards but that would be intrusive to the mainwindow class
+  QTimer::singleShot(1000, this, SLOT(tryCreateTaskbar()));
+}
+
+
+} // namespace MOBase

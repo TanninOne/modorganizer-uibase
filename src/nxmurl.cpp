@@ -24,7 +24,7 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 
 NXMUrl::NXMUrl(const QString &url)
 {
-  QRegExp exp("nxm://([a-z]+)/mods/(\\d+)/files/(\\d+)", Qt::CaseInsensitive);
+  QRegExp exp("nxm://([a-z0-9]+)/mods/(\\d+)/files/(\\d+)", Qt::CaseInsensitive);
   exp.indexIn(url);
   if (exp.captureCount() != 3) {
     throw MOBase::MyException(tr("invalid nxm-link: %1").arg(url));
