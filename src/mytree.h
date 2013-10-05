@@ -212,8 +212,10 @@ public:
    * @brief erase the node at the specfied iterator. its content is deleted!
    * @return an iterator to the following node
    **/
-  const_node_reverse_iterator erase(const_node_reverse_iterator iter) { const_node_iterator next = m_Nodes.erase((++iter).base());
-                                                                        return const_node_reverse_iterator(next); }
+  const_node_reverse_iterator erase(const_node_reverse_iterator iter) {
+    delete *iter;
+    const_node_iterator next = m_Nodes.erase((++iter).base());
+    return const_node_reverse_iterator(next); }
 
   /**
    * @brief remove the node at the specfied iterator but don't delete the content

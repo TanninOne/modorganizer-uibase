@@ -39,6 +39,8 @@ class QDLLEXPORT VersionInfo
   friend QDLLEXPORT bool operator<(const VersionInfo &LHS, const VersionInfo &RHS);
   friend QDLLEXPORT bool operator<=(const VersionInfo &LHS, const VersionInfo &RHS);
   friend QDLLEXPORT bool operator>=(const VersionInfo &LHS, const VersionInfo &RHS);
+  friend QDLLEXPORT bool operator!=(const VersionInfo &LHS, const VersionInfo &RHS);
+  friend QDLLEXPORT bool operator==(const VersionInfo &LHS, const VersionInfo &RHS);
 
 public:
 
@@ -47,8 +49,15 @@ public:
     RELEASE_ALPHA,
     RELEASE_BETA,
     RELEASE_CANDIDATE,
-    RELEASE_FINAL,
-    RELEASE_DATE
+    RELEASE_FINAL
+  };
+
+  enum VersionScheme {
+    SCHEME_DISCOVER,          // use regular scheme unless the string contains a hint that it's one of the others
+    SCHEME_REGULAR,
+    SCHEME_DECIMALMARK,       // for schemes that treat the version as a decimal number with the dot as the decimal mark
+    SCHEME_NUMBERSANDLETTERS, // for schemes that mix numbers and letters (1.0.1a, 1.0.1c, ...). otherwise this is the regular scheme
+    SCHEME_DATE               // contains a release date instead of a version number
   };
 
 public:
@@ -72,19 +81,31 @@ public:
    * @brief constructor
    * @param versionString the string to construct from
    **/
-  VersionInfo(const QString &versionString);
+  VersionInfo(const QString &versionString, VersionScheme scheme = SCHEME_DISCOVER);
+
+  /**
+   * @brief resets this structure to an invalid version
+   */
+  void clear();
 
   /**
    * @brief parse the version from the specified string
    *
    * @param versionString the string to parse
    **/
-  void parse(const QString &versionString);
+  void parse(const QString &versionString, VersionScheme scheme = SCHEME_DISCOVER);
 
   /**
    * @return a canonicalized version string
+   * @note due to support for different versioning schemes this somewhat lost it's original intention. This is now supposed to return
+   *       a version string that can be parsed to re-create this VersionInfo without information loss.
    **/
   QString canonicalString() const;
+
+  /**
+   * @return a version string for display to the user. This may loose information as it doesn't contain information about the versioning scheme
+   */
+  QString displayString() const;
 
   /**
    * @return true if this version is valid, false if it wasn't initialised or
@@ -93,9 +114,9 @@ public:
   bool isValid() const { return m_Valid; }
 
   /**
-   * @return true if the version is a date
+   * @return the versioning scheme in effect
    */
-  bool isVersionDate() const { return m_ReleaseType == RELEASE_DATE; }
+  VersionScheme scheme() const { return m_Scheme; }
 
 private:
 
@@ -108,11 +129,15 @@ private:
 
 private:
 
+  VersionScheme m_Scheme;
+
   bool m_Valid;
   ReleaseType m_ReleaseType;
   int m_Major;
   int m_Minor;
   int m_SubMinor;
+
+  int m_DecimalPositions;
 
   QString m_Rest;
 
