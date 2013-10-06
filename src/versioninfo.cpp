@@ -218,18 +218,22 @@ void VersionInfo::parse(const QString &versionString, VersionScheme scheme)
   QString temp = versionString;
 
   // first, determine the versioning scheme if there is a hint
-  if (scheme == SCHEME_DISCOVER) {
-    if (temp.startsWith('f')) {
-      m_Scheme = SCHEME_DECIMALMARK;
-      temp.remove(0, 1);
-    } else if (temp.startsWith('n')) {
-      m_Scheme = SCHEME_NUMBERSANDLETTERS;
-      temp.remove(0, 1);
-    } else if (temp.startsWith('d')) {
-      m_Scheme = SCHEME_DATE;
-      temp.remove(0, 1);
-    }
+  VersionScheme newScheme = m_Scheme;
+  if (temp.startsWith('f')) {
+    newScheme = SCHEME_DECIMALMARK;
+    temp.remove(0, 1);
+  } else if (temp.startsWith('n')) {
+    newScheme = SCHEME_NUMBERSANDLETTERS;
+    temp.remove(0, 1);
+  } else if (temp.startsWith('d')) {
+    newScheme = SCHEME_DATE;
+    temp.remove(0, 1);
   }
+
+  if (scheme == SCHEME_DISCOVER) {
+    m_Scheme = newScheme;
+  }
+
   if (temp.startsWith('v', Qt::CaseInsensitive)) {
     // v is often prepended to versions
     temp.remove(0, 1);

@@ -388,4 +388,12 @@ QString getStartMenuDirectory()
 #endif
 }
 
+bool shellDeleteQuiet(const QString &fileName, QWidget *dialog)
+{
+  if (!QFile::remove(fileName)) {
+    return shellDelete(QStringList(fileName), false, dialog);
+  }
+  return true;
+}
+
 } // namespace MOBase
