@@ -117,6 +117,13 @@ QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, QWid
 QDLLEXPORT bool shellDelete(const QStringList &fileNames, bool recycle = false, QWidget *dialog = NULL);
 
 /**
+ * @brief delete a file. This tries a regular delete and falls back to a shell operation if that fails.
+ * @param fileName names of file to be deleted
+ * @note this is a workaround for win 8 and newer where shell operations caused the windows to loose focus even if no dialog is shown
+ **/
+QDLLEXPORT bool shellDeleteQuiet(const QString &fileName, QWidget *dialog = NULL);
+
+/**
  * @brief construct a string containing the elements of a vector concatenated
  *
  * @param value the container to concatenate
