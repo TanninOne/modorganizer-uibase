@@ -31,14 +31,36 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "idownloadmanager.h"
 #include <QString>
 #include <QVariant>
+#include <boost/signals2.hpp>
+#include <Windows.h>
 
 namespace MOBase {
+
+struct SignalCombinerAnd
+{
+  typedef bool result_type;
+  template<typename InputIterator>
+  bool operator()(InputIterator first, InputIterator last) const
+  {
+    while (first != last) {
+      if (!(*first)) {
+        return false;
+      }
+      ++first;
+    }
+    return true;
+  }
+};
 
 /**
  * @brief Interface to class that provides information about the running session
  *        of Mod Organizer to be used by plugins
  */
 class IOrganizer {
+
+public:
+
+  typedef boost::signals2::signal<bool (const QString&), SignalCombinerAnd> SignalAboutToRunApplication;
 
 public:
 
@@ -165,10 +187,41 @@ public:
   virtual QString resolvePath(const QString &fileName) const = 0;
 
   /**
+   * @brief retrieves a list of (virtual) subdirectories for a path (relative to the data directory)
+   * @param directoryName relative path to the directory to list
+   * @return a list of directory names
+   */
+  virtual QStringList listDirectories(const QString &directoryName) const = 0;
+
+  /**
+   * @brief find files in the virtual directory matching the specified filter
+   * @param path the path to search in
+   * @param filter filter function to match agains
+   * @return a list of matching files
+   */
+  virtual QStringList findFiles(const QString &path, const std::function<bool(const QString&)> &filter) const = 0;
+
+  /**
    * @return interface to the download manager
    */
   virtual MOBase::IDownloadManager *downloadManager() = 0;
 
+  /**
+   * @brief starts an application with virtual filesystem active
+   * @param executable name or path of the executable. If this is only a filename it will only work if it has been configured in MO as an executable.
+   *        if it is a relative path it is expected to be relative to the game directory.
+   * @param args arguments to pass to the executable. If this is empty and executable refers to a configured exe the configured arguments are used
+   * @param cwd working directory for the executable. If this is empty the path to the executable is used unless executable referred to a configured
+   *        MO executable. In that case the configured cwd is used
+   * @param profile profile to use. If this is empty (the default) the current profile is used
+   * @return handle to the started process or INVALID_HANDLE_VALUE if the application failed to start
+   */
+  virtual HANDLE startApplication(const QString &executable, const QStringList &args = QStringList(), const QString &cwd = "", const QString &profile = "") = 0;
+
+  /**
+   * @return the signal to be called when an application is run
+   */
+  virtual bool onAboutToRun(const boost::function<bool(const QString&)> &func) = 0;
 };
 
 } // namespace MOBase

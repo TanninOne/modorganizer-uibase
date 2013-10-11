@@ -178,7 +178,7 @@ QString VersionInfo::parseReleaseType(QString versionString)
 
   if (m_Scheme == SCHEME_REGULAR) {
     // also interpret the a/b letters, but only if they follow immediately on the version number, otherwise the margin for error is too big
-    if (offset == -1) {
+    if ((offset == -1) && (versionString.length() > 0)) {
       if (versionString.at(0) == 'a') {
         m_ReleaseType = RELEASE_ALPHA;
         offset = 0;

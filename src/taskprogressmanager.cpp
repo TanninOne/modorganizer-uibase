@@ -80,7 +80,7 @@ bool TaskProgressManager::tryCreateTaskbar()
   foreach (QWidget *widget, QApplication::topLevelWidgets()) {
     QMainWindow *mainWin = qobject_cast<QMainWindow*>(widget);
     if (mainWin != NULL) {
-      m_WinId = mainWin->winId();
+      m_WinId = reinterpret_cast<HWND>(mainWin->winId());
     }
   }
 
