@@ -31,36 +31,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "idownloadmanager.h"
 #include <QString>
 #include <QVariant>
-#include <boost/signals2.hpp>
 #include <Windows.h>
 
 namespace MOBase {
-
-struct SignalCombinerAnd
-{
-  typedef bool result_type;
-  template<typename InputIterator>
-  bool operator()(InputIterator first, InputIterator last) const
-  {
-    while (first != last) {
-      if (!(*first)) {
-        return false;
-      }
-      ++first;
-    }
-    return true;
-  }
-};
 
 /**
  * @brief Interface to class that provides information about the running session
  *        of Mod Organizer to be used by plugins
  */
 class IOrganizer {
-
-public:
-
-  typedef boost::signals2::signal<bool (const QString&), SignalCombinerAnd> SignalAboutToRunApplication;
 
 public:
 
@@ -221,7 +200,7 @@ public:
   /**
    * @return the signal to be called when an application is run
    */
-  virtual bool onAboutToRun(const boost::function<bool(const QString&)> &func) = 0;
+  virtual bool onAboutToRun(const std::function<bool(const QString&)> &func) = 0;
 };
 
 } // namespace MOBase
