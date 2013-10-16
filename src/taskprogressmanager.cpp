@@ -13,6 +13,9 @@ TaskProgressManager &TaskProgressManager::instance()
 
 void TaskProgressManager::forgetMe(quint32 id)
 {
+  if (m_Taskbar == NULL) {
+    return;
+  }
   auto iter = m_Percentages.find(id);
   if (iter != m_Percentages.end()) {
     m_Percentages.erase(iter);
