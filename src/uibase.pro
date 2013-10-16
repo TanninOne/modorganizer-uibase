@@ -75,7 +75,8 @@ HEADERS +=\
     imodrepositorybridge.h \
     idownloadmanager.h \
     nxmurl.h \
-    taskprogressmanager.h
+    taskprogressmanager.h \
+    ipluginlist.h
 
 FORMS += \
     textviewer.ui \
