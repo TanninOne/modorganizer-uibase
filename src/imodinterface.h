@@ -51,10 +51,29 @@ public:
   virtual void setVersion(const VersionInfo &version) = 0;
 
   /**
+   * @brief set/change the latest known version of this mod
+   * @param version newest known version of the mod
+   */
+  virtual void setNewestVersion(const VersionInfo &version) = 0;
+
+  /**
+   * @brief set endorsement state of the mod
+   * @param endorsed new endorsement state
+   */
+  virtual void setIsEndorsed(bool endorsed) = 0;
+
+  /**
    * @brief sets the mod id on nexus for this mod
    * @param the new id to set
    */
   virtual void setNexusID(int nexusID) = 0;
+
+  /**
+   * @brief sets the category id from a nexus category id. Conversion to MO id happens internally
+   * @param categoryID the nexus category id
+   * @note if a mapping is not possible, the category is set to the default value
+   */
+  virtual void addNexusCategory(int categoryID) = 0;
 
   /**
    * @brief set the name of this mod
