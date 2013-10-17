@@ -76,6 +76,7 @@ HEADERS +=\
     idownloadmanager.h \
     nxmurl.h \
     taskprogressmanager.h \
+    ipluginlist.h \
     ipluginlist.h
 
 FORMS += \
