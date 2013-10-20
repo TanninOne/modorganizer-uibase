@@ -40,7 +40,8 @@ SOURCES += \
     json.cpp \
     imodrepositorybridge.cpp \
     nxmurl.cpp \
-    taskprogressmanager.cpp
+    taskprogressmanager.cpp \
+    questionboxmemory.cpp
 
 HEADERS +=\
     utility.h \
@@ -77,11 +78,13 @@ HEADERS +=\
     nxmurl.h \
     taskprogressmanager.h \
     ipluginlist.h \
-    ipluginlist.h
+    ipluginlist.h \
+    questionboxmemory.h
 
 FORMS += \
     textviewer.ui \
-		finddialog.ui
+    finddialog.ui \
+    questionboxmemory.ui
 
 
 CONFIG(debug, debug|release) {
