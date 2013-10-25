@@ -100,7 +100,7 @@ void TutorialManager::unregisterControl(const QString &windowName)
   if (iter != m_Controls.end()) {
     m_Controls.erase(iter);
   } else {
-    qCritical() << "failed to remove tutorial control " << windowName;
+    qWarning() << "failed to remove tutorial control " << windowName;
   }
 }
 } // namespace MOBase
