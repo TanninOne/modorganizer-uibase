@@ -41,7 +41,8 @@ SOURCES += \
     imodrepositorybridge.cpp \
     nxmurl.cpp \
     taskprogressmanager.cpp \
-    questionboxmemory.cpp
+    questionboxmemory.cpp \
+    sortabletreewidget.cpp
 
 HEADERS +=\
     utility.h \
@@ -79,7 +80,8 @@ HEADERS +=\
     taskprogressmanager.h \
     ipluginlist.h \
     ipluginlist.h \
-    questionboxmemory.h
+    questionboxmemory.h \
+    sortabletreewidget.h
 
 FORMS += \
     textviewer.ui \
