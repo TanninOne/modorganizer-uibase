@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "imodrepositorybridge.h"
 #include "idownloadmanager.h"
 #include "ipluginlist.h"
+#include "imodlist.h"
 #include <QString>
 #include <QVariant>
 #include <Windows.h>
@@ -187,9 +188,14 @@ public:
   virtual MOBase::IDownloadManager *downloadManager() = 0;
 
   /**
-   * @return interface to the plugin list (esps and esms)
+   * @return interface to the list of plugins (esps and esms)
    */
   virtual MOBase::IPluginList *pluginList() = 0;
+
+  /**
+   * @return interface to the list of mods
+   */
+  virtual MOBase::IModList *modList() = 0;
 
   /**
    * @brief starts an application with virtual filesystem active
