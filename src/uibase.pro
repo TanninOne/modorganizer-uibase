@@ -42,7 +42,7 @@ SOURCES += \
     nxmurl.cpp \
     taskprogressmanager.cpp \
     questionboxmemory.cpp \
-    sortabletreewidget.cpp
+		sortabletreewidget.cpp
 
 HEADERS +=\
     utility.h \
@@ -82,7 +82,7 @@ HEADERS +=\
     ipluginlist.h \
     questionboxmemory.h \
     sortabletreewidget.h \
-    imodlist.h
+		imodlist.h
 
 FORMS += \
     textviewer.ui \

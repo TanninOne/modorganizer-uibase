@@ -34,6 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QString>
 #include <QVariant>
 #include <Windows.h>
+#include <functional>
 
 namespace MOBase {
 
@@ -213,6 +214,7 @@ public:
    * @return the signal to be called when an application is run
    */
   virtual bool onAboutToRun(const std::function<bool(const QString&)> &func) = 0;
+
 };
 
 } // namespace MOBase

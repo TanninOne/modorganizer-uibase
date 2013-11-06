@@ -24,6 +24,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 #include <vector>
+#include <functional>
+#include <boost/signals2.hpp>
+
 
 namespace MOBase {
 
@@ -36,6 +39,10 @@ namespace MOBase {
  * diagnosis plugins, derive from IPlugin and IPluginDiagnose
  */
 class IPluginDiagnose {
+public:
+
+  /// signal to be emitted when the diagnosis information of the plugin is invalidated
+  typedef boost::signals2::signal<void ()> SignalInvalidated;
 
 public:
 
@@ -76,10 +83,30 @@ public:
    */
   virtual void startGuidedFix(unsigned int key) const = 0;
 
+  /**
+   * @brief the application will use this to register callbacks to be called when
+   *        the diagnosis information needs to be re-evaluated
+   */
+  virtual void onInvalidated(const std::function<void()> &callback) {
+    m_OnInvalidated.disconnect(callback);
+    m_OnInvalidated.connect(callback);
+  }
+
+
+protected:
+
+  void invalidate() {
+    m_OnInvalidated();
+  }
+
+private:
+
+  SignalInvalidated m_OnInvalidated;
+
 };
 
 } // namespace MOBase
 
-Q_DECLARE_INTERFACE(MOBase::IPluginDiagnose, "com.tannin.ModOrganizer.PluginDiagnose/1.0")
+Q_DECLARE_INTERFACE(MOBase::IPluginDiagnose, "com.tannin.ModOrganizer.PluginDiagnose/1.1")
 
 #endif // IPLUGINDIAGNOSE_H

@@ -31,20 +31,24 @@ class IModList {
 public:
 
   enum ModState {
-    STATE_MISSING,
-    STATE_INACTIVE,
-    STATE_ACTIVE,
-    STATE_NOTOPTIONAL
+    STATE_EXISTS    = 0x00000001,
+    STATE_ACTIVE    = 0x00000002,
+    STATE_ESSENTIAL = 0x00000004,
+    STATE_EMPTY     = 0x00000008,
+    STATE_ENDORSED  = 0x00000010,
+    STATE_VALID     = 0x00000020
   };
+
+  Q_DECLARE_FLAGS(ModStates, ModState)
 
 public:
 
   /**
    * @brief retrieve the state of a mod
    * @param name name of the mod
-   * @return one of the possible mod states: missing, inactive or active
+   * @return a bitset of information about the mod
    */
-  virtual ModState state(const QString &name) const = 0;
+  virtual ModStates state(const QString &name) const = 0;
 
   /**
    * @brief retrieve the priority of a mod
@@ -63,7 +67,14 @@ public:
    */
   virtual bool setPriority(const QString &name, int newPriority) = 0;
 
+  /**
+   * @return the signal to be called when an application is run
+   */
+  virtual bool onModStateChanged(const std::function<void(const QString&, ModStates)> &func) = 0;
+
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(IModList::ModStates)
 
 }
 

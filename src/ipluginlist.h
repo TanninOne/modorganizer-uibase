@@ -75,6 +75,11 @@ public:
    */
   virtual QString origin(const QString &name) const = 0;
 
+  /**
+   * @brief invoked whenever the application felt it necessary to refresh the list (i.e. because of external changes)
+   */
+  virtual bool onRefreshed(const std::function<void()> &callback) = 0;
+
 };
 
 }
