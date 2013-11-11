@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef SORTABLETREEWIDGET_H
 #define SORTABLETREEWIDGET_H
 
-#include <dllimport.h>
+#include "dllimport.h"
 #include <QTreeWidget>
 
 namespace MOBase {
