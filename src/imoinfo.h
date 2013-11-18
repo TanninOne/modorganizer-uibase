@@ -46,6 +46,17 @@ class IOrganizer {
 
 public:
 
+  /**
+   * @brief information about a virtualised file
+   */
+  struct FileInfo {
+    QString filePath;    /// full path to the file
+    QString archive;     /// name of the archive if this file is in a BSA, otherwise this is empty.
+    QStringList origins; /// list of origins containing this file. the first one is the highest priority one
+  };
+
+public:
+
   virtual ~IOrganizer() {}
 
   /**
@@ -176,12 +187,21 @@ public:
   virtual QStringList listDirectories(const QString &directoryName) const = 0;
 
   /**
-   * @brief find files in the virtual directory matching the specified filter
+   * @brief find files in the virtual directory matching the filename filter
    * @param path the path to search in
-   * @param filter filter function to match agains
+   * @param filter filter function to match against
    * @return a list of matching files
    */
   virtual QStringList findFiles(const QString &path, const std::function<bool(const QString&)> &filter) const = 0;
+
+  /**
+   * @brief find files in the virtual directory matching the specified complex filter
+   * @param path the path to search in
+   * @param filter filter function to match against
+   * @return a list of matching files
+   * @note this function is more expensive than the one filtering by name so use the other one if it suffices
+   */
+  virtual QList<FileInfo> findFileInfos(const QString &path, const std::function<bool(const FileInfo&)> &filter) const = 0;
 
   /**
    * @return interface to the download manager
@@ -214,6 +234,12 @@ public:
    * @return the signal to be called when an application is run
    */
   virtual bool onAboutToRun(const std::function<bool(const QString&)> &func) = 0;
+
+  /**
+   * @brief refresh the mod list
+   * @param saveChanges if true, the relevant profile information is saved first (enabled mods and the ordering)
+   */
+  virtual void refreshModList(bool saveChanges = true) = 0;
 
 };
 
