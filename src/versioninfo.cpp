@@ -110,7 +110,11 @@ QString VersionInfo::displayString() const
 
   QString result;
   if (m_Scheme == SCHEME_REGULAR) {
-    result = QString("%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
+    if (m_SubMinor != 0) {
+      result = QString("%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
+    } else {
+      result = QString("%1.%2").arg(m_Major).arg(m_Minor);
+    }
   } else if (m_Scheme == SCHEME_DECIMALMARK) {
     result = QString("%1.%2").arg(m_Major).arg(QString("%1").arg(m_Minor).rightJustified(m_DecimalPositions, '0'));
   } else if (m_Scheme == SCHEME_NUMBERSANDLETTERS) {
@@ -279,18 +283,21 @@ QDLLEXPORT bool operator<(const VersionInfo &LHS, const VersionInfo &RHS)
   }else if ((LHS.m_Scheme != VersionInfo::SCHEME_DATE) &&
            (RHS.m_Scheme == VersionInfo::SCHEME_DATE)) {
     return false;
-  } else if ((LHS.m_Scheme != VersionInfo::SCHEME_DECIMALMARK)
-          || (RHS.m_Scheme != VersionInfo::SCHEME_DECIMALMARK)) {
+  } else if ((LHS.m_Scheme == VersionInfo::SCHEME_DECIMALMARK) ||
+             (RHS.m_Scheme == VersionInfo::SCHEME_DECIMALMARK)) {
+    // use decimal versioning if either version is a decimal. The parser interprets versions as regular if in doubt so
+    // if the scheme is "decimal" it is definitively a decimal version number whereas SCHEME_REGULAR means "probably regular"
+
+    float leftVal = QString("%1.%2").arg(LHS.m_Major).arg(QString("%1").arg(LHS.m_Minor).rightJustified(LHS.m_DecimalPositions, '0')).toFloat();
+    float rightVal = QString("%1.%2").arg(RHS.m_Major).arg(QString("%1").arg(RHS.m_Minor).rightJustified(RHS.m_DecimalPositions, '0')).toFloat();
+    if (fabs(leftVal - rightVal) > 0.001f) {
+      return leftVal < rightVal;
+    }
+  } else {
     // if in doubt, use the sane choice. regular and numbers+letters can be treated the same way
     if (LHS.m_Major != RHS.m_Major)             return LHS.m_Major < RHS.m_Major;
     if (LHS.m_Minor != RHS.m_Minor)             return LHS.m_Minor < RHS.m_Minor;
     if (LHS.m_SubMinor != RHS.m_SubMinor)       return LHS.m_SubMinor < RHS.m_SubMinor;
-  } else { // use decimal mark, need to compare first two components differently
-    if ((LHS.m_Major != RHS.m_Major) || (LHS.m_Minor != RHS.m_Minor) || (LHS.m_SubMinor != RHS.m_SubMinor)) {
-      float leftVal = QString("%1.%2").arg(LHS.m_Major).arg(QString("%1").arg(LHS.m_Minor).rightJustified(LHS.m_DecimalPositions, '0')).toFloat();
-      float rightVal = QString("%1.%2").arg(RHS.m_Major).arg(QString("%1").arg(RHS.m_Minor).rightJustified(RHS.m_DecimalPositions, '0')).toFloat();
-      return leftVal < rightVal;
-    }
   }
 
   // subminor, release-type and rest are treated the same for all versioning schemes, but
