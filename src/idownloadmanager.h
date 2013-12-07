@@ -27,7 +27,7 @@ public:
   virtual int startDownloadURLs(const QStringList &urls) = 0;
 
   /**
-   * @brief download a file from <game>.nexusmods.com. <game> is always the game currently being managed
+   * @brief download a file from www.nexusmods.com/<game>. <game> is always the game currently being managed
    * @param modID id of the mod for which to download a file
    * @param fileID id of the file to download
    * @return an id by which the download will be identified

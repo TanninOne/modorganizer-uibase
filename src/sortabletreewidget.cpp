@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 namespace MOBase {
 
 SortableTreeWidget::SortableTreeWidget(QWidget *parent)
-  : QTreeWidget(parent)
+  : QTreeWidget(parent), m_LocalMoveOnly(false)
 {
 }
 
@@ -56,10 +56,9 @@ bool SortableTreeWidget::dropMimeData(QTreeWidgetItem *parent, int index, const 
   return this->moveSelection(parent, index);
 }
 
-bool SortableTreeWidget::moveSelection(QTreeWidgetItem *parent, int index)
+bool SortableTreeWidget::moveSelection(QTreeWidgetItem *parent, int idx)
 {
   QModelIndex parentIndex = indexFromItem(parent);
-
   std::vector<QPersistentModelIndex> persistentIndices;
   Q_FOREACH(const QModelIndex &index, selectedIndexes()) {
     if (index == parentIndex) return false;
@@ -70,10 +69,10 @@ bool SortableTreeWidget::moveSelection(QTreeWidgetItem *parent, int index)
 
   int targetRow = -1;
   if (itemsExpandable() || !parentIndex.isValid()) {
-    targetRow = model()->index(index, 0, parentIndex).row();
+    targetRow = model()->index(idx, 0, parentIndex).row();
 
     if (targetRow < 0) {
-      targetRow = index;
+      targetRow = idx;
     }
   } else {
     // if items aren't expandable, we can't be placing items on sublevels
@@ -93,7 +92,7 @@ bool SortableTreeWidget::moveSelection(QTreeWidgetItem *parent, int index)
     }
   }
 
-  if (index == -1) {
+  if (idx == -1) {
     // append
     if (parentIndex.isValid()) {
       parent->addChildren(temp);
