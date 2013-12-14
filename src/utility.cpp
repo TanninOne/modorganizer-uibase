@@ -321,6 +321,11 @@ std::string ToString(const QString &source, bool utf8)
   return std::string(array8bit.constData());
 }
 
+QString ToQString(const std::string &source)
+{
+  return QString::fromUtf8(source.c_str());
+}
+
 QString ToQString(const std::wstring &source)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
@@ -329,7 +334,6 @@ QString ToQString(const std::wstring &source)
   return QString::fromUtf16(source.c_str());
 #endif
 }
-
 
 QString ToString(const SYSTEMTIME &time)
 {
