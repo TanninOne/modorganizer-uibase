@@ -102,9 +102,17 @@ public:
    * @brief add a new leaf to this node
    *
    * @param leaf the leaf data to attach
+   * @param overwrite if true, the new leaf will overwrite an existing one that compares as "equal"
    * @return true if the leaf was added, false if it already exists
    **/
-  bool addLeaf(const LeafT &leaf) { return m_Leafs.insert(leaf).second; }
+  bool addLeaf(const LeafT &leaf, bool overwrite = true) {
+    auto res = m_Leafs.insert(leaf);
+    if (!res.second && overwrite) {
+      m_Leafs.erase(res.first);
+      res = m_Leafs.insert(leaf);
+    }
+    return res.second;
+  }
 
   /**
    * @brief add a new node to the tree
