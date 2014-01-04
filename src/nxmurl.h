@@ -52,14 +52,14 @@ public:
    *
    * @return mod id
    **/
-  int getModId() const { return m_ModId; }
+  int modId() const { return m_ModId; }
 
   /**
    * @brief retrieve the file id encoded into the url
    *
    * @return file id
    **/
-  int getFileId() const { return m_FileId; }
+  int fileId() const { return m_FileId; }
 
 private:
 
