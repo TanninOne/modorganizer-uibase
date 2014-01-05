@@ -272,6 +272,16 @@ QDLLEXPORT QString getStartMenuDirectory();
  **/
 QDLLEXPORT bool fixDirectoryName(QString &name);
 
+/**
+ * @brief read a file and return it's content as a unicode string. This tries to guess
+ *        the encoding used in the file
+ * @param fileName name of the file to read
+ * @param encoding (optional) if this is set, the target variable received the name of the encoding used
+ * @return the textual content of the file or an empty string if the file doesn't exist
+ **/
+QDLLEXPORT QString readFileText(const QString &fileName, QString *encoding = nullptr);
+
+
 
 } // namespace MOBase
 

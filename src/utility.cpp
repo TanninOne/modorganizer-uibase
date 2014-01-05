@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QBuffer>
 #include <QDesktopWidget>
 #include <QApplication>
+#include <QTextCodec>
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <ShlObj.h>
@@ -398,6 +399,36 @@ bool shellDeleteQuiet(const QString &fileName, QWidget *dialog)
     return shellDelete(QStringList(fileName), false, dialog);
   }
   return true;
+}
+
+QString readFileText(const QString &fileName, QString *encoding)
+{
+  // the functions from QTextCodec we use are supposed to be reentrant so it's
+  // safe to use statics for that
+  static QTextCodec *utf8Codec = QTextCodec::codecForName("utf-8");
+
+  QFile textFile(fileName);
+  if (!textFile.open(QIODevice::ReadOnly)) {
+    return QString();
+  }
+
+  QByteArray buffer = textFile.readAll();
+  QTextCodec *codec = QTextCodec::codecForUtfText(buffer, utf8Codec);
+  QString text = codec->toUnicode(buffer);
+
+  // check reverse conversion. If this was unicode text there can't be data loss
+  // this assumes QString doesn't normalize the data in any way so this is a bit unsafe
+  if (codec->fromUnicode(text) != buffer) {
+    qDebug("conversion failed assuming local encoding");
+    codec = QTextCodec::codecForLocale();
+    text = codec->toUnicode(buffer);
+  }
+
+  if (encoding != nullptr) {
+    *encoding = codec->name();
+  }
+
+  return text;
 }
 
 } // namespace MOBase
