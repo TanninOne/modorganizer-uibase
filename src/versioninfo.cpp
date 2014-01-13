@@ -171,6 +171,7 @@ QString VersionInfo::parseReleaseType(QString versionString)
     offset = versionString.indexOf(typeIter->first, Qt::CaseInsensitive);
     if (offset != -1) {
       m_ReleaseType = typeIter->second;
+      break;
     }
   }
 
