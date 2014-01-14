@@ -82,7 +82,8 @@ HEADERS +=\
     ipluginlist.h \
     questionboxmemory.h \
     sortabletreewidget.h \
-		imodlist.h
+		imodlist.h \
+    ipluginpreview.h
 
 FORMS += \
     textviewer.ui \
