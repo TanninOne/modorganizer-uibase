@@ -3,7 +3,7 @@
 
 MOBase::ModRepositoryFileInfo::ModRepositoryFileInfo(const QString &data)
 {
-  QVariantList result = QtJson::Json::parse(data).toList();
+  QVariantList result = QtJson::parse(data).toList();
 
   while (result.length() < 7) {
     result.append(QVariant());
