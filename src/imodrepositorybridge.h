@@ -88,7 +88,7 @@ signals:
   void fileInfoAvailable(int modID, int fileID, QVariant userData, QVariant resultData);
   void downloadURLsAvailable(int modID, int fileID, QVariant userData, QVariant resultData);
   void endorsementToggled(int modID, QVariant userData, QVariant resultData);
-  void requestFailed(int modID, QVariant userData, const QString &errorMessage);
+  void requestFailed(int modID, int fileID, QVariant userData, const QString &errorMessage);
 
 };
 
