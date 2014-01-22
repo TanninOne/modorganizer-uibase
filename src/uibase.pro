@@ -97,6 +97,9 @@ CONFIG(debug, debug|release) {
 } else {
 	OUTDIR = $$OUT_PWD/release
 	DSTDIR = $$PWD/../../output
+
+  QMAKE_CXXFLAGS += /Zi /GL
+  QMAKE_LFLAGS += /LTCG /LARGEADDRESSAWARE /OPT:REF /OPT:ICF
 }
 
 OUTDIR ~= s,/,$$QMAKE_DIR_SEP,g
