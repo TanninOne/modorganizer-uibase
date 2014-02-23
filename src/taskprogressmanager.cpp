@@ -99,7 +99,7 @@ bool TaskProgressManager::tryCreateTaskbar()
   m_Taskbar = NULL;
   if (m_CreateTries-- > 0) {
     QTimer::singleShot(1000, this, SLOT(tryCreateTaskbar()));
-    qWarning("failed to create taskbar connection");
+    qWarning("failed to create taskbar connection (this is to be expected on Windows XP)");
   }
   return false;
 }
