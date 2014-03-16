@@ -19,8 +19,14 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "tutorialcontrol.h"
 #include <QCoreApplication>
+#if QT_VERSION >= 0x050000
+#include <QQmlEngine>
+#include <QQmlContext>
+#include <QQuickItem>
+#else
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
+#endif
 #include <QDebug>
 #include <QFile>
 #include <QDir>
@@ -83,14 +89,20 @@ void TutorialControl::expose(const QString &widgetName, QObject *widget)
 void TutorialControl::startTutorial(const QString &tutorial)
 {
   if (m_TutorialView == NULL) {
+#if QT_VERSION >= 0x050000
+    m_TutorialView = new QQuickView(m_TargetControl->windowHandle());
+    m_TutorialView->setResizeMode(QQuickView::SizeRootObjectToView);
+    m_TutorialView->setColor(QColor(0, 0, 0, 0));
+#else
     m_TutorialView = new QDeclarativeView(m_TargetControl);
+    m_TutorialView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
+    m_TutorialView->setStyleSheet(QString("background: transparent"));
+#endif
     m_TutorialView->setObjectName("tutorialView");
     QString qmlName = QCoreApplication::applicationDirPath() + "/tutorials/tutorials_" + m_Name.toLower() + ".qml";
     QUrl qmlSource = QUrl::fromLocalFile(qmlName);
     m_TutorialView->setSource(qmlSource);
-    m_TutorialView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
     m_TutorialView->resize(m_TargetControl->width(), m_TargetControl->height());
-    m_TutorialView->setStyleSheet(QString("background: transparent"));
     m_TutorialView->rootContext()->setContextProperty("scriptName", tutorial);
     m_TutorialView->rootContext()->setContextProperty("tutorialControl", this);
     m_TutorialView->rootContext()->setContextProperty("manager", &m_Manager);
@@ -112,7 +124,10 @@ void TutorialControl::startTutorial(const QString &tutorial)
 
 void TutorialControl::lockUI(bool locked)
 {
+#if QT_VERSION >= 0x050000
+#else
   m_TutorialView->setAttribute(Qt::WA_TransparentForMouseEvents, !locked);
+#endif
 
   QMetaObject::invokeMethod(m_TutorialView->rootObject(), "enableBackground", Q_ARG(QVariant, QVariant(locked)));
 }

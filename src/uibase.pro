@@ -12,12 +12,10 @@ DEFINES += UIBASE_LIBRARY _WINDLL
 CONFIG += dll
 
 contains(QT_VERSION, "^5.*") {
-	QT += widgets
+	QT += widgets qml quick script
+} else {
+	QT += declarative script
 }
-
-INCLUDEPATH += "$(BOOSTPATH)"
-
-QT += declarative script
 
 SOURCES += \
     utility.cpp \
@@ -105,6 +103,7 @@ CONFIG(debug, debug|release) {
 OUTDIR ~= s,/,$$QMAKE_DIR_SEP,g
 DSTDIR ~= s,/,$$QMAKE_DIR_SEP,g
 
+INCLUDEPATH += "$(BOOSTPATH)"
 
 LIBS += -luser32 -lshell32 -lole32
 

@@ -25,7 +25,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "dllimport.h"
 #include <QWidget>
+#if QT_VERSION >= 0x050000
+#include <QQuickView>
+#else
 #include <QDeclarativeView>
+#endif
 #include <QScriptEngine>
 #include <utility>
 
@@ -68,7 +72,11 @@ private:
 
   QWidget *m_TargetControl;
   QString m_Name;
+#if QT_VERSION >= 0x050000
+  QQuickView *m_TutorialView;
+#else
   QDeclarativeView *m_TutorialView;
+#endif
   TutorialManager &m_Manager;
 
   std::vector<std::pair<QString, QObject*> > m_ExposedObjects;
