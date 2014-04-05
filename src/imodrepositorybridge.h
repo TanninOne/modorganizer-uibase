@@ -5,28 +5,10 @@
 #include <QObject>
 #include <QVariant>
 #include "versioninfo.h"
+#include "modrepositoryfileinfo.h"
 
 
 namespace MOBase {
-
-
-class QDLLEXPORT ModRepositoryFileInfo {
-
-public:
-
-  ModRepositoryFileInfo() {}
-  ModRepositoryFileInfo(const QString &data);
-  QString toString() const;
-
-  QString name;
-  QString uri;
-  QString description;
-  VersionInfo version;
-  int categoryID;
-  int fileID;
-  size_t fileSize;
-
-};
 
 
 class QDLLEXPORT IModRepositoryBridge : public QObject

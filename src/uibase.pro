@@ -40,7 +40,8 @@ SOURCES += \
     nxmurl.cpp \
     taskprogressmanager.cpp \
     questionboxmemory.cpp \
-		sortabletreewidget.cpp
+    modrepositoryfileinfo.cpp \
+    sortabletreewidget.cpp
 
 HEADERS +=\
     utility.h \
@@ -77,10 +78,11 @@ HEADERS +=\
     nxmurl.h \
     taskprogressmanager.h \
     ipluginlist.h \
-    ipluginlist.h \
+    ipluginmodpage.h \
     questionboxmemory.h \
     sortabletreewidget.h \
-		imodlist.h \
+    imodlist.h \
+    modrepositoryfileinfo.h \
     ipluginpreview.h
 
 FORMS += \
