@@ -4,6 +4,7 @@
 
 #include <versioninfo.h>
 #include <QString>
+#include <QDateTime>
 #include <QVariantMap>
 
 
@@ -40,7 +41,7 @@ public:
   size_t fileSize;
   QString fileName;
   int fileCategory;
-
+  QDateTime fileTime;
   QString repository;
 
   QVariantMap userData;

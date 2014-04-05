@@ -22,7 +22,7 @@ MOBase::ModRepositoryFileInfo::ModRepositoryFileInfo(int modID, int fileID)
 
 MOBase::ModRepositoryFileInfo::ModRepositoryFileInfo(const QString &data)
 {
-  QVariantList result = QtJson::Json::parse(data).toList();
+  QVariantList result = QtJson::parse(data).toList();
 
   while (result.length() < 14) {
     result.append(QVariant());
@@ -62,5 +62,5 @@ QString MOBase::ModRepositoryFileInfo::toString() const
             .arg(fileName)
             .arg(fileCategory)
             .arg(repository)
-            .arg(QString(QtJson::Json::serialize(userData)));
+            .arg(QString(QtJson::serialize(userData)));
 }
