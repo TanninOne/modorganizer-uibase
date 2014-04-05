@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <algorithm>
 #include <QString>
 #include <QTextStream>
+#include <QDir>
 #ifndef WIN32_MEAN_AND_LEAN
 #define WIN32_MEAN_AND_LEAN
 #endif
@@ -87,6 +88,19 @@ QDLLEXPORT bool copyFileRecursive(const QString &source, const QString &baseDir,
 QDLLEXPORT bool shellCopy(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog = NULL);
 
 /**
+ * @brief copy one or multiple files using a shell operation (this will ask the user for confirmation on overwrite
+ *        or elevation requirement)
+ * @param sourceName names of file to be copied. This can include wildcards
+ * @param destinationName name of the files in the destination location or the destination directory to copy to.
+ *                        There has to be one destination name for each source name or a single directory
+ * @param yesToAll if true, the operation will assume "yes" to overwrite confirmations. This doesn't seem to work when providing
+ *                 multiple files to copy
+ * @param dialog a dialog to be the parent of possible confirmation dialogs
+ * @return true on success, false on error. Call ::GetLastError() to retrieve error code
+ **/
+QDLLEXPORT bool shellCopy(const QString &sourceNames, const QString &destinationNames, bool yesToAll = false, QWidget *dialog = NULL);
+
+/**
  * @brief move one or multiple files using a shell operation (this will ask the user for confirmation on overwrite
  *        or elevation requirement)
  * @param sourceNames names of files to be moved. This can include wildcards
@@ -103,9 +117,10 @@ QDLLEXPORT bool shellMove(const QStringList &sourceNames, const QStringList &des
  * @param oldName old name of file to be renamed
  * @param newName new name of the file
  * @param dialog a dialog to be the parent of possible confirmation dialogs
+ * @param yesToAll if true, the operation will assume "yes" to all overwrite confirmations
  * @return true on success, false on error. Call ::GetLastError() to retrieve error code
  **/
-QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, QWidget *dialog = NULL);
+QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, QWidget *dialog = NULL, bool yesToAll = false);
 
 /**
  * @brief delete files using a shell operation (this will ask the user for confirmation on overwrite
@@ -280,6 +295,16 @@ QDLLEXPORT bool fixDirectoryName(QString &name);
  * @return the textual content of the file or an empty string if the file doesn't exist
  **/
 QDLLEXPORT QString readFileText(const QString &fileName, QString *encoding = nullptr);
+
+
+/**
+ * @brief delete files matching a pattern
+ * @param directory in which to delete files
+ * @param pattern the name pattern files have to match
+ * @param numToKeep the number of files to keep
+ * @param sorting if numToKeep is not 0, the last numToKeep files according to this sorting a kept
+ **/
+QDLLEXPORT void removeOldFiles(const QString &path, const QString &pattern, int numToKeep, QDir::SortFlags sorting = QDir::Time);
 
 
 
