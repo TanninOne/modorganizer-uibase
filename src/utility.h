@@ -120,7 +120,7 @@ QDLLEXPORT bool shellMove(const QStringList &sourceNames, const QStringList &des
  * @param yesToAll if true, the operation will assume "yes" to all overwrite confirmations
  * @return true on success, false on error. Call ::GetLastError() to retrieve error code
  **/
-QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, QWidget *dialog = NULL, bool yesToAll = false);
+QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, bool yesToAll = false, QWidget *dialog = NULL);
 
 /**
  * @brief delete files using a shell operation (this will ask the user for confirmation on overwrite
