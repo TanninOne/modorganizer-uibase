@@ -249,10 +249,15 @@ void VersionInfo::parse(const QString &versionString, VersionScheme scheme)
   if (index > -1) {
     m_Major = exp.cap(1).toInt();
     m_Minor = exp.cap(3).toInt();
-    if (m_Scheme != SCHEME_DECIMALMARK) {
-      m_SubMinor = exp.cap(5).toInt();
+    QString subMinor = exp.cap(5);
+    if (!subMinor.isEmpty() && (m_Scheme == SCHEME_DECIMALMARK)) {
+      // nooooope, if there are two dots it can't be a decimal mark
+      m_Scheme = SCHEME_REGULAR;
     }
-    if ((exp.cap(3).size() > 1) && exp.cap(3).startsWith('0')) {
+    if (m_Scheme != SCHEME_DECIMALMARK) {
+      m_SubMinor = subMinor.toInt();
+    }
+    if (subMinor.isEmpty() && (exp.cap(3).size() > 1) && exp.cap(3).startsWith('0')) {
       // this indicates a decimal scheme
       m_Scheme = SCHEME_DECIMALMARK;
       m_DecimalPositions = exp.cap(3).size();
