@@ -169,8 +169,9 @@ public:
   /**
    * @brief install a mod archive at the specified location
    * @param fileName absolute file name of the mod to install
+   * @return interface to the newly installed mod or NULL if no installation took place (failure or use canceled
    */
-  virtual void installMod(const QString &fileName) = 0;
+  virtual IModInterface *installMod(const QString &fileName) = 0;
 
   /**
    * @brief resolves a path relative to the virtual data directory to its absolute real path

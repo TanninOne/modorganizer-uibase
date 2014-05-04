@@ -68,7 +68,7 @@ public:
   virtual bool setPriority(const QString &name, int newPriority) = 0;
 
   /**
-   * @return the signal to be called when an application is run
+   * @return the signal to be called when the state of any mod changes
    */
   virtual bool onModStateChanged(const std::function<void(const QString&, ModStates)> &func) = 0;
 

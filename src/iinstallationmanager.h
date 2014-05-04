@@ -31,6 +31,9 @@ namespace MOBase {
 template <typename T> class GuessedValue;
 
 
+/**
+ * @brief The IInstallationManager class
+ */
 class IInstallationManager {
 
 public:
@@ -57,8 +60,6 @@ public:
    * @note This call can be very slow if the archive is large and "solid"
    */
   virtual QStringList extractFiles(const QStringList &files, bool flatten) = 0;
-
-
 
   /**
    * @brief installs an archive
