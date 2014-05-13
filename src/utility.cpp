@@ -201,6 +201,7 @@ static bool shellOp(const QStringList &sourceNames, const QStringList &destinati
   toBuffer.push_back(L'\0');
 
   SHFILEOPSTRUCTW op;
+  memset(&op, 0, sizeof(SHFILEOPSTRUCTW));
   if (dialog != NULL) {
     op.hwnd = (HWND)dialog->winId();
   } else {

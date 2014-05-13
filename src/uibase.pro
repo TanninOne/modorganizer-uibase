@@ -8,7 +8,6 @@ TARGET = uibase
 TEMPLATE = lib
 
 DEFINES += UIBASE_LIBRARY _WINDLL
-#CONFIG += staticlib
 CONFIG += dll
 
 contains(QT_VERSION, "^5.*") {
@@ -97,6 +96,7 @@ CONFIG(debug, debug|release) {
 } else {
 	OUTDIR = $$OUT_PWD/release
 	DSTDIR = $$PWD/../../output
+  SRCDIR = $$PWD
 
   QMAKE_CXXFLAGS += /Zi /GL
   QMAKE_LFLAGS += /LTCG /LARGEADDRESSAWARE /OPT:REF /OPT:ICF
@@ -104,9 +104,11 @@ CONFIG(debug, debug|release) {
 
 OUTDIR ~= s,/,$$QMAKE_DIR_SEP,g
 DSTDIR ~= s,/,$$QMAKE_DIR_SEP,g
+SRCDIR ~= s,/,$$QMAKE_DIR_SEP,g
 
 INCLUDEPATH += "$(BOOSTPATH)"
 
 LIBS += -luser32 -lshell32 -lole32
 
 QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.dll*) $$quote($$DSTDIR) $$escape_expand(\\n)
+QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.lib*) $$quote($$SRCDIR\\..\\plugins\\helloworldcpp) $$escape_expand(\\n)
