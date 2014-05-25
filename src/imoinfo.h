@@ -232,6 +232,11 @@ public:
   virtual HANDLE startApplication(const QString &executable, const QStringList &args = QStringList(), const QString &cwd = "", const QString &profile = "") = 0;
 
   /**
+   * @return signal called when a mod has been installed. the parameter to the callback is the mod name
+   */
+  virtual bool onModInstalled(const std::function<void (const QString &)> &func) = 0;
+
+  /**
    * @return the signal to be called when an application is run
    */
   virtual bool onAboutToRun(const std::function<bool(const QString&)> &func) = 0;
