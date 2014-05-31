@@ -92,6 +92,17 @@ void TutorialControl::startTutorial(const QString &tutorial)
 #if QT_VERSION >= 0x050000
     m_TutorialView = new QQuickView(m_TargetControl->windowHandle());
     m_TutorialView->setResizeMode(QQuickView::SizeRootObjectToView);
+
+    m_TutorialView->setSurfaceType(QSurface::OpenGLSurface);
+
+    QSurfaceFormat format;
+    format.setAlphaBufferSize(8);
+    format.setRenderableType(QSurfaceFormat::OpenGL);
+    qDebug() << format.hasAlpha();
+
+    m_TutorialView->setFormat(format);
+    m_TutorialView->setClearBeforeRendering(true);
+
     m_TutorialView->setColor(QColor(0, 0, 0, 0));
 #else
     m_TutorialView = new QDeclarativeView(m_TargetControl);

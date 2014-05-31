@@ -2,7 +2,7 @@
 #define MODREPOSITORYFILEINFO_H
 
 
-#include <versioninfo.h>
+#include "versioninfo.h"
 #include <QString>
 #include <QDateTime>
 #include <QVariantMap>
