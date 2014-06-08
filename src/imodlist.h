@@ -68,9 +68,19 @@ public:
   virtual bool setPriority(const QString &name, int newPriority) = 0;
 
   /**
-   * @return the signal to be called when the state of any mod changes
+   * installs a handler for the event that the state of a mod changed (enabled/disabled, endorsed, ...)
+   * @param func the signal to be called when the state of any mod changes
+   * @return true if the handler was successfully installed (there is as of now no known reason this should fail)
    */
   virtual bool onModStateChanged(const std::function<void(const QString&, ModStates)> &func) = 0;
+
+  /**
+   * installs a handler for the event that a mod changes priority
+   * @param func the signal to be called when the priority of a mod changes
+   *        (first parameter for the handler is the name of the mod, second is the old priority, third the new one)
+   * @return true if the handler was successfully installed (there is as of now no known reason this should fail)
+   */
+  virtual bool onModMoved(const std::function<void (const QString &, int, int)> &func) = 0;
 
 };
 
