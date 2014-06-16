@@ -80,6 +80,11 @@ public:
    */
   virtual bool onRefreshed(const std::function<void()> &callback) = 0;
 
+  /**
+   * @brief invoked whenever a plugin has changed priority
+   */
+  virtual bool onPluginMoved(const std::function<void (const QString &, int, int)> &func) = 0;
+
 };
 
 }
