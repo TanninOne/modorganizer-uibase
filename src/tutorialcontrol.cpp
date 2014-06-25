@@ -40,6 +40,8 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 #include "utility.h"
 #include "tutorialmanager.h"
 #include "report.h"
+#include <boost/scoped_array.hpp>
+
 
 namespace MOBase {
 
@@ -86,6 +88,20 @@ void TutorialControl::expose(const QString &widgetName, QObject *widget)
 }
 
 
+QString canonicalPath(const QString &path)
+{
+  boost::scoped_array<wchar_t> buffer(new wchar_t[32768]);
+  DWORD res = ::GetShortPathNameW((wchar_t*)path.utf16(), buffer.get(), 32768);
+  if (res == 0) {
+    return path;
+  }
+  res = ::GetLongPathNameW(buffer.get(), buffer.get(), 32768);
+  if (res == 0) {
+    return path;
+  }
+  return QString::fromWCharArray(buffer.get());
+}
+
 void TutorialControl::startTutorial(const QString &tutorial)
 {
   if (m_TutorialView == NULL) {
@@ -110,8 +126,10 @@ void TutorialControl::startTutorial(const QString &tutorial)
     m_TutorialView->setStyleSheet(QString("background: transparent"));
 #endif
     m_TutorialView->setObjectName("tutorialView");
-    QString qmlName = QCoreApplication::applicationDirPath() + "/tutorials/tutorials_" + m_Name.toLower() + ".qml";
+
+    QString qmlName = canonicalPath(QCoreApplication::applicationDirPath() + "/tutorials") + "/tutorials_" + m_Name.toLower() + ".qml";
     QUrl qmlSource = QUrl::fromLocalFile(qmlName);
+
     m_TutorialView->setSource(qmlSource);
     m_TutorialView->resize(m_TargetControl->width(), m_TargetControl->height());
     m_TutorialView->rootContext()->setContextProperty("scriptName", tutorial);
