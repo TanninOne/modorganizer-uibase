@@ -11,7 +11,7 @@ DEFINES += UIBASE_LIBRARY _WINDLL
 CONFIG += dll
 
 contains(QT_VERSION, "^5.*") {
-	QT += widgets qml quick script
+	QT += widgets qml quick script quickwidgets
 } else {
 	QT += declarative script
 }

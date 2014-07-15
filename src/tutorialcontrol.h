@@ -62,7 +62,6 @@ public:
   Q_INVOKABLE bool waitForAction(const QString &actionName);
   Q_INVOKABLE bool waitForTabOpen(const QString &tabControlName, int tab);
   Q_INVOKABLE void lockUI(bool locked);
-
 private slots:
 
   void tabChangedProxy(int selected);
@@ -77,6 +76,8 @@ private:
 #else
   QDeclarativeView *m_TutorialView;
 #endif
+  QWidget *m_TutorialWidget;
+
   TutorialManager &m_Manager;
 
   std::vector<std::pair<QString, QObject*> > m_ExposedObjects;
