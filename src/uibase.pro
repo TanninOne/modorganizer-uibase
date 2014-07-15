@@ -10,10 +10,10 @@ TEMPLATE = lib
 DEFINES += UIBASE_LIBRARY _WINDLL
 CONFIG += dll
 
-contains(QT_VERSION, "^5.*") {
+greaterThan(QT_MAJOR_VERSION, 4) {
 	QT += widgets qml quick script quickwidgets
 } else {
-	QT += declarative script
+  QT += declarative script
 }
 
 SOURCES += \
@@ -91,13 +91,12 @@ FORMS += \
 
 
 CONFIG(debug, debug|release) {
-	OUTDIR = $$OUT_PWD/debug
-	DSTDIR = $$PWD/../../outputd
+  OUTDIR = $$OUT_PWD/debug
+  DSTDIR = $$PWD/../../outputd
 } else {
-	OUTDIR = $$OUT_PWD/release
-	DSTDIR = $$PWD/../../output
+  OUTDIR = $$OUT_PWD/release
+  DSTDIR = $$PWD/../../output
   SRCDIR = $$PWD
-
   QMAKE_CXXFLAGS += /Zi /GL
   QMAKE_LFLAGS += /LTCG /LARGEADDRESSAWARE /OPT:REF /OPT:ICF
 }
