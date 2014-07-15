@@ -10,8 +10,8 @@ TEMPLATE = lib
 DEFINES += UIBASE_LIBRARY _WINDLL
 CONFIG += dll
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-  QT += widgets qml quick script
+contains(QT_VERSION, "^5.*") {
+	QT += widgets qml quick script quickwidgets
 } else {
   QT += declarative script
 }
