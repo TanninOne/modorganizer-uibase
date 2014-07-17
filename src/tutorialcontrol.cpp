@@ -158,9 +158,12 @@ void TutorialControl::startTutorial(const QString &tutorial)
 
 void TutorialControl::lockUI(bool locked)
 {
+#if QT_VERSION >= 0x050000
   m_TutorialView->setFlags(locked ? m_TutorialView->flags() & ~Qt::WindowTransparentForInput
                                   : m_TutorialView->flags() | Qt::WindowTransparentForInput);
-//  m_TutorialWidget->setAttribute(Qt::WA_TransparentForMouseEvents, !locked);
+#else
+  m_TutorialWidget->setAttribute(Qt::WA_TransparentForMouseEvents, !locked);
+#endif // QT_VERSION >= 0x050000
 
   QMetaObject::invokeMethod(m_TutorialView->rootObject(), "enableBackground", Q_ARG(QVariant, QVariant(locked)));
 }
