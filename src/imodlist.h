@@ -26,6 +26,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 namespace MOBase {
 
+/**
+ * @brief interface to the mod-list
+ * @note all api functions in this interface work need the internal name of a mod to find a mod. For regular mods
+ *   (mods the user installed) the display name (as shown to the user) and internal name are identical. For other
+ *   mods (non-MO mods) there is currently no way to translate from display name to internal name because the display
+ *   name might not me un-ambiguous.
+ */
 class IModList {
 
 public:
@@ -42,6 +49,15 @@ public:
   Q_DECLARE_FLAGS(ModStates, ModState)
 
 public:
+
+  /**
+   * @brief retrieves the display name of a mod from it's internal name
+   * @param internalName the internal name
+   * @return a string intended to identify the name to the user
+   * @note If you received an internal name from an api (i.e. IPluginList::origin) then you should use that name
+   *       to identify the mod to all other api calls but use this function to retrieve the name to show to the user.
+   */
+  virtual QString displayName(const QString &internalName) const = 0;
 
   /**
    * @brief retrieve the state of a mod
