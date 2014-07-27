@@ -227,9 +227,23 @@ public:
    * @param cwd working directory for the executable. If this is empty the path to the executable is used unless executable referred to a configured
    *        MO executable. In that case the configured cwd is used
    * @param profile profile to use. If this is empty (the default) the current profile is used
-   * @return handle to the started process or INVALID_HANDLE_VALUE if the application failed to start
+   * @return a handle or INVALID_HANDLE_VALUE if the application failed to start.
+   * @note the returned handle is usually a job handle but under some situations MO may not be able to create a job and then the handle is a process handle.
+   *       Use waitForApplication to wait for completion on this handle, it works for both process and job. If you want to write waiting code yourself, be aware
+   *       that you can't WaitForSingleObject on a job object. There is no single windows api call that works for both
    */
   virtual HANDLE startApplication(const QString &executable, const QStringList &args = QStringList(), const QString &cwd = "", const QString &profile = "") = 0;
+
+  /**
+   * @brief wait for completion of an application
+   * @param handle a process or job handle
+   * @param exitCode the exit code of the process after it ended
+   * @return true if the application completed, false if waiting failed
+   * @note the exit code is slightly fickle if handle is a job handle since there is no reliable way to know for which process the exitcode was returned.
+   *       If, at the end of the jobs lifetime only one process was left (for at least 500ms) that processes exitcode will be returned. If there is only
+   *       one process, again, the expected exit code is returned. Otherwise,
+   */
+  virtual bool waitForApplication(HANDLE handle, LPDWORD exitCode = NULL) const = 0;
 
   /**
    * @return signal called when a mod has been installed. the parameter to the callback is the mod name
