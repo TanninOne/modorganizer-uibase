@@ -196,6 +196,13 @@ public:
   virtual QStringList findFiles(const QString &path, const std::function<bool(const QString&)> &filter) const = 0;
 
   /**
+   * @brief retrieve the file origins for the speicified file. The origins are listed with their internal name
+   * @return list of origins that contain the specified file, sorted by their priority
+   * @note the internal name of a mod can differ from the display name for disambiguation
+   */
+  virtual QStringList getFileOrigins(const QString &fileName) const = 0;
+
+  /**
    * @brief find files in the virtual directory matching the specified complex filter
    * @param path the path to search in
    * @param filter filter function to match against
