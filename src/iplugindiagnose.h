@@ -87,11 +87,8 @@ public:
    * @brief the application will use this to register callbacks to be called when
    *        the diagnosis information needs to be re-evaluated
    */
-  virtual void onInvalidated(std::function<void()> callback) {
-    if (m_OnInvalidatedConnection.connected()) {
-      m_OnInvalidatedConnection.disconnect();
-    }
-    m_OnInvalidatedConnection = m_OnInvalidated.connect(callback);
+  virtual boost::signals2::connection onInvalidated(std::function<void()> callback) {
+    return m_OnInvalidated.connect(callback);
   }
 
 
@@ -104,7 +101,7 @@ protected:
 private:
 
   SignalInvalidated m_OnInvalidated;
-  boost::signals2::connection m_OnInvalidatedConnection;
+//  boost::signals2::connection m_OnInvalidatedConnection;
 
 };
 
