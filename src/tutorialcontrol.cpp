@@ -19,14 +19,8 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "tutorialcontrol.h"
 #include <QCoreApplication>
-#if QT_VERSION >= 0x050000
-#include <QQmlEngine>
-#include <QQmlContext>
-#include <QQuickItem>
-#else
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
-#endif
 #include <QDebug>
 #include <QFile>
 #include <QDir>
@@ -44,6 +38,14 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 #include <QImage>
 #include <QBitmap>
 
+
+
+#include <QMetaObject>
+#include <QMetaMethod>
+#include <QMetaEnum>
+#include <qmetaobject.h>
+
+
 namespace MOBase {
 
 
@@ -52,7 +54,6 @@ TutorialControl::TutorialControl(const TutorialControl &reference)
   , m_TargetControl(reference.m_TargetControl)
   , m_Name(reference.m_Name)
   , m_TutorialView(NULL)
-  , m_TutorialWidget(NULL)
   , m_Manager(TutorialManager::instance())
 {
 
@@ -64,7 +65,6 @@ TutorialControl::TutorialControl(QWidget *targetControl, const QString &name)
   , m_TargetControl(targetControl)
   , m_Name(name)
   , m_TutorialView(NULL)
-  , m_TutorialWidget(NULL)
   , m_Manager(TutorialManager::instance())
 {
 }
@@ -85,8 +85,8 @@ void TutorialControl::registerControl()
 
 void TutorialControl::resize(const QSize &size)
 {
-  if (m_TutorialWidget != NULL) {
-    m_TutorialWidget->resize(size.width(), size.height());
+  if (m_TutorialView != NULL) {
+    m_TutorialView->resize(size.width(), size.height());
   }
 }
 
@@ -114,29 +114,16 @@ QString canonicalPath(const QString &path)
 void TutorialControl::startTutorial(const QString &tutorial)
 {
   if (m_TutorialView == NULL) {
-#if QT_VERSION >= 0x050000
-    m_TutorialView = new QQuickView();
-    m_TutorialView->setResizeMode(QQuickView::SizeRootObjectToView);
-
-    QSurfaceFormat format;
-    format.setAlphaBufferSize(8);
-    m_TutorialView->setFormat(format);
-    m_TutorialView->setColor(Qt::transparent);
-
-    m_TutorialWidget = QWidget::createWindowContainer(m_TutorialView, m_TargetControl);
-#else
     m_TutorialView = new QDeclarativeView(m_TargetControl);
     m_TutorialView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
-    m_TutorialWidget = m_TutorialView;
-    m_TutorialWidget->setStyleSheet(QString("background: transparent"));
-#endif
-    m_TutorialWidget->setObjectName("tutorialView");
+    m_TutorialView->setStyleSheet(QString("background: transparent"));
+    m_TutorialView->setObjectName("tutorialView");
 
     QString qmlName = canonicalPath(QCoreApplication::applicationDirPath() + "/tutorials") + "/tutorials_" + m_Name.toLower() + ".qml";
     QUrl qmlSource = QUrl::fromLocalFile(qmlName);
 
     m_TutorialView->setSource(qmlSource);
-    m_TutorialWidget->resize(m_TargetControl->width(), m_TargetControl->height());
+    m_TutorialView->resize(m_TargetControl->width(), m_TargetControl->height());
     m_TutorialView->rootContext()->setContextProperty("scriptName", tutorial);
     m_TutorialView->rootContext()->setContextProperty("tutorialControl", this);
     m_TutorialView->rootContext()->setContextProperty("manager", &m_Manager);
@@ -146,11 +133,11 @@ void TutorialControl::startTutorial(const QString &tutorial)
          iter != m_ExposedObjects.end(); ++iter) {
       m_TutorialView->rootContext()->setContextProperty(iter->first, iter->second);
     }
-    m_TutorialWidget->show();
-    m_TutorialWidget->raise();
+    m_TutorialView->show();
+    m_TutorialView->raise();
     if (!QMetaObject::invokeMethod(m_TutorialView->rootObject(), "init")) {
       reportError(tr("Tutorial failed to start, please check \"mo_interface.log\" for details."));
-      m_TutorialWidget->close();
+      m_TutorialView->close();
     }
   }
 }
@@ -158,12 +145,7 @@ void TutorialControl::startTutorial(const QString &tutorial)
 
 void TutorialControl::lockUI(bool locked)
 {
-#if QT_VERSION >= 0x050000
-  m_TutorialView->setFlags(locked ? m_TutorialView->flags() & ~Qt::WindowTransparentForInput
-                                  : m_TutorialView->flags() | Qt::WindowTransparentForInput);
-#else
-  m_TutorialWidget->setAttribute(Qt::WA_TransparentForMouseEvents, !locked);
-#endif // QT_VERSION >= 0x050000
+  m_TutorialView->setAttribute(Qt::WA_TransparentForMouseEvents, !locked);
 
   QMetaObject::invokeMethod(m_TutorialView->rootObject(), "enableBackground", Q_ARG(QVariant, QVariant(locked)));
 }
@@ -185,7 +167,7 @@ void TutorialControl::finish()
     m_TutorialView->deleteLater();
   }
   m_TutorialView = NULL;
-  m_TutorialWidget = NULL;
+  m_TutorialView = NULL;
 }
 
 
@@ -221,11 +203,12 @@ QRect TutorialControl::getActionRect(const QString &widgetName)
   return QRect();
 }
 
-
 void TutorialControl::nextTutorialStepProxy()
 {
+
   if (m_TutorialView != NULL) {
     QObject *background = m_TutorialView->rootObject();
+
     QTimer::singleShot(1, background, SLOT(nextStep()));
     lockUI(true);
 
@@ -240,6 +223,9 @@ void TutorialControl::nextTutorialStepProxy()
     if (!success) {
       qCritical("failed to disconnect tutorial proxy");
     }
+  } else {
+    qCritical("failed to proceed to next tutorial step");
+    finish();
   }
 }
 

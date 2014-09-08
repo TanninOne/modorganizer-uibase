@@ -7,13 +7,17 @@
 TARGET = uibase
 TEMPLATE = lib
 
-DEFINES += UIBASE_LIBRARY _WINDLL
+DEFINES += UIBASE_LIBRARY UIBASE_EXPORT
 CONFIG += dll
 
 contains(QT_VERSION, "^5.*") {
 	QT += widgets qml quick script quickwidgets
 } else {
   QT += declarative script
+}
+
+!include(../LocalPaths.pri) {
+  message("paths to required libraries need to be set up in LocalPaths.pri")
 }
 
 SOURCES += \
@@ -98,16 +102,18 @@ CONFIG(debug, debug|release) {
   DSTDIR = $$PWD/../../output
   SRCDIR = $$PWD
   QMAKE_CXXFLAGS += /Zi /GL
-  QMAKE_LFLAGS += /LTCG /LARGEADDRESSAWARE /OPT:REF /OPT:ICF
+  QMAKE_LFLAGS += /DEBUG /LTCG /LARGEADDRESSAWARE /OPT:REF /OPT:ICF
 }
+
 
 OUTDIR ~= s,/,$$QMAKE_DIR_SEP,g
 DSTDIR ~= s,/,$$QMAKE_DIR_SEP,g
 SRCDIR ~= s,/,$$QMAKE_DIR_SEP,g
 
-INCLUDEPATH += "$(BOOSTPATH)"
+INCLUDEPATH += "$${BOOSTPATH}"
 
 LIBS += -luser32 -lshell32 -lole32
 
 QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.dll*) $$quote($$DSTDIR) $$escape_expand(\\n)
+QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.pdb*) $$quote($$DSTDIR) $$escape_expand(\\n)
 QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.lib*) $$quote($$SRCDIR\\..\\plugins\\helloworldcpp) $$escape_expand(\\n)
