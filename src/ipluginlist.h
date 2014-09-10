@@ -69,6 +69,13 @@ public:
   virtual bool isMaster(const QString &name) const = 0;
 
   /**
+   * @brief retrieve the list of masters required for this plugin
+   * @param name filename of the plugin (without path but with file extension)
+   * @return list of masters (filenames with extension, no path)
+   */
+  virtual QStringList masters(const QString &name) const = 0;
+
+  /**
    * @brief retrieve the name of the origin of a plugin. This is either the (internal!) name of a mod or "overwrite" or "data"
    * @param name filename of the plugin (without path but with file extension)
    * @return name of the origin or an empty string if the plugin doesn't exist
