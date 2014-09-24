@@ -136,6 +136,7 @@ private:
   int m_Major;
   int m_Minor;
   int m_SubMinor;
+  int m_SubSubMinor;
 
   int m_DecimalPositions;
 

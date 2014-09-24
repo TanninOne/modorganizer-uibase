@@ -55,8 +55,9 @@ TutorialControl::TutorialControl(const TutorialControl &reference)
   , m_Name(reference.m_Name)
   , m_TutorialView(NULL)
   , m_Manager(TutorialManager::instance())
+  , m_ExpectedTab(0)
+  , m_CurrentClickControl(NULL)
 {
-
 }
 
 
@@ -66,6 +67,8 @@ TutorialControl::TutorialControl(QWidget *targetControl, const QString &name)
   , m_Name(name)
   , m_TutorialView(NULL)
   , m_Manager(TutorialManager::instance())
+  , m_ExpectedTab(0)
+  , m_CurrentClickControl(NULL)
 {
 }
 
