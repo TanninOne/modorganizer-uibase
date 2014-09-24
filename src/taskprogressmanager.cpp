@@ -51,7 +51,7 @@ quint32 TaskProgressManager::getId()
 
 void TaskProgressManager::showProgress()
 {
-  if (m_Percentages.size() > 0) {
+  if (!m_Percentages.empty()) {
     m_Taskbar->SetProgressState(m_WinId, TBPF_NORMAL);
 
     QTime now = QTime::currentTime();

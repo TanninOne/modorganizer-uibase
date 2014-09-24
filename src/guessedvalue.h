@@ -74,7 +74,7 @@ public:
    * @param reference
    * @return GuessedValue<T>
    */
-  GuessedValue<T> &operator=(const GuessedValue &reference);
+  GuessedValue<T> &operator=(const GuessedValue<T> &reference);
 
   /**
    * install a filter function. This filter is applied on every update and can

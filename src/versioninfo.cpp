@@ -27,22 +27,42 @@ namespace MOBase {
 
 
 VersionInfo::VersionInfo()
-  : m_Scheme(SCHEME_REGULAR), m_Valid(false), m_ReleaseType(RELEASE_FINAL), m_Major(0), m_Minor(0), m_SubMinor(0), m_DecimalPositions(0), m_Rest()
+  : m_Scheme(SCHEME_REGULAR)
+  , m_Valid(false)
+  , m_ReleaseType(RELEASE_FINAL)
+  , m_Major(0)
+  , m_Minor(0)
+  , m_SubMinor(0)
+  , m_SubSubMinor(0)
+  , m_DecimalPositions(0)
+  , m_Rest()
 {
 }
 
 
 VersionInfo::VersionInfo(int major, int minor, int subminor, ReleaseType releaseType)
-  : m_Scheme(SCHEME_REGULAR), m_Valid(true), m_ReleaseType(releaseType), m_Major(major), m_Minor(minor), m_SubMinor(subminor),
-    m_DecimalPositions(0), m_Rest()
+  : m_Scheme(SCHEME_REGULAR)
+  , m_Valid(true)
+  , m_ReleaseType(releaseType)
+  , m_Major(major)
+  , m_Minor(minor)
+  , m_SubMinor(subminor)
+  , m_SubSubMinor(0)
+  , m_DecimalPositions(0)
+  , m_Rest()
 {
 }
 
 
 VersionInfo::VersionInfo(const QString &versionString, VersionScheme scheme)
-  : m_Valid(true), m_ReleaseType(RELEASE_FINAL),
-    m_Major(0), m_Minor(0), m_SubMinor(0),
-    m_DecimalPositions(0), m_Rest()
+  : m_Valid(true)
+  , m_ReleaseType(RELEASE_FINAL)
+  , m_Major(0)
+  , m_Minor(0)
+  , m_SubMinor(0)
+  , m_SubSubMinor(0)
+  , m_DecimalPositions(0)
+  , m_Rest()
 {
   parse(versionString, scheme);
 }
@@ -52,7 +72,7 @@ void VersionInfo::clear()
   m_Scheme = SCHEME_REGULAR;
   m_Valid = false;
   m_ReleaseType = RELEASE_FINAL;
-  m_Major = m_Minor = m_SubMinor = m_DecimalPositions = 0;
+  m_Major = m_Minor = m_SubMinor = m_SubSubMinor = m_DecimalPositions = 0;
   m_Rest.clear();
 }
 
@@ -65,14 +85,11 @@ QString VersionInfo::canonicalString() const
 
   QString result;
   if (m_Scheme == SCHEME_REGULAR) {
-    result = QString("%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
+    result = QString("%1.%2.%3.%4").arg(m_Major).arg(m_Minor).arg(m_SubMinor).arg(m_SubSubMinor);
   } else if (m_Scheme == SCHEME_DECIMALMARK) {
     result = QString("f%1.%2").arg(m_Major).arg(QString("%1").arg(m_Minor).rightJustified(m_DecimalPositions, '0'));
   } else if (m_Scheme == SCHEME_NUMBERSANDLETTERS) {
-    result = QString("n%1.%2").arg(m_Major).arg(m_Minor);
-    if (m_SubMinor != 0) {
-      result += ('a' + m_SubMinor);
-    }
+    result = QString("n%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
   } else if (m_Scheme == SCHEME_DATE) {
     // year.month.day was stored in the version fields
     result = QString("d%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
@@ -111,17 +128,18 @@ QString VersionInfo::displayString() const
   QString result;
   if (m_Scheme == SCHEME_REGULAR) {
     if (m_SubMinor != 0) {
-      result = QString("%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
+      if (m_SubSubMinor != 0) {
+        result = QString("%1.%2.%3.%4").arg(m_Major).arg(m_Minor).arg(m_SubMinor).arg(m_SubSubMinor);
+      } else {
+        result = QString("%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
+      }
     } else {
       result = QString("%1.%2").arg(m_Major).arg(m_Minor);
     }
   } else if (m_Scheme == SCHEME_DECIMALMARK) {
     result = QString("%1.%2").arg(m_Major).arg(QString("%1").arg(m_Minor).rightJustified(m_DecimalPositions, '0'));
   } else if (m_Scheme == SCHEME_NUMBERSANDLETTERS) {
-    result = QString("%1.%2").arg(m_Major).arg(m_Minor);
-    if (m_SubMinor != 0) {
-      result += ('a' + m_SubMinor);
-    }
+    result = QString("%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
   } else if (m_Scheme == SCHEME_DATE) {
     // year.month.day was stored in the version fields
     result = QString("%1-%2-%3").arg(m_Major).arg(QString("%1").arg(m_Minor).rightJustified(2, '0')).arg(QString("%1").arg(m_SubMinor).rightJustified(2, '0'));
@@ -208,7 +226,7 @@ void VersionInfo::parse(const QString &versionString, VersionScheme scheme)
   m_Valid = false;
   m_Scheme = scheme != SCHEME_DISCOVER ? scheme : SCHEME_REGULAR;
   m_ReleaseType = RELEASE_FINAL;
-  m_Major = m_Minor = m_SubMinor = 0;
+  m_Major = m_Minor = m_SubMinor = m_SubSubMinor = 0;
   m_Rest.clear();
   if (versionString.length() == 0) {
     return;
@@ -244,34 +262,36 @@ void VersionInfo::parse(const QString &versionString, VersionScheme scheme)
     temp.remove(0, 1);
   }
 
-  QRegExp exp("([0-9]+)(\\.([0-9]+)(\\.([0-9]+)(\\.([0-9]+))?)?)?");
+  QRegExp exp("(\\d+)(\\.(\\d+))?(\\.(\\d+))?(\\.(\\d+))?");
   int index = exp.indexIn(temp);
   if (index > -1) {
     m_Major = exp.cap(1).toInt();
     m_Minor = exp.cap(3).toInt();
     QString subMinor = exp.cap(5);
+    QString subSubMinor = exp.cap(7);
     if (!subMinor.isEmpty() && (m_Scheme == SCHEME_DECIMALMARK)) {
       // nooooope, if there are two dots it can't be a decimal mark
       m_Scheme = SCHEME_REGULAR;
     }
     if (m_Scheme != SCHEME_DECIMALMARK) {
       m_SubMinor = subMinor.toInt();
+      m_SubSubMinor = subSubMinor.toInt();
     }
     if (subMinor.isEmpty() && (exp.cap(3).size() > 1) && exp.cap(3).startsWith('0')) {
       // this indicates a decimal scheme
       m_Scheme = SCHEME_DECIMALMARK;
       m_DecimalPositions = exp.cap(3).size();
     }
-    // TODO a potential sub-sub-minor version is currently ignored
     temp.remove(index, exp.matchedLength());
   }
 
-  temp = parseReleaseType(temp);
+  if (m_Scheme == SCHEME_REGULAR) {
+    temp = parseReleaseType(temp);
+  }
 
   if ((m_Scheme == SCHEME_DATE) && (m_Major < 1900)) {
     m_Scheme = SCHEME_REGULAR;
   }
-
   m_Rest = temp.trimmed();
   m_Valid = true;
 }
@@ -304,6 +324,7 @@ QDLLEXPORT bool operator<(const VersionInfo &LHS, const VersionInfo &RHS)
     if (LHS.m_Major != RHS.m_Major)             return LHS.m_Major < RHS.m_Major;
     if (LHS.m_Minor != RHS.m_Minor)             return LHS.m_Minor < RHS.m_Minor;
     if (LHS.m_SubMinor != RHS.m_SubMinor)       return LHS.m_SubMinor < RHS.m_SubMinor;
+    if (LHS.m_SubSubMinor != RHS.m_SubSubMinor) return LHS.m_SubSubMinor < RHS.m_SubSubMinor;
   }
 
   // subminor, release-type and rest are treated the same for all versioning schemes, but
