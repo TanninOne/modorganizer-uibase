@@ -56,8 +56,7 @@ public:
   virtual std::set<QString> supportedExtensions() const = 0;
 
   /**
-   * install call for the simple mode. The installer only needs to restructure the tree parameter,
-   * the caller does the rest
+   * install call
    * @param modName name of the mod to install. As an input parameter this is the suggested name
    *        (i.e. from meta data) The installer may change this parameter to rename the mod)
    * @param filename of the archive
