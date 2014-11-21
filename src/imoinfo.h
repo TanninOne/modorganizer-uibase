@@ -258,9 +258,14 @@ public:
   virtual bool onModInstalled(const std::function<void (const QString &)> &func) = 0;
 
   /**
-   * @return the signal to be called when an application is run
+   * @param func function to be called when an application is run
    */
   virtual bool onAboutToRun(const std::function<bool(const QString&)> &func) = 0;
+
+  /**
+   * @param func function to be called when an application is run
+   */
+  virtual bool onFinishedRun(const std::function<void(const QString&, unsigned int)> &func) = 0;
 
   /**
    * @brief refresh the mod list

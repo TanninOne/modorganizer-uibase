@@ -44,7 +44,8 @@ SOURCES += \
     taskprogressmanager.cpp \
     questionboxmemory.cpp \
     modrepositoryfileinfo.cpp \
-    sortabletreewidget.cpp
+    sortabletreewidget.cpp \
+    executableinfo.cpp
 
 HEADERS +=\
     utility.h \
@@ -86,7 +87,9 @@ HEADERS +=\
     sortabletreewidget.h \
     imodlist.h \
     modrepositoryfileinfo.h \
-    ipluginpreview.h
+    ipluginpreview.h \
+    iplugingame.h \
+    executableinfo.h
 
 FORMS += \
     textviewer.ui \
