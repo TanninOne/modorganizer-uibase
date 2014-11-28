@@ -53,22 +53,22 @@ TutorialControl::TutorialControl(const TutorialControl &reference)
   : QObject(reference.parent())
   , m_TargetControl(reference.m_TargetControl)
   , m_Name(reference.m_Name)
-  , m_TutorialView(NULL)
+  , m_TutorialView(nullptr)
   , m_Manager(TutorialManager::instance())
   , m_ExpectedTab(0)
-  , m_CurrentClickControl(NULL)
+  , m_CurrentClickControl(nullptr)
 {
 }
 
 
 TutorialControl::TutorialControl(QWidget *targetControl, const QString &name)
-  : QObject(NULL)
+  : QObject(nullptr)
   , m_TargetControl(targetControl)
   , m_Name(name)
-  , m_TutorialView(NULL)
+  , m_TutorialView(nullptr)
   , m_Manager(TutorialManager::instance())
   , m_ExpectedTab(0)
-  , m_CurrentClickControl(NULL)
+  , m_CurrentClickControl(nullptr)
 {
 }
 
@@ -88,7 +88,7 @@ void TutorialControl::registerControl()
 
 void TutorialControl::resize(const QSize &size)
 {
-  if (m_TutorialView != NULL) {
+  if (m_TutorialView != nullptr) {
     m_TutorialView->resize(size.width(), size.height());
   }
 }
@@ -116,7 +116,7 @@ QString canonicalPath(const QString &path)
 
 void TutorialControl::startTutorial(const QString &tutorial)
 {
-  if (m_TutorialView == NULL) {
+  if (m_TutorialView == nullptr) {
     m_TutorialView = new QDeclarativeView(m_TargetControl);
     m_TutorialView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
     m_TutorialView->setStyleSheet(QString("background: transparent"));
@@ -156,29 +156,29 @@ void TutorialControl::lockUI(bool locked)
 
 QWidget* TutorialControl::getChild(const QString &name)
 {
-  if (m_TargetControl != NULL) {
+  if (m_TargetControl != nullptr) {
     return m_TargetControl->findChild<QWidget*>(name);
   } else {
-    return NULL;
+    return nullptr;
   }
 }
 
 
 void TutorialControl::finish()
 {
-  if (m_TutorialView != NULL) {
+  if (m_TutorialView != nullptr) {
     m_TutorialView->deleteLater();
   }
-  m_TutorialView = NULL;
-  m_TutorialView = NULL;
+  m_TutorialView = nullptr;
+  m_TutorialView = nullptr;
 }
 
 
 QRect TutorialControl::getRect(const QString &widgetName)
 {
-  if (m_TargetControl != NULL) {
+  if (m_TargetControl != nullptr) {
     QWidget *widget = m_TargetControl->findChild<QWidget*>(widgetName);
-    if (widget != NULL) {
+    if (widget != nullptr) {
       QRect res = widget->rect();
       QPoint pos = widget->mapTo(m_TargetControl, res.topLeft());
       res.moveTopLeft(pos);
@@ -195,7 +195,7 @@ QRect TutorialControl::getRect(const QString &widgetName)
 
 QRect TutorialControl::getActionRect(const QString &widgetName)
 {
-  if (m_TargetControl != NULL) {
+  if (m_TargetControl != nullptr) {
     QToolBar *toolBar = m_TargetControl->findChild<QToolBar*>("toolBar");
     foreach (QAction *action, toolBar->actions()) {
       if (action->objectName() == widgetName) {
@@ -209,7 +209,7 @@ QRect TutorialControl::getActionRect(const QString &widgetName)
 void TutorialControl::nextTutorialStepProxy()
 {
 
-  if (m_TutorialView != NULL) {
+  if (m_TutorialView != nullptr) {
     QObject *background = m_TutorialView->rootObject();
 
     QTimer::singleShot(1, background, SLOT(nextStep()));
@@ -235,7 +235,7 @@ void TutorialControl::nextTutorialStepProxy()
 
 void TutorialControl::tabChangedProxy(int selected)
 {
-  if ((m_TutorialView != NULL) && (selected == m_ExpectedTab)) {
+  if ((m_TutorialView != nullptr) && (selected == m_ExpectedTab)) {
     QObject *background = m_TutorialView->rootObject();
     QTimer::singleShot(1, background, SLOT(nextStep()));
     lockUI(true);
@@ -249,9 +249,9 @@ void TutorialControl::tabChangedProxy(int selected)
 
 bool TutorialControl::waitForAction(const QString &actionName)
 {
-  if (m_TargetControl != NULL) {
+  if (m_TargetControl != nullptr) {
     QAction *action = m_TargetControl->findChild<QAction*>(actionName);
-    if (action == NULL) {
+    if (action == nullptr) {
       qCritical("no action \"%s\" in control \"%s\"",
                 actionName.toUtf8().constData(), m_Name.toUtf8().constData());
       return false;
@@ -270,9 +270,9 @@ bool TutorialControl::waitForAction(const QString &actionName)
 
 bool TutorialControl::waitForButton(const QString &buttonName)
 {
-  if (m_TargetControl != NULL) {
+  if (m_TargetControl != nullptr) {
     QAbstractButton *button = m_TargetControl->findChild<QAbstractButton*>(buttonName);
-    if (button == NULL) {
+    if (button == nullptr) {
       qCritical("no button \"%s\" in control \"%s\"",
                 buttonName.toUtf8().constData(), m_Name.toUtf8().constData());
       return false;
@@ -292,9 +292,9 @@ bool TutorialControl::waitForButton(const QString &buttonName)
 
 bool TutorialControl::waitForTabOpen(const QString &tabControlName, int tab)
 {
-  if (m_TargetControl != NULL) {
+  if (m_TargetControl != nullptr) {
     QTabWidget *tabWidget = m_TargetControl->findChild<QTabWidget*>(tabControlName);
-    if (tabWidget == NULL) {
+    if (tabWidget == nullptr) {
       qCritical("no tab widget \"%s\" in control \"%s\"",
                 tabControlName.toUtf8().constData(), m_Name.toUtf8().constData());
       return false;

@@ -92,14 +92,14 @@ public:
   /**
    * @brief retrieve an interface to a mod by its name
    * @param name name of the mod to query
-   * @return an interface to the mod or NULL if there is no mod with the name
+   * @return an interface to the mod or nullptr if there is no mod with the name
    */
   virtual IModInterface *getMod(const QString &name) = 0;
 
   /**
    * @brief create a new mod with the specified name
    * @param name name of the new mod
-   * @return an interface that can be used to modify the mod. NULL if the user canceled
+   * @return an interface that can be used to modify the mod. nullptr if the user canceled
    * @note an exception is thrown if the mod already exists. Use "getMod" to verify
    *       the mod-name is unused first
    */
@@ -169,7 +169,7 @@ public:
   /**
    * @brief install a mod archive at the specified location
    * @param fileName absolute file name of the mod to install
-   * @return interface to the newly installed mod or NULL if no installation took place (failure or use canceled
+   * @return interface to the newly installed mod or nullptr if no installation took place (failure or use canceled
    */
   virtual IModInterface *installMod(const QString &fileName) = 0;
 
@@ -250,7 +250,7 @@ public:
    *       If, at the end of the jobs lifetime only one process was left (for at least 500ms) that processes exitcode will be returned. If there is only
    *       one process, again, the expected exit code is returned. Otherwise,
    */
-  virtual bool waitForApplication(HANDLE handle, LPDWORD exitCode = NULL) const = 0;
+  virtual bool waitForApplication(HANDLE handle, LPDWORD exitCode = nullptr) const = 0;
 
   /**
    * @return signal called when a mod has been installed. the parameter to the callback is the mod name

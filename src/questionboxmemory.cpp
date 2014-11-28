@@ -60,7 +60,7 @@ QuestionBoxMemory::~QuestionBoxMemory()
 void QuestionBoxMemory::init(const QString &fileName)
 {
   QMutexLocker locker(&s_SettingsMutex);
-  if (s_SettingFile == NULL) {
+  if (s_SettingFile == nullptr) {
     s_SettingFile = new QSettings(fileName, QSettings::IniFormat);
     atexit(&QuestionBoxMemory::cleanup);
   }

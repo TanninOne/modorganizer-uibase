@@ -50,7 +50,7 @@ public:
 
 public:
 
-  IPluginInstaller() : m_ParentWidget(NULL), m_InstallationManager(NULL) {}
+  IPluginInstaller() : m_ParentWidget(nullptr), m_InstallationManager(nullptr) {}
 
   /**
    * retrieve the priority of this installer. If multiple installers are able

@@ -14,7 +14,7 @@ class QDLLEXPORT IDownloadManager : public QObject
 
 public:
 
-  IDownloadManager(QObject *parent = NULL)
+  IDownloadManager(QObject *parent = nullptr)
     : QObject(parent)
   {}
 

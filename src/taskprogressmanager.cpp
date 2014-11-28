@@ -13,7 +13,7 @@ TaskProgressManager &TaskProgressManager::instance()
 
 void TaskProgressManager::forgetMe(quint32 id)
 {
-  if (m_Taskbar == NULL) {
+  if (m_Taskbar == nullptr) {
     return;
   }
   auto iter = m_Percentages.find(id);
@@ -26,7 +26,7 @@ void TaskProgressManager::forgetMe(quint32 id)
 void TaskProgressManager::updateProgress(quint32 id, qint64 value, qint64 max)
 {
   QMutexLocker lock(&m_Mutex);
-  if (m_Taskbar == NULL) {
+  if (m_Taskbar == nullptr) {
     return;
   }
 
@@ -82,12 +82,12 @@ bool TaskProgressManager::tryCreateTaskbar()
   // try to find our main window
   foreach (QWidget *widget, QApplication::topLevelWidgets()) {
     QMainWindow *mainWin = qobject_cast<QMainWindow*>(widget);
-    if (mainWin != NULL) {
+    if (mainWin != nullptr) {
       m_WinId = reinterpret_cast<HWND>(mainWin->winId());
     }
   }
 
-  if (m_WinId != NULL) {
+  if (m_WinId != nullptr) {
     HRESULT result = CoCreateInstance(CLSID_TaskbarList, 0, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_Taskbar));
     if (result == S_OK) {
       return true;
@@ -106,7 +106,7 @@ bool TaskProgressManager::tryCreateTaskbar()
 }
 
 TaskProgressManager::TaskProgressManager()
-  : m_NextId(1), m_CreateTries(10), m_WinId(NULL), m_Taskbar(NULL)
+  : m_NextId(1), m_CreateTries(10), m_WinId(nullptr), m_Taskbar(nullptr)
 {
   // using a timer to create the taskbar connection. The correct way would be to register for the "TaskbarButtonCreated"
   // event and create afterwards but that would be intrusive to the mainwindow class
