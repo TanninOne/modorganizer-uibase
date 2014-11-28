@@ -2,6 +2,7 @@
 #define EXECUTABLEINFO_H
 
 
+#include "dllimport.h"
 #include <QString>
 #include <QFileInfo>
 #include <QDir>
@@ -9,7 +10,7 @@
 
 namespace MOBase {
 
-class ExecutableInfo
+class QDLLEXPORT ExecutableInfo
 {
 public:
 
@@ -24,10 +25,12 @@ public:
   ExecutableInfo(const QString &title, const QFileInfo &binary)
     : m_Title(title)
     , m_Binary(binary)
-    , m_WorkingDirectory(binary.absoluteDir())
     , m_CloseMO(CloseMOStyle::DEFAULT_STAY)
     , m_SteamAppID()
   {
+    if (binary.exists()) {
+      m_WorkingDirectory = binary.absoluteDir();
+    }
   }
 
   ExecutableInfo &withArgument(const QString &argument)
@@ -70,6 +73,8 @@ public:
   {
     m_ShowInToolbar = show;
   }
+
+  bool isValid() const { return m_Binary.exists(); }
 
   QString title() const;
   QFileInfo binary() const;
