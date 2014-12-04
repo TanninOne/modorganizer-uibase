@@ -57,7 +57,8 @@ public:
     SCHEME_REGULAR,
     SCHEME_DECIMALMARK,       // for schemes that treat the version as a decimal number with the dot as the decimal mark
     SCHEME_NUMBERSANDLETTERS, // for schemes that mix numbers and letters (1.0.1a, 1.0.1c, ...). otherwise this is the regular scheme
-    SCHEME_DATE               // contains a release date instead of a version number
+    SCHEME_DATE,              // contains a release date instead of a version number
+    SCHEME_LITERAL            // use the version string as is, unmodified
   };
 
 public:
@@ -84,6 +85,13 @@ public:
   VersionInfo(const QString &versionString, VersionScheme scheme = SCHEME_DISCOVER);
 
   /**
+   * @brief constructor
+   * @param versionString the string to construct from
+   * @param manualInput if true the versionString is treated as input from a user
+   **/
+  VersionInfo(const QString &versionString, VersionScheme scheme, bool manualInput);
+
+  /**
    * @brief resets this structure to an invalid version
    */
   void clear();
@@ -93,7 +101,7 @@ public:
    *
    * @param versionString the string to parse
    **/
-  void parse(const QString &versionString, VersionScheme scheme = SCHEME_DISCOVER);
+  void parse(const QString &versionString, VersionScheme scheme = SCHEME_DISCOVER, bool manualInput = false);
 
   /**
    * @return a canonicalized version string
