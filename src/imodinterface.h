@@ -51,6 +51,12 @@ public:
   virtual void setVersion(const VersionInfo &version) = 0;
 
   /**
+   * @brief sets the installation file for this mod
+   * @param fileName archive file name
+   */
+  virtual void setInstallationFile(const QString &fileName) = 0;
+
+  /**
    * @brief set/change the latest known version of this mod
    * @param version newest known version of the mod
    */
