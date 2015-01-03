@@ -241,6 +241,18 @@ std::vector<T> MakeVector(int count, ...)
   return result;
 }
 
+template <typename T>
+QList<T> ConvertList(const QVariantList &variants)
+{
+  QList<T> result;
+  foreach (QVariant var, variants) {
+    if (!var.canConvert<T>()) {
+      throw MyException("invalid variant type");
+    }
+    result.append(var.value<T>());
+  }
+}
+
 /**
  * @brief convert QString to std::wstring (utf-16 encoding)
  **/
@@ -295,7 +307,6 @@ QDLLEXPORT bool fixDirectoryName(QString &name);
  * @return the textual content of the file or an empty string if the file doesn't exist
  **/
 QDLLEXPORT QString readFileText(const QString &fileName, QString *encoding = nullptr);
-
 
 /**
  * @brief delete files matching a pattern

@@ -67,6 +67,19 @@ VersionInfo::VersionInfo(const QString &versionString, VersionScheme scheme)
   parse(versionString, scheme);
 }
 
+VersionInfo::VersionInfo(const QString &versionString, VersionInfo::VersionScheme scheme, bool manualInput)
+  : m_Valid(true)
+  , m_ReleaseType(RELEASE_FINAL)
+  , m_Major(0)
+  , m_Minor(0)
+  , m_SubMinor(0)
+  , m_SubSubMinor(0)
+  , m_DecimalPositions(0)
+  , m_Rest()
+{
+  parse(versionString, scheme, manualInput);
+}
+
 void VersionInfo::clear()
 {
   m_Scheme = SCHEME_REGULAR;
@@ -127,12 +140,10 @@ QString VersionInfo::displayString() const
 
   QString result;
   if (m_Scheme == SCHEME_REGULAR) {
-    if (m_SubMinor != 0) {
-      if (m_SubSubMinor != 0) {
-        result = QString("%1.%2.%3.%4").arg(m_Major).arg(m_Minor).arg(m_SubMinor).arg(m_SubSubMinor);
-      } else {
-        result = QString("%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
-      }
+    if (m_SubSubMinor != 0) {
+      result = QString("%1.%2.%3.%4").arg(m_Major).arg(m_Minor).arg(m_SubMinor).arg(m_SubSubMinor);
+    } else if (m_SubMinor != 0) {
+      result = QString("%1.%2.%3").arg(m_Major).arg(m_Minor).arg(m_SubMinor);
     } else {
       result = QString("%1.%2").arg(m_Major).arg(m_Minor);
     }
@@ -221,10 +232,12 @@ QString VersionInfo::parseReleaseType(QString versionString)
 }
 
 
-void VersionInfo::parse(const QString &versionString, VersionScheme scheme)
+void VersionInfo::parse(const QString &versionString, VersionScheme scheme, bool manualInput)
 {
   m_Valid = false;
-  m_Scheme = scheme != SCHEME_DISCOVER ? scheme : SCHEME_REGULAR;
+  m_Scheme = scheme == SCHEME_LITERAL ? SCHEME_REGULAR
+           : scheme != SCHEME_DISCOVER ? scheme
+           : SCHEME_REGULAR;
   m_ReleaseType = RELEASE_FINAL;
   m_Major = m_Minor = m_SubMinor = m_SubSubMinor = 0;
   m_Rest.clear();
@@ -239,18 +252,19 @@ void VersionInfo::parse(const QString &versionString, VersionScheme scheme)
   }
 
   QString temp = versionString;
-
   // first, determine the versioning scheme if there is a hint
   VersionScheme newScheme = m_Scheme;
-  if (temp.startsWith('f')) {
-    newScheme = SCHEME_DECIMALMARK;
-    temp.remove(0, 1);
-  } else if (temp.startsWith('n')) {
-    newScheme = SCHEME_NUMBERSANDLETTERS;
-    temp.remove(0, 1);
-  } else if (temp.startsWith('d')) {
-    newScheme = SCHEME_DATE;
-    temp.remove(0, 1);
+  if (!manualInput) {
+    if (temp.startsWith('f')) {
+      newScheme = SCHEME_DECIMALMARK;
+      temp.remove(0, 1);
+    } else if (temp.startsWith('n')) {
+      newScheme = SCHEME_NUMBERSANDLETTERS;
+      temp.remove(0, 1);
+    } else if (temp.startsWith('d')) {
+      newScheme = SCHEME_DATE;
+      temp.remove(0, 1);
+    }
   }
 
   if (scheme == SCHEME_DISCOVER) {
@@ -262,7 +276,7 @@ void VersionInfo::parse(const QString &versionString, VersionScheme scheme)
     temp.remove(0, 1);
   }
 
-  QRegExp exp("(\\d+)(\\.(\\d+))?(\\.(\\d+))?(\\.(\\d+))?");
+  QRegExp exp("^(\\d+)(\\.(\\d+))?(\\.(\\d+))?(\\.(\\d+))?");
   int index = exp.indexIn(temp);
   if (index > -1) {
     m_Major = exp.cap(1).toInt();
@@ -283,6 +297,8 @@ void VersionInfo::parse(const QString &versionString, VersionScheme scheme)
       m_DecimalPositions = exp.cap(3).size();
     }
     temp.remove(index, exp.matchedLength());
+  } else {
+    m_Scheme = SCHEME_LITERAL;
   }
 
   if (m_Scheme == SCHEME_REGULAR) {
