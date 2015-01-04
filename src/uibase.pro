@@ -37,7 +37,7 @@ SOURCES += \
     diagnosisreport.cpp \
     directorytree.cpp \
     iplugininstaller.cpp \
-		guessedvalue.cpp \
+    guessedvalue.cpp \
     json.cpp \
     imodrepositorybridge.cpp \
     nxmurl.cpp \

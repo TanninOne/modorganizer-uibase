@@ -2,6 +2,7 @@
 #define EXECUTABLEINFO_H
 
 
+#include "dllimport.h"
 #include <QString>
 #include <QFileInfo>
 #include <QDir>
@@ -9,7 +10,7 @@
 
 namespace MOBase {
 
-class ExecutableInfo
+class QDLLEXPORT ExecutableInfo
 {
 public:
 
@@ -21,55 +22,21 @@ public:
 
 public:
 
-  ExecutableInfo(const QString &title, const QFileInfo &binary)
-    : m_Title(title)
-    , m_Binary(binary)
-    , m_WorkingDirectory(binary.absoluteDir())
-    , m_CloseMO(CloseMOStyle::DEFAULT_STAY)
-    , m_SteamAppID()
-  {
-  }
+  ExecutableInfo(const QString &title, const QFileInfo &binary);
 
-  ExecutableInfo &withArgument(const QString &argument)
-  {
-    m_Arguments.append(argument);
-    return *this;
-  }
+  ExecutableInfo &withArgument(const QString &argument);
 
-  ExecutableInfo &withWorkingDirectory(const QDir &workingDirectory)
-  {
-    m_WorkingDirectory = workingDirectory;
-    return *this;
-  }
+  ExecutableInfo &withWorkingDirectory(const QDir &workingDirectory);
 
-  ExecutableInfo &withSteamAppId(const QString &appId)
-  {
-    m_SteamAppID = appId;
-    return *this;
-  }
+  ExecutableInfo &withSteamAppId(const QString &appId);
 
-  ExecutableInfo &withDefaultClose()
-  {
-    m_CloseMO = CloseMOStyle::DEFAULT_CLOSE;
-    return *this;
-  }
+  ExecutableInfo &withDefaultClose();
 
-  ExecutableInfo &withNeverClose()
-  {
-    m_CloseMO = CloseMOStyle::NEVER_CLOSE;
-    return *this;
-  }
+  ExecutableInfo &withNeverClose();
 
-  ExecutableInfo &asCustom()
-  {
-    m_Custom = true;
-    return *this;
-  }
+  ExecutableInfo &asCustom();
 
-  void showInToolbar(bool show)
-  {
-    m_ShowInToolbar = show;
-  }
+  void showInToolbar(bool show);
 
   QString title() const;
   QFileInfo binary() const;
