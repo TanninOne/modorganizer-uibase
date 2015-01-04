@@ -16,7 +16,7 @@ class QDLLEXPORT IModRepositoryBridge : public QObject
   Q_OBJECT
 public:
 
-  IModRepositoryBridge(QObject *parent = NULL) : QObject(parent) {}
+  IModRepositoryBridge(QObject *parent = nullptr) : QObject(parent) {}
 
   /**
    * @brief request description for a mod

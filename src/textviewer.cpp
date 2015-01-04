@@ -35,7 +35,7 @@ namespace MOBase {
 
 
 TextViewer::TextViewer(const QString &title, QWidget *parent)
-  : QDialog(parent), ui(new Ui::TextViewer), m_FindDialog(NULL)
+  : QDialog(parent), ui(new Ui::TextViewer), m_FindDialog(nullptr)
 {
   ui->setupUi(this);
   setWindowTitle(title);

@@ -33,7 +33,7 @@ class IPluginTool : public QObject, public IPlugin {
   Q_INTERFACES(IPlugin)
 public:
 
-  IPluginTool() : m_ParentWidget(NULL) {}
+  IPluginTool() : m_ParentWidget(nullptr) {}
 
   /**
    * @return name of the tool as displayed in the ui

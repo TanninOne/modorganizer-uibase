@@ -29,7 +29,7 @@ namespace MOBase {
 class IPluginProxy : public IPlugin {
 public:
 
-  IPluginProxy() : m_ParentWidget(NULL) {}
+  IPluginProxy() : m_ParentWidget(nullptr) {}
 
   /**
    * @param pluginPath path to plugins
