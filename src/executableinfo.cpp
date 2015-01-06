@@ -6,7 +6,7 @@ using namespace MOBase;
 MOBase::ExecutableInfo::ExecutableInfo(const QString &title, const QFileInfo &binary)
   : m_Title(title)
   , m_Binary(binary)
-  , m_WorkingDirectory(binary.absoluteDir())
+  , m_WorkingDirectory(binary.exists() ? binary.absoluteDir() : QString())
   , m_CloseMO(CloseMOStyle::DEFAULT_STAY)
   , m_SteamAppID()
 {
@@ -51,6 +51,11 @@ ExecutableInfo &ExecutableInfo::asCustom()
 void ExecutableInfo::showInToolbar(bool show)
 {
   m_ShowInToolbar = show;
+}
+
+bool ExecutableInfo::isValid() const
+{
+  return m_Binary.exists();
 }
 
 QString ExecutableInfo::title() const

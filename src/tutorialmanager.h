@@ -84,9 +84,12 @@ public:
    */
   Q_INVOKABLE void finishWindowTutorial(const QString &windowName);
 
+  Q_INVOKABLE QWidget *findControl(const QString &controlName);
 signals:
 
   void windowTutorialFinished(const QString &windowName);
+
+  void tabChanged(int index);
 
 private:
 

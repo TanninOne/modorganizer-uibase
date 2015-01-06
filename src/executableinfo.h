@@ -38,6 +38,8 @@ public:
 
   void showInToolbar(bool show);
 
+  bool isValid() const;
+
   QString title() const;
   QFileInfo binary() const;
   QStringList arguments() const;

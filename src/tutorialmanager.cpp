@@ -23,6 +23,8 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDir>
 #include <QString>
 #include <QDebug>
+#include <QApplication>
+
 
 namespace MOBase {
 
@@ -81,6 +83,15 @@ bool TutorialManager::hasTutorial(const QString &tutorialName)
   return QFile::exists(m_TutorialPath + tutorialName);
 }
 
+QWidget *TutorialManager::findControl(const QString &controlName)
+{
+  QWidget *mainWindow = qApp->activeWindow();
+  if (mainWindow != nullptr) {
+    return mainWindow->findChild<QWidget*>(controlName);
+  } else {
+    return nullptr;
+  }
+}
 
 void TutorialManager::registerControl(const QString &windowName, TutorialControl *control)
 {

@@ -38,8 +38,6 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 #include <QImage>
 #include <QBitmap>
 
-
-
 #include <QMetaObject>
 #include <QMetaMethod>
 #include <QMetaEnum>
@@ -119,8 +117,9 @@ void TutorialControl::startTutorial(const QString &tutorial)
   if (m_TutorialView == nullptr) {
     m_TutorialView = new QDeclarativeView(m_TargetControl);
     m_TutorialView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
-    m_TutorialView->setStyleSheet(QString("background: transparent"));
+    m_TutorialView->setStyleSheet("background: transparent");
     m_TutorialView->setObjectName("tutorialView");
+    m_TutorialView->rootContext()->setContextProperty("manager", &m_Manager);
 
     QString qmlName = canonicalPath(QCoreApplication::applicationDirPath() + "/tutorials") + "/tutorials_" + m_Name.toLower() + ".qml";
     QUrl qmlSource = QUrl::fromLocalFile(qmlName);
@@ -129,7 +128,6 @@ void TutorialControl::startTutorial(const QString &tutorial)
     m_TutorialView->resize(m_TargetControl->width(), m_TargetControl->height());
     m_TutorialView->rootContext()->setContextProperty("scriptName", tutorial);
     m_TutorialView->rootContext()->setContextProperty("tutorialControl", this);
-    m_TutorialView->rootContext()->setContextProperty("manager", &m_Manager);
     m_TutorialView->rootContext()->setContextProperty("applicationWindow", m_TargetControl);
 
     for (std::vector<std::pair<QString, QObject*> >::const_iterator iter = m_ExposedObjects.begin();
@@ -145,7 +143,6 @@ void TutorialControl::startTutorial(const QString &tutorial)
   }
 }
 
-
 void TutorialControl::lockUI(bool locked)
 {
   m_TutorialView->setAttribute(Qt::WA_TransparentForMouseEvents, !locked);
@@ -153,6 +150,25 @@ void TutorialControl::lockUI(bool locked)
   QMetaObject::invokeMethod(m_TutorialView->rootObject(), "enableBackground", Q_ARG(QVariant, QVariant(locked)));
 }
 
+void TutorialControl::simulateClick(int x, int y)
+{
+  bool wasTransparent = m_TutorialView->testAttribute(Qt::WA_TransparentForMouseEvents);
+  if (!wasTransparent) {
+    m_TutorialView->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+  }
+  QWidget *hitControl = m_TargetControl->childAt(x, y);
+  QPoint globalPos = m_TargetControl->mapToGlobal(QPoint(x, y));
+  QPoint hitPos = hitControl->mapFromGlobal(globalPos);
+  QMouseEvent *downEvent= new QMouseEvent(QEvent::MouseButtonPress, hitPos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+  QMouseEvent *upEvent= new QMouseEvent(QEvent::MouseButtonRelease, hitPos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+
+  qApp->postEvent(hitControl, (QEvent*)downEvent);
+  qApp->postEvent(hitControl, (QEvent*)upEvent);
+
+  if (!wasTransparent) {
+    m_TutorialView->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+  }
+}
 
 QWidget* TutorialControl::getChild(const QString &name)
 {
@@ -162,7 +178,6 @@ QWidget* TutorialControl::getChild(const QString &name)
     return nullptr;
   }
 }
-
 
 void TutorialControl::finish()
 {

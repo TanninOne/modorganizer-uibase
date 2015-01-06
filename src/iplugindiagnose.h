@@ -43,7 +43,7 @@ class IPluginDiagnose {
 public:
 
   /// signal to be emitted when the diagnosis information of the plugin is invalidated
-  typedef boost::signals2::signal<void ()> SignalInvalidated;
+  typedef boost::signals2::signal<void (void)> SignalInvalidated;
 
 public:
 

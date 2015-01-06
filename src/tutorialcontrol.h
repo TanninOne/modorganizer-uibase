@@ -58,6 +58,8 @@ public:
   Q_INVOKABLE bool waitForAction(const QString &actionName);
   Q_INVOKABLE bool waitForTabOpen(const QString &tabControlName, int tab);
   Q_INVOKABLE void lockUI(bool locked);
+  Q_INVOKABLE void simulateClick(int x, int y);
+
 private slots:
 
   void tabChangedProxy(int selected);
