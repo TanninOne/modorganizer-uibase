@@ -50,6 +50,8 @@ public:
 
 public:
 
+  virtual ~IModList() {}
+
   /**
    * @brief retrieves the display name of a mod from it's internal name
    * @param internalName the internal name

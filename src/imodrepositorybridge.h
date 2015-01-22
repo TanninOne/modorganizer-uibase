@@ -4,7 +4,6 @@
 
 #include <QObject>
 #include <QVariant>
-#include "versioninfo.h"
 #include "modrepositoryfileinfo.h"
 
 

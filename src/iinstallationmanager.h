@@ -38,6 +38,8 @@ class IInstallationManager {
 
 public:
 
+  virtual ~IInstallationManager() {}
+
   /**
    * @brief extract the specified file from the currently open archive to a temporary location
    * @param (relative) name of the file within the archive

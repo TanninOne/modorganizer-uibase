@@ -43,7 +43,7 @@ private:
   int m_Index;
 };
 
-Q_DECLARE_METATYPE(FileTreeInformation)
+//Q_DECLARE_METATYPE(FileTreeInformation)
 
 
 struct DirectoryTreeInformation {

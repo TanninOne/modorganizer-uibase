@@ -25,18 +25,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "versioninfo.h"
 #include "guessedvalue.h"
-#include "imodinterface.h"
-#include "igameinfo.h"
-#include "imodrepositorybridge.h"
-#include "idownloadmanager.h"
-#include "ipluginlist.h"
-#include "imodlist.h"
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 #include <Windows.h>
 #include <functional>
 
 namespace MOBase {
+
+class IModInterface;
+class IGameInfo;
+class IModRepositoryBridge;
+class IDownloadManager;
+class IPluginList;
+class IModList;
 
 /**
  * @brief Interface to class that provides information about the running session

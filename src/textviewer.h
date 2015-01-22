@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QDialog>
 #include <QTabWidget>
 #include <QTextEdit>
-#include "finddialog.h"
 #include <set>
 
 namespace Ui {
@@ -35,6 +34,7 @@ namespace Ui {
 
 namespace MOBase {
 
+class FindDialog;
 
 /**
  * @brief rudimentary tabbed text editor

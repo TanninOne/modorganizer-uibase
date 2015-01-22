@@ -38,6 +38,8 @@ public:
 
 public:
 
+  virtual ~IPluginList() {}
+
   /**
    * @brief retrieve the state of a plugin
    * @param name filename of the plugin (without path but with file extension)

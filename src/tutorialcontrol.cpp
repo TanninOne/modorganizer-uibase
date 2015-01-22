@@ -100,7 +100,7 @@ void TutorialControl::expose(const QString &widgetName, QObject *widget)
 }
 
 
-QString canonicalPath(const QString &path)
+static QString canonicalPath(const QString &path)
 {
   boost::scoped_array<wchar_t> buffer(new wchar_t[32768]);
   DWORD res = ::GetShortPathNameW((wchar_t*)path.utf16(), buffer.get(), 32768);
