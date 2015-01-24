@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <vector>
 #include <functional>
+#include <QString>
 #include <boost/signals2.hpp>
 
 
@@ -42,7 +43,7 @@ class IPluginDiagnose {
 public:
 
   /// signal to be emitted when the diagnosis information of the plugin is invalidated
-  typedef boost::signals2::signal<void ()> SignalInvalidated;
+  typedef boost::signals2::signal<void (void)> SignalInvalidated;
 
 public:
 

@@ -69,7 +69,7 @@ public:
    * @brief constructor
    **/
   MyTree()
-    : m_Parent(NULL)
+    : m_Parent(nullptr)
   {}
 
   ~MyTree();
@@ -232,7 +232,7 @@ public:
   node_iterator detach(node_iterator iter) { return m_Nodes.erase(iter); }
 
   /**
-   * @return the parent of this node. may be NULL
+   * @return the parent of this node. may be nullptr
    **/
   const MyTree<LeafT, NodeData> *getParent() const { return m_Parent; }
 

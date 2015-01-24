@@ -32,7 +32,7 @@ class QDLLEXPORT SortableTreeWidget : public QTreeWidget
   Q_OBJECT
 
 public:
-  SortableTreeWidget(QWidget *parent = NULL);
+  SortableTreeWidget(QWidget *parent = nullptr);
 
   /**
    * @brief sets whether sorting is allowed only within the branch of a tree

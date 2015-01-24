@@ -10,8 +10,8 @@ TEMPLATE = lib
 DEFINES += UIBASE_LIBRARY UIBASE_EXPORT
 CONFIG += dll
 
-contains(QT_VERSION, "^5.*") {
-	QT += widgets qml quick script quickwidgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+  QT += widgets qml declarative script quickwidgets
 } else {
   QT += declarative script
 }
@@ -37,14 +37,15 @@ SOURCES += \
     diagnosisreport.cpp \
     directorytree.cpp \
     iplugininstaller.cpp \
-		guessedvalue.cpp \
+    guessedvalue.cpp \
     json.cpp \
     imodrepositorybridge.cpp \
     nxmurl.cpp \
     taskprogressmanager.cpp \
     questionboxmemory.cpp \
     modrepositoryfileinfo.cpp \
-    sortabletreewidget.cpp
+    sortabletreewidget.cpp \
+    executableinfo.cpp
 
 HEADERS +=\
     utility.h \
@@ -86,7 +87,9 @@ HEADERS +=\
     sortabletreewidget.h \
     imodlist.h \
     modrepositoryfileinfo.h \
-    ipluginpreview.h
+    ipluginpreview.h \
+    iplugingame.h \
+    executableinfo.h
 
 FORMS += \
     textviewer.ui \

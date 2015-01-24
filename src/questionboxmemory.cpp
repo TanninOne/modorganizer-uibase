@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 namespace MOBase {
 
-QSettings *QuestionBoxMemory::s_SettingFile = NULL;
+QSettings *QuestionBoxMemory::s_SettingFile = nullptr;
 QMutex QuestionBoxMemory::s_SettingsMutex;
 
 QuestionBoxMemory::QuestionBoxMemory(QWidget *parent, const QString &title, const QString &text,
@@ -60,7 +60,7 @@ QuestionBoxMemory::~QuestionBoxMemory()
 void QuestionBoxMemory::init(const QString &fileName)
 {
   QMutexLocker locker(&s_SettingsMutex);
-  if (s_SettingFile == NULL) {
+  if (s_SettingFile == nullptr) {
     s_SettingFile = new QSettings(fileName, QSettings::IniFormat);
     atexit(&QuestionBoxMemory::cleanup);
   }

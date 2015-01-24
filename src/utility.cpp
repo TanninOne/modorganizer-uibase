@@ -49,10 +49,10 @@ QString windowsErrorString(DWORD errorCode)
   QByteArray result;
   QTextStream stream(&result);
 
-  LPWSTR buffer = NULL;
+  LPWSTR buffer = nullptr;
   // TODO: the message is not english?
   if (FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-                     NULL, errorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPWSTR)&buffer, 0, NULL) == 0) {
+                     nullptr, errorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPWSTR)&buffer, 0, nullptr) == 0) {
     stream << " (errorcode " << errorCode << ")";
   } else {
     // remove line break
@@ -202,10 +202,10 @@ static bool shellOp(const QStringList &sourceNames, const QStringList &destinati
 
   SHFILEOPSTRUCTW op;
   memset(&op, 0, sizeof(SHFILEOPSTRUCTW));
-  if (dialog != NULL) {
+  if (dialog != nullptr) {
     op.hwnd = (HWND)dialog->winId();
   } else {
-    op.hwnd = NULL;
+    op.hwnd = nullptr;
   }
   op.wFunc = operation;
   op.pFrom = &fromBuffer[0];
@@ -347,8 +347,8 @@ QString ToString(const SYSTEMTIME &time)
   char dateBuffer[100];
   char timeBuffer[100];
   int size = 100;
-  GetDateFormatA(LOCALE_USER_DEFAULT, LOCALE_USE_CP_ACP, &time, NULL, dateBuffer, size);
-  GetTimeFormatA(LOCALE_USER_DEFAULT, LOCALE_USE_CP_ACP, &time, NULL, timeBuffer, size);
+  GetDateFormatA(LOCALE_USER_DEFAULT, LOCALE_USE_CP_ACP, &time, nullptr, dateBuffer, size);
+  GetTimeFormatA(LOCALE_USER_DEFAULT, LOCALE_USE_CP_ACP, &time, nullptr, timeBuffer, size);
   return QString::fromLocal8Bit(dateBuffer) + " " + QString::fromLocal8Bit(timeBuffer);
 }
 
@@ -380,7 +380,7 @@ bool fixDirectoryName(QString &name)
 QString getDesktopDirectory()
 {
   wchar_t desktop[32768];
-  SHGetSpecialFolderPathW(NULL, desktop, CSIDL_DESKTOPDIRECTORY, 0);
+  SHGetSpecialFolderPathW(nullptr, desktop, CSIDL_DESKTOPDIRECTORY, 0);
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
   return QString::fromWCharArray(desktop);
 #else
@@ -391,7 +391,7 @@ QString getDesktopDirectory()
 QString getStartMenuDirectory()
 {
   wchar_t desktop[32768];
-  SHGetSpecialFolderPathW(NULL, desktop, CSIDL_STARTMENU, 0);
+  SHGetSpecialFolderPathW(nullptr, desktop, CSIDL_STARTMENU, 0);
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
   return QString::fromWCharArray(desktop);
 #else

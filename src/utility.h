@@ -85,7 +85,7 @@ QDLLEXPORT bool copyFileRecursive(const QString &source, const QString &baseDir,
  * @param dialog a dialog to be the parent of possible confirmation dialogs
  * @return true on success, false on error. Call ::GetLastError() to retrieve error code
  **/
-QDLLEXPORT bool shellCopy(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog = NULL);
+QDLLEXPORT bool shellCopy(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog = nullptr);
 
 /**
  * @brief copy one or multiple files using a shell operation (this will ask the user for confirmation on overwrite
@@ -98,7 +98,7 @@ QDLLEXPORT bool shellCopy(const QStringList &sourceNames, const QStringList &des
  * @param dialog a dialog to be the parent of possible confirmation dialogs
  * @return true on success, false on error. Call ::GetLastError() to retrieve error code
  **/
-QDLLEXPORT bool shellCopy(const QString &sourceNames, const QString &destinationNames, bool yesToAll = false, QWidget *dialog = NULL);
+QDLLEXPORT bool shellCopy(const QString &sourceNames, const QString &destinationNames, bool yesToAll = false, QWidget *dialog = nullptr);
 
 /**
  * @brief move one or multiple files using a shell operation (this will ask the user for confirmation on overwrite
@@ -109,7 +109,7 @@ QDLLEXPORT bool shellCopy(const QString &sourceNames, const QString &destination
  * @param dialog a dialog to be the parent of possible confirmation dialogs
  * @return true on success, false on error. Call ::GetLastError() to retrieve error code
  **/
-QDLLEXPORT bool shellMove(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog = NULL);
+QDLLEXPORT bool shellMove(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog = nullptr);
 
 /**
  * @brief rename a file using a shell operation (this will ask the user for confirmation on overwrite
@@ -120,7 +120,7 @@ QDLLEXPORT bool shellMove(const QStringList &sourceNames, const QStringList &des
  * @param yesToAll if true, the operation will assume "yes" to all overwrite confirmations
  * @return true on success, false on error. Call ::GetLastError() to retrieve error code
  **/
-QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, bool yesToAll = false, QWidget *dialog = NULL);
+QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, bool yesToAll = false, QWidget *dialog = nullptr);
 
 /**
  * @brief delete files using a shell operation (this will ask the user for confirmation on overwrite
@@ -129,14 +129,14 @@ QDLLEXPORT bool shellRename(const QString &oldName, const QString &newName, bool
  * @param recycle if true, the file goes to the recycle bin instead of being permanently deleted
  * @return true on success, false on error. Call ::GetLastError() to retrieve error code
  **/
-QDLLEXPORT bool shellDelete(const QStringList &fileNames, bool recycle = false, QWidget *dialog = NULL);
+QDLLEXPORT bool shellDelete(const QStringList &fileNames, bool recycle = false, QWidget *dialog = nullptr);
 
 /**
  * @brief delete a file. This tries a regular delete and falls back to a shell operation if that fails.
  * @param fileName names of file to be deleted
  * @note this is a workaround for win 8 and newer where shell operations caused the windows to loose focus even if no dialog is shown
  **/
-QDLLEXPORT bool shellDeleteQuiet(const QString &fileName, QWidget *dialog = NULL);
+QDLLEXPORT bool shellDeleteQuiet(const QString &fileName, QWidget *dialog = nullptr);
 
 /**
  * @brief construct a string containing the elements of a vector concatenated

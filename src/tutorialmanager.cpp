@@ -23,11 +23,13 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDir>
 #include <QString>
 #include <QDebug>
+#include <QApplication>
+
 
 namespace MOBase {
 
 
-TutorialManager *TutorialManager::s_Instance = NULL;
+TutorialManager *TutorialManager::s_Instance = nullptr;
 
 
 TutorialManager::TutorialManager(const QString &tutorialPath)
@@ -39,7 +41,7 @@ TutorialManager::TutorialManager(const QString &tutorialPath)
 
 void TutorialManager::init(const QString &tutorialPath)
 {
-  if (s_Instance == NULL) {
+  if (s_Instance == nullptr) {
     s_Instance = new TutorialManager(tutorialPath);
   } else {
     throw MyException(tr("tutorial manager already initialized"));
@@ -49,7 +51,7 @@ void TutorialManager::init(const QString &tutorialPath)
 
 TutorialManager &TutorialManager::instance()
 {
-  if (s_Instance == NULL) {
+  if (s_Instance == nullptr) {
     throw MyException(tr("tutorial manager not set up yet"));
   }
   return *s_Instance;
@@ -81,6 +83,15 @@ bool TutorialManager::hasTutorial(const QString &tutorialName)
   return QFile::exists(m_TutorialPath + tutorialName);
 }
 
+QWidget *TutorialManager::findControl(const QString &controlName)
+{
+  QWidget *mainWindow = qApp->activeWindow();
+  if (mainWindow != nullptr) {
+    return mainWindow->findChild<QWidget*>(controlName);
+  } else {
+    return nullptr;
+  }
+}
 
 void TutorialManager::registerControl(const QString &windowName, TutorialControl *control)
 {
