@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QString>
 #include <QTextStream>
 #include <QDir>
+#include <QIcon>
 #ifndef WIN32_MEAN_AND_LEAN
 #define WIN32_MEAN_AND_LEAN
 #endif
@@ -317,6 +318,12 @@ QDLLEXPORT QString readFileText(const QString &fileName, QString *encoding = nul
  **/
 QDLLEXPORT void removeOldFiles(const QString &path, const QString &pattern, int numToKeep, QDir::SortFlags sorting = QDir::Time);
 
+/**
+ * @brief retrieve the icon of an executable. Currently this always extracts the biggest icon
+ * @param absolute path to the executable
+ * @return the icon
+ **/
+QDLLEXPORT QIcon iconForExecutable(const QString &filePath);
 
 
 } // namespace MOBase

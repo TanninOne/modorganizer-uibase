@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QTextCodec>
+#include <QtWinExtras/QtWin>
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <ShlObj.h>
@@ -450,6 +451,20 @@ void removeOldFiles(const QString &path, const QString &pattern, int numToKeep, 
     if (!shellDelete(deleteFiles)) {
       qWarning("failed to remove log files: %s", qPrintable(windowsErrorString(::GetLastError())));
     }
+  }
+}
+
+
+QIcon iconForExecutable(const QString &filePath)
+{
+  HICON winIcon;
+  UINT res = ::ExtractIconExW(ToWString(filePath).c_str(), 0, &winIcon, nullptr, 1);
+  if (res == 1) {
+    QIcon result = QIcon(QtWin::fromHICON(winIcon));
+    ::DestroyIcon(winIcon);
+    return result;
+  } else {
+    return QIcon(":/MO/gui/executable");
   }
 }
 

@@ -4,7 +4,10 @@
 
 #include "iplugin.h"
 #include <executableinfo.h>
-#include <stdint.h>
+#include <cstdint>
+#include <typeindex>
+#include <unordered_map>
+#include <boost/any.hpp>
 
 
 namespace MOBase {
@@ -30,12 +33,26 @@ public:
 
 public:
 
-  IPluginGame() {}
-
   /**
    * @return name of the game
    */
   virtual QString gameName() const = 0;
+
+  template <typename T>
+  T *feature() {
+    auto list = featureList();
+    auto iter = list.find(typeid(T));
+    if (iter != list.end()) {
+      try {
+        return boost::any_cast<T*>(iter->second);
+      } catch (const boost::bad_any_cast &e) {
+        qCritical("failed to retrieve feature type %s (got %s)", typeid(T).name(), typeid(iter->second).name());
+        return nullptr;
+      }
+    } else {
+      return nullptr;
+    }
+  }
 
   /**
    * @brief initialize a profile for this game
@@ -51,6 +68,16 @@ public:
    * @return file extension of save games for this game
    */
   virtual QString savegameExtension() const = 0;
+
+  /**
+   * @return true if this game has been discovered as installed, false otherwise
+   */
+  virtual bool isInstalled() const = 0;
+
+  /**
+   * @return an icon for this game
+   */
+  virtual QIcon gameIcon() const = 0;
 
   /**
    * @return path to the game installation
@@ -78,6 +105,15 @@ public:
    */
   virtual QString steamAPPId() const = 0;
 
+  /**
+   * @return list of plugins that are part of the game and not considered optional
+   */
+  virtual QStringList getPrimaryPlugins() = 0;
+
+protected:
+
+  virtual const std::map<std::type_index, boost::any> &featureList() const = 0;
+
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(IPluginGame::ProfileSettings)
@@ -85,5 +121,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(IPluginGame::ProfileSettings)
 } // namespace MOBase
 
 Q_DECLARE_INTERFACE(MOBase::IPluginGame, "com.tannin.ModOrganizer.PluginGame/1.0")
+Q_DECLARE_METATYPE(MOBase::IPluginGame*)
 
 #endif // IPLUGINGAME_H

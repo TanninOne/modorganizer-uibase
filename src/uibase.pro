@@ -11,7 +11,7 @@ DEFINES += UIBASE_LIBRARY UIBASE_EXPORT
 CONFIG += dll
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-  QT += widgets qml declarative script quickwidgets
+  QT += widgets qml declarative script quickwidgets winextras
 } else {
   QT += declarative script
 }
@@ -89,7 +89,8 @@ HEADERS +=\
     modrepositoryfileinfo.h \
     ipluginpreview.h \
     iplugingame.h \
-    executableinfo.h
+    executableinfo.h \
+    iprofile.h
 
 FORMS += \
     textviewer.ui \
