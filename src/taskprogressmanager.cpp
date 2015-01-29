@@ -108,9 +108,6 @@ bool TaskProgressManager::tryCreateTaskbar()
 TaskProgressManager::TaskProgressManager()
   : m_NextId(1), m_CreateTries(10), m_WinId(nullptr), m_Taskbar(nullptr)
 {
-  // using a timer to create the taskbar connection. The correct way would be to register for the "TaskbarButtonCreated"
-  // event and create afterwards but that would be intrusive to the mainwindow class
-  QTimer::singleShot(1000, this, SLOT(tryCreateTaskbar()));
 }
 
 

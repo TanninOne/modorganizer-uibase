@@ -26,7 +26,7 @@ public:
 
   quint32 getId();
 
-private slots:
+public slots:
   bool tryCreateTaskbar();
 private:
 
