@@ -45,7 +45,7 @@ public:
     if (iter != list.end()) {
       try {
         return boost::any_cast<T*>(iter->second);
-      } catch (const boost::bad_any_cast &e) {
+      } catch (const boost::bad_any_cast&) {
         qCritical("failed to retrieve feature type %s (got %s)", typeid(T).name(), typeid(iter->second).name());
         return nullptr;
       }

@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "utility.h"
 #include "report.h"
+#include <memory>
 #include <boost/scoped_array.hpp>
 #include <QDir>
 #include <QBuffer>
@@ -380,23 +381,23 @@ bool fixDirectoryName(QString &name)
 
 QString getDesktopDirectory()
 {
-  wchar_t desktop[32768];
-  SHGetSpecialFolderPathW(nullptr, desktop, CSIDL_DESKTOPDIRECTORY, 0);
+  std::unique_ptr<wchar_t> desktop(new wchar_t[32768]);
+  SHGetSpecialFolderPathW(nullptr, desktop.get(), CSIDL_DESKTOPDIRECTORY, 0);
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
-  return QString::fromWCharArray(desktop);
+  return QString::fromWCharArray(desktop.get());
 #else
-  return QString::fromUtf16(desktop);
+  return QString::fromUtf16(desktop.get());
 #endif
 }
 
 QString getStartMenuDirectory()
 {
-  wchar_t desktop[32768];
-  SHGetSpecialFolderPathW(nullptr, desktop, CSIDL_STARTMENU, 0);
+  std::unique_ptr<wchar_t> desktop(new wchar_t[32768]);
+  SHGetSpecialFolderPathW(nullptr, desktop.get(), CSIDL_STARTMENU, 0);
 #if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
-  return QString::fromWCharArray(desktop);
+  return QString::fromWCharArray(desktop.get());
 #else
-  return QString::fromUtf16(desktop);
+  return QString::fromUtf16(desktop.get());
 #endif
 }
 
