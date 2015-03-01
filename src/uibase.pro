@@ -45,7 +45,8 @@ SOURCES += \
     questionboxmemory.cpp \
     modrepositoryfileinfo.cpp \
     sortabletreewidget.cpp \
-    executableinfo.cpp
+    executableinfo.cpp \
+    delayedfilewriter.cpp
 
 HEADERS +=\
     utility.h \
@@ -90,7 +91,8 @@ HEADERS +=\
     ipluginpreview.h \
     iplugingame.h \
     executableinfo.h \
-    iprofile.h
+    iprofile.h \
+    delayedfilewriter.h
 
 FORMS += \
     textviewer.ui \
