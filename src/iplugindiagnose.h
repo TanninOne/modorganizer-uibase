@@ -26,8 +26,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <vector>
 #include <functional>
 #include <QString>
+#pragma warning(push)
+#pragma warning(disable: 4100)
 #include <boost/signals2.hpp>
-
+#pragma warning(pop)
 
 namespace MOBase {
 
