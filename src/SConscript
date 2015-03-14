@@ -6,7 +6,6 @@ env = qt_env.Clone()
 
 modules = [
     'Script',
-    # These get automagically added by QT?
     'Core',
     'Gui'
 ]
@@ -24,22 +23,16 @@ else:
     ]
 
 # 'debug = True' should be settable more globally somehow?
-env.EnableQt4Modules(['Qt' + n for n in modules], debug = env['CONFIG'] == 'debug')
+env.EnableQt4Modules(['Qt' + n for n in modules],
+                     debug = env['CONFIG'] == 'debug')
 env['QT4_AUTOSCAN_STRATEGY'] = 1
 env.Uic4(Glob('*.ui'))
 
 env.AppendUnique(LIBS = ['user32', 'shell32', 'ole32'])
 
-# We have to 'persuade' moc to generate certain other targets and inject them into
-# the list of cpps
-targets = []
-for file in env.Glob('*.h'):
-    target = str(file)[:-1] + 'cpp'
-    if not os.path.exists(target):
-        if 'Q_OBJECT' in file.get_contents():
-            header = os.path.basename(str(file))
-            target = env.ExplicitMoc4('moc_' + header[:-1] + 'cpp', header)
-            targets.append(target)
+# We have to 'persuade' moc to generate certain other targets and inject them
+# into the list of cpps
+targets = env.AddExtraMoc(env.Glob('*.h'))
 
 # Note the order of this is important, or you can pick up the wrong report.h...
 env.AppendUnique(CPPPATH = [
@@ -52,34 +45,21 @@ env.AppendUnique(CPPDEFINES = [
 ])
 
 #CONFIG(debug, debug|release) {
-#  OUTDIR = $$OUT_PWD/debug
-#  DSTDIR = $$PWD/../../outputd
 #} else {
-#  OUTDIR = $$OUT_PWD/release
-#  DSTDIR = $$PWD/../../output
-#  SRCDIR = $$PWD
 #  QMAKE_CXXFLAGS += /Zi /GL
 #  QMAKE_LFLAGS += /DEBUG /LTCG /LARGEADDRESSAWARE /OPT:REF /OPT:ICF
 #}
 
 
-"""
-cl -c -nologo -Zm200 -Zc:wchar_t- -Zi -MDd -GR -EHsc -W3 -w34100 -w34189 -DUNICODE
--DWIN32 -DUIBASE_LIBRARY -DUIBASE_EXPORT -DQT_DECLARATIVE_DEBUG -DQT_DLL -DQT_DECLARATIVE_LIB
--DQT_SCRIPT_LIB -DQT_GUI_LIB -DQT_CORE_LIB
--DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT
--I"c:\Apps\Qt\4.8.6\include\QtCore" -I"c:\Apps\Qt\4.8.6\include\QtGui" -I"c:\Apps\Qt\4.8.6\include\QtScript" -I"c:\Apps\Qt\4.8.6\include\QtDeclarative" -I"c:\Apps\Qt\4.8.6\include" -I"c:\Apps\boost_1_55_0" -I"c:\Apps\Qt\4.8.6\include\ActiveQt" -I"debug" -I"." -I"..\..\source\uibase" -I"." -I"c:\Apps\Qt\4.8.6\mkspecs\win32-msvc2010" -Fodebug\ @C:\Users\Dad\AppData\Local\Temp\nmF963.tmp
-
-cl /Fobuild-ModOrganizer-scons\debug\uibase\diagnosisreport.obj /c source\uibase\diagnosisreport.cpp
-/TP /nologo -Zm200 -Zc:wchar_t-
-/DQT_SCRIPT_LIB /DQT_DECLARATIVE_LIB /DUIBASE_LIBRARY /DUIBASE_EXPORT
-/IC:\Apps\Qt\4.8.6\include /IC:\Apps\Qt\4.8.6\include /IC:\Apps\Qt\4.8.6\include\QtScript /IC:\Apps\Qt\4.8.6\include\QtDeclarative /Ibuild-ModOrganizer-scons\debug\uibase /Isource\uibase /IC:\Apps\boost_1_55_0
-link /LIBPATH:"c:\Apps\Qt\4.8.6\lib" /NOLOGO /DYNAMICBASE /NXCOMPAT /DEBUG /DLL /MANIFEST /MANIFESTFILE:"debug\uibase.intermediate.manifest" /OUT:debug\uibase.dll @C:\Users\Dad\AppData\Local\Temp\nm8119.tmp
-LINK : debug\uibase.dll not found or not built by the last incremental link; performing full link
-        mt.exe -nologo -manifest "debug\uibase.intermediate.manifest" -outputresource:debug\uibase.dll;2
-"""
-# Err. Thats it!
-
 lib = env.SharedLibrary('uibase', env.Glob('*.cpp') + targets)
-# Dodgy. I want to extract 'pdb' and 'dll'
-env.Install(env['INSTALL_PATH'], lib[0])
+env.Depends(lib, env.Value(env['ENV']['DLLSPATH']))
+
+# FIXME scons bug doesn't provide pdb for executable.
+if env['CONFIG'] == 'debug':
+    x = env.File('uibase.pdb')
+    env.Depends(x, lib)
+    lib.append(x)
+env.Install(env['INSTALL_PATH'],
+            filter(lambda x: str(x).endswith('.dll') or str(x).endswith('.pdb'),
+            lib))
+
