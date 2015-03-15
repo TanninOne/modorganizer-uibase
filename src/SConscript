@@ -22,7 +22,6 @@ else:
         'Declarative'
     ]
 
-# 'debug = True' should be settable more globally somehow?
 env.EnableQt4Modules(['Qt' + n for n in modules],
                      debug = env['CONFIG'] == 'debug')
 env['QT4_AUTOSCAN_STRATEGY'] = 1
@@ -50,16 +49,9 @@ env.AppendUnique(CPPDEFINES = [
 #  QMAKE_LFLAGS += /DEBUG /LTCG /LARGEADDRESSAWARE /OPT:REF /OPT:ICF
 #}
 
-
 lib = env.SharedLibrary('uibase', env.Glob('*.cpp') + targets)
-env.Depends(lib, env.Value(env['ENV']['DLLSPATH']))
 
-# FIXME scons bug doesn't provide pdb for executable.
-if env['CONFIG'] == 'debug':
-    x = env.File('uibase.pdb')
-    env.Depends(x, lib)
-    lib.append(x)
 env.Install(env['INSTALL_PATH'],
             filter(lambda x: str(x).endswith('.dll') or str(x).endswith('.pdb'),
-            lib))
+                   lib))
 
