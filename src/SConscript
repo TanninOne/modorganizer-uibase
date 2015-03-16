@@ -24,7 +24,6 @@ else:
 
 env.EnableQt4Modules(['Qt' + n for n in modules],
                      debug = env['CONFIG'] == 'debug')
-env['QT4_AUTOSCAN_STRATEGY'] = 1
 env.Uic4(Glob('*.ui'))
 
 env.AppendUnique(LIBS = ['user32', 'shell32', 'ole32'])
@@ -51,7 +50,5 @@ env.AppendUnique(CPPDEFINES = [
 
 lib = env.SharedLibrary('uibase', env.Glob('*.cpp') + targets)
 
-env.Install(env['INSTALL_PATH'],
-            filter(lambda x: str(x).endswith('.dll') or str(x).endswith('.pdb'),
-                   lib))
+env.InstallModule(lib)
 
