@@ -35,7 +35,7 @@ targets = env.AddExtraMoc(env.Glob('*.h'))
 # Note the order of this is important, or you can pick up the wrong report.h...
 env.AppendUnique(CPPPATH = [
     '.',            # Why is this necessary?
-    '$BOOST_PATH',
+    '${BOOSTPATH}',
 ])
 env.AppendUnique(CPPDEFINES = [
     'UIBASE_LIBRARY',
