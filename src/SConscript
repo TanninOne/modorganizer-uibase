@@ -1,5 +1,3 @@
-import os.path
-
 Import('qt_env')
 
 env = qt_env.Clone()
@@ -22,8 +20,8 @@ else:
         'Declarative'
     ]
 
-env.EnableQt4Modules(['Qt' + n for n in modules],
-                     debug = env['CONFIG'] == 'debug')
+env.EnableQtModules(*modules)
+
 env.Uic4(Glob('*.ui'))
 
 env.AppendUnique(LIBS = ['user32', 'shell32', 'ole32'])
@@ -37,6 +35,7 @@ env.AppendUnique(CPPPATH = [
     '.',            # Why is this necessary?
     '${BOOSTPATH}',
 ])
+
 env.AppendUnique(CPPDEFINES = [
     'UIBASE_LIBRARY',
     'UIBASE_EXPORT'
@@ -51,4 +50,3 @@ env.AppendUnique(CPPDEFINES = [
 lib = env.SharedLibrary('uibase', env.Glob('*.cpp') + targets)
 
 env.InstallModule(lib)
-
