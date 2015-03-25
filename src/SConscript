@@ -19,7 +19,7 @@ if env['QT_MAJOR_VERSION'] > 4:
 
 env.EnableQtModules(*modules)
 
-env.Uic4(Glob('*.ui'))
+env.Uic(Glob('*.ui'))
 
 env.AppendUnique(LIBS = ['user32', 'shell32', 'ole32'])
 
