@@ -104,7 +104,6 @@ protected:
 private:
 
   SignalInvalidated m_OnInvalidated;
-//  boost::signals2::connection m_OnInvalidatedConnection;
 
 };
 
