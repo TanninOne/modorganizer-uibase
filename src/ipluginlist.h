@@ -36,6 +36,8 @@ public:
     STATE_ACTIVE
   };
 
+  Q_DECLARE_FLAGS(PluginStates, PluginState)
+
 public:
 
   virtual ~IPluginList() {}
@@ -45,7 +47,7 @@ public:
    * @param name filename of the plugin (without path but with file extension)
    * @return one of the possible plugin states: missing, inactive or active
    */
-  virtual PluginState state(const QString &name) const = 0;
+  virtual PluginStates state(const QString &name) const = 0;
 
   /**
    * @brief retrieve the priority of a plugin
@@ -94,6 +96,11 @@ public:
    * @brief invoked whenever a plugin has changed priority
    */
   virtual bool onPluginMoved(const std::function<void (const QString &, int, int)> &func) = 0;
+
+  /**
+   * @brief invoked whenever a plugin has changed state
+   */
+  virtual bool onPluginStateChanged(const std::function<void (const QString &, PluginStates)> &func) = 0;
 
 };
 
