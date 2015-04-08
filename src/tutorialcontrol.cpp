@@ -129,6 +129,7 @@ void TutorialControl::startTutorial(const QString &tutorial)
     m_TutorialView->rootContext()->setContextProperty("scriptName", tutorial);
     m_TutorialView->rootContext()->setContextProperty("tutorialControl", this);
     m_TutorialView->rootContext()->setContextProperty("applicationWindow", m_TargetControl);
+    m_TutorialView->rootContext()->setContextProperty("organizer", m_Manager.organizerCore());
 
     for (std::vector<std::pair<QString, QObject*> >::const_iterator iter = m_ExposedObjects.begin();
          iter != m_ExposedObjects.end(); ++iter) {

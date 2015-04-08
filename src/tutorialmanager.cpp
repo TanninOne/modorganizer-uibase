@@ -32,17 +32,17 @@ namespace MOBase {
 TutorialManager *TutorialManager::s_Instance = nullptr;
 
 
-TutorialManager::TutorialManager(const QString &tutorialPath)
+TutorialManager::TutorialManager(const QString &tutorialPath, QObject *organizerCore)
   : m_TutorialPath(tutorialPath)
+  , m_OrganizerCore(organizerCore)
 {
-  // m_TutorialPath(QDir::fromNativeSeparators(ToQString(GameInfo::instance().getTutorialDir())).append("/"))
 }
 
 
-void TutorialManager::init(const QString &tutorialPath)
+void TutorialManager::init(const QString &tutorialPath, QObject *organizerCore)
 {
   if (s_Instance == nullptr) {
-    s_Instance = new TutorialManager(tutorialPath);
+    s_Instance = new TutorialManager(tutorialPath, organizerCore);
   } else {
     throw MyException(tr("tutorial manager already initialized"));
   }

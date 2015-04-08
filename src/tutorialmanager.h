@@ -44,9 +44,11 @@ public:
    * @brief set up the tutorial manager
    * @param path to where the tutorials are stored
    */
-  static void init(const QString &tutorialPath);
+  static void init(const QString &tutorialPath, QObject *organizerCore);
 
   static TutorialManager &instance();
+
+  QObject *organizerCore() { return m_OrganizerCore; }
 
   /**
    * @brief registers a control that can be used to display tutorial messages in one window. This
@@ -93,7 +95,7 @@ signals:
 
 private:
 
-  TutorialManager(const QString &tutorialPath);
+  TutorialManager(const QString &tutorialPath, QObject *organizerCore);
 
 private:
 
@@ -101,6 +103,7 @@ private:
 
 //  QScriptEngine m_ScriptEngine;
   QString m_TutorialPath;
+  QObject *m_OrganizerCore;
 
   std::map<QString, TutorialControl*> m_Controls;
   std::map<QString, QString> m_PendingTutorials;

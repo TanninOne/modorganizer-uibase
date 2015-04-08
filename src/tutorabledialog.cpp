@@ -22,7 +22,8 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 namespace MOBase {
 
 TutorableDialog::TutorableDialog(const QString &name, QWidget *parent)
-  : QDialog(parent), m_Tutorial(this, name)
+  : QDialog(parent)
+  , m_Tutorial(this, name)
 {
 }
 
