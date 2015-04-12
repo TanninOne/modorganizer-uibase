@@ -80,9 +80,17 @@ public:
   virtual QIcon gameIcon() const = 0;
 
   /**
-   * @return path to the game installation
+   * @return directory to the game installation
    */
   virtual QDir gameDirectory() const = 0;
+
+  /**
+   * @brief set the path to the managed game
+   * @param path to the game
+   * @note this will be called by by MO to set the concrete path of the game. This is particularly
+   *       relevant if the path wasn't auto-detected but had to be set manually by the user
+   */
+  virtual void setGamePath(const QString &path) = 0;
 
   /**
    * @return directory of the documents folder where configuration files and such for this game reside
