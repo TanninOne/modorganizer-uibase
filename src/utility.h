@@ -113,6 +113,17 @@ QDLLEXPORT bool shellCopy(const QString &sourceNames, const QString &destination
 QDLLEXPORT bool shellMove(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog = nullptr);
 
 /**
+ * @brief move one files using a shell operation (this will ask the user for confirmation on overwrite
+ *        or elevation requirement)
+ * @param sourceNames names of files to be moved. This can include wildcards
+ * @param destinationNames names of the files in the destination location or the destination directory to move to.
+ *                         There has to be one destination name for each source name or a single directory
+ * @param dialog a dialog to be the parent of possible confirmation dialogs
+ * @return true on success, false on error. Call ::GetLastError() to retrieve error code
+ **/
+QDLLEXPORT bool shellMove(const QString &sourceNames, const QString &destinationNames, bool yesToAll = false, QWidget *dialog = nullptr);
+
+/**
  * @brief rename a file using a shell operation (this will ask the user for confirmation on overwrite
  *        or elevation requirement)
  * @param oldName old name of file to be renamed

@@ -252,6 +252,11 @@ bool shellMove(const QStringList &sourceNames, const QStringList &destinationNam
   return shellOp(sourceNames, destinationNames, dialog, FO_MOVE, false);
 }
 
+bool shellMove(const QString &sourceNames, const QString &destinationNames, bool yesToAll, QWidget *dialog)
+{
+  return shellOp(QStringList() << sourceNames, QStringList() << destinationNames, dialog, FO_MOVE, yesToAll);
+}
+
 bool shellRename(const QString &oldName, const QString &newName, bool yesToAll, QWidget *dialog)
 {
   return shellOp(QStringList(oldName), QStringList(newName), dialog, FO_RENAME, yesToAll);
