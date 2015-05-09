@@ -46,7 +46,8 @@ SOURCES += \
     modrepositoryfileinfo.cpp \
     sortabletreewidget.cpp \
     executableinfo.cpp \
-    delayedfilewriter.cpp
+    delayedfilewriter.cpp \
+    modfeature.cpp
 
 HEADERS +=\
     utility.h \
@@ -92,7 +93,9 @@ HEADERS +=\
     iplugingame.h \
     executableinfo.h \
     iprofile.h \
-    delayedfilewriter.h
+    delayedfilewriter.h \
+    modfeature.h \
+    modflags.h
 
 FORMS += \
     textviewer.ui \

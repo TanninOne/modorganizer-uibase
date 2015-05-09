@@ -23,6 +23,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #define IMODINTERFACE_H
 
 
+#include <QString>
+
+
 namespace MOBase {
 
 class VersionInfo;
@@ -71,7 +74,7 @@ public:
    * @brief sets the mod id on nexus for this mod
    * @param the new id to set
    */
-  virtual void setNexusID(int nexusID) = 0;
+  virtual void setRepoModID(int nexusID) = 0;
 
   /**
    * @brief sets the category id from a nexus category id. Conversion to MO id happens internally
