@@ -5,24 +5,21 @@ env = qt_env.Clone()
 modules = [
     'Script',
     'Core',
-    'Gui'
+    'Gui',
+    'Declarative'
 ]
 
 if env['QT_MAJOR_VERSION'] > 4:
     modules += [
         'Widgets',
         'Qml',
-        'Quick',
-        'WebKitWidgets'
-    ]
-else:
-    modules += [
-        'Declarative'
+        'QuickWidgets',
+        'WinExtras'
     ]
 
 env.EnableQtModules(*modules)
 
-env.Uic4(Glob('*.ui'))
+env.Uic(Glob('*.ui'))
 
 env.AppendUnique(LIBS = ['user32', 'shell32', 'ole32'])
 
@@ -50,3 +47,6 @@ env.AppendUnique(CPPDEFINES = [
 lib = env.SharedLibrary('uibase', env.Glob('*.cpp') + targets)
 
 env.InstallModule(lib)
+
+res = env['QT_USED_MODULES']
+Return('res')
