@@ -22,8 +22,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef MYTREE_H
 #define MYTREE_H
 
-
+#include <list>
 #include <set>
+#include <utility>
 
 namespace MOBase {
 
@@ -62,6 +63,8 @@ public:
 
   typedef typename std::set<Node*, ByNodeData>::const_reverse_iterator const_node_reverse_iterator;
   typedef typename std::set<LeafT>::const_reverse_iterator const_leaf_reverse_iterator;
+
+  typedef typename std::list<std::pair<Node const *, LeafT>> Overwrites;
 
 public:
 
@@ -105,9 +108,12 @@ public:
    * @param overwrite if true, the new leaf will overwrite an existing one that compares as "equal"
    * @return true if the leaf was added, false if it already exists
    **/
-  bool addLeaf(const LeafT &leaf, bool overwrite = true) {
+  bool addLeaf(const LeafT &leaf, bool overwrite = true, Overwrites *overwrites = nullptr) {
     auto res = m_Leafs.insert(leaf);
     if (!res.second && overwrite) {
+      if (overwrites != nullptr) {
+        overwrites->push_back(std::make_pair(this->m_Parent, leaf));
+      }
       m_Leafs.erase(res.first);
       res = m_Leafs.insert(leaf);
     }
@@ -119,10 +125,11 @@ public:
    *
    * @param node node to add. "this" takes custody of the pointer
    * @param merge if true the content of node will merged with an existing node
+   * @param merged if not null, a list of overwritten nodes will be maintained
    * @return true if the node was added or merged. false if merge is false and a node with the
    *         specified node data exists already
    **/
-  bool addNode(Node *node, bool merge);
+  bool addNode(Node *node, bool merge, Overwrites *overwrites = nullptr);
 
   /**
    * @return the number of leafs in the current node
@@ -309,7 +316,7 @@ MyTree<LeafT, NodeData> *MyTree<LeafT, NodeData>::copy() const
 
 
 template <typename LeafT, typename NodeData>
-bool MyTree<LeafT, NodeData>::addNode(Node *node, bool merge)
+bool MyTree<LeafT, NodeData>::addNode(Node *node, bool merge, Overwrites *overwrites)
 {
   std::pair<std::set<Node*, ByNodeData>::iterator, bool> res = m_Nodes.insert(node);
   if (res.second) {
@@ -321,12 +328,11 @@ bool MyTree<LeafT, NodeData>::addNode(Node *node, bool merge)
     for (node_iterator iter = node->nodesBegin(); iter != node->nodesEnd();) {
       Node *subNode = *iter;
       iter = node->detach(iter);
-      (*res.first)->addNode(subNode, merge);
+      (*res.first)->addNode(subNode, merge, overwrites);
     }
     for (leaf_iterator iter = node->leafsBegin(); iter != node->leafsEnd(); ++iter) {
-      (*res.first)->addLeaf(*iter);
+      (*res.first)->addLeaf(*iter, true, overwrites);
     }
-
     return true;
   }
   // node exists and merge was disabled
