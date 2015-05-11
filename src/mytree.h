@@ -111,7 +111,7 @@ public:
   bool addLeaf(const LeafT &leaf, bool overwrite = true, Overwrites *overwrites = nullptr) {
     auto res = m_Leafs.insert(leaf);
     if (!res.second && overwrite) {
-      if (overwrites != nullptr) {
+      if (overwrites != nullptr && leaf.getPriority() == res.first->getPriority()) {
         overwrites->push_back(std::make_pair(this->m_Parent, leaf));
       }
       m_Leafs.erase(res.first);
@@ -125,7 +125,10 @@ public:
    *
    * @param node node to add. "this" takes custody of the pointer
    * @param merge if true the content of node will merged with an existing node
-   * @param merged if not null, a list of overwritten nodes will be maintained
+   * @param overwrites if not null, a list of overwritten nodes will be maintained
+   * @param prio priority at which leaves are added. If a high priority leaf
+   *             overwrites a low priority leaf, this doesn't get added to the
+   *             overwrites list.
    * @return true if the node was added or merged. false if merge is false and a node with the
    *         specified node data exists already
    **/
@@ -216,6 +219,9 @@ public:
    * @return an iterator to the following leaf
    **/
   leaf_iterator erase(leaf_iterator iter) { return m_Leafs.erase(iter); }
+
+  /** find a leaf */
+  leaf_iterator find(LeafT const &leaf) { return m_Leafs.find(leaf); }
 
   /**
    * @brief erase the node at the specfied iterator. its content is deleted!

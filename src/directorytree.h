@@ -32,15 +32,34 @@ namespace MOBase {
 class FileTreeInformation {
   friend QDLLEXPORT bool operator<(const FileTreeInformation &LHS, const FileTreeInformation &RHS);
 public:
-  FileTreeInformation() : m_Name(), m_Index(0) {}
-  FileTreeInformation(const FileTreeInformation &reference) : m_Name(reference.m_Name), m_Index(reference.m_Index) {}
-  FileTreeInformation(const QString &name, int index) : m_Name(name), m_Index(index) {}
+  FileTreeInformation() :
+    m_Name(),
+    m_Index(0),
+    m_Priority(0)
+  {}
+
+  FileTreeInformation(const FileTreeInformation &reference) :
+    m_Name(reference.m_Name),
+    m_Index(reference.m_Index),
+    m_Priority(reference.m_Priority)
+  {}
+
+  FileTreeInformation(const QString &name, int index, int priority = 0) :
+    m_Name(name),
+    m_Index(index),
+    m_Priority(priority)
+  {}
+
   const QString &getName() const { return m_Name; }
   void setName(const QString &name) { m_Name = name; }
   int getIndex() const { return m_Index; }
+  int getPriority() const { return m_Priority; }
+  void setPriority(int priority) { m_Priority = priority; }
+
 private:
   QString m_Name;
   int m_Index;
+  int m_Priority;
 };
 
 //Q_DECLARE_METATYPE(FileTreeInformation)
