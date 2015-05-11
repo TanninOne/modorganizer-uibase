@@ -64,7 +64,7 @@ public:
   typedef typename std::set<Node*, ByNodeData>::const_reverse_iterator const_node_reverse_iterator;
   typedef typename std::set<LeafT>::const_reverse_iterator const_leaf_reverse_iterator;
 
-  typedef typename std::list<std::pair<Node const *, LeafT>> Overwrites;
+  typedef typename std::list<std::pair<int, int>> Overwrites;
 
 public:
 
@@ -111,8 +111,8 @@ public:
   bool addLeaf(const LeafT &leaf, bool overwrite = true, Overwrites *overwrites = nullptr) {
     auto res = m_Leafs.insert(leaf);
     if (!res.second && overwrite) {
-      if (overwrites != nullptr && leaf.getPriority() == res.first->getPriority()) {
-        overwrites->push_back(std::make_pair(this->m_Parent, leaf));
+      if (overwrites != nullptr) {
+        overwrites->push_back(std::make_pair(res.first->getIndex(), leaf.getIndex()));
       }
       m_Leafs.erase(res.first);
       res = m_Leafs.insert(leaf);
@@ -219,9 +219,6 @@ public:
    * @return an iterator to the following leaf
    **/
   leaf_iterator erase(leaf_iterator iter) { return m_Leafs.erase(iter); }
-
-  /** find a leaf */
-  leaf_iterator find(LeafT const &leaf) { return m_Leafs.find(leaf); }
 
   /**
    * @brief erase the node at the specfied iterator. its content is deleted!
