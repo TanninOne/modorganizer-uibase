@@ -188,7 +188,7 @@ template <typename T>
 QString SetJoin(const std::set<T> &value, const QString &separator, size_t maximum = UINT_MAX)
 {
   QString result;
-  std::set<T>::const_iterator iter = value.begin();
+  typename std::set<T>::const_iterator iter = value.begin();
   if (iter != value.end()) {
     QTextStream stream(&result);
     stream << *iter;

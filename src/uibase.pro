@@ -8,7 +8,7 @@ TARGET = uibase
 TEMPLATE = lib
 
 DEFINES += UIBASE_LIBRARY UIBASE_EXPORT
-CONFIG += dll
+CONFIG += dll c++11
 
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets qml declarative script quickwidgets winextras
@@ -107,8 +107,9 @@ CONFIG(debug, debug|release) {
   OUTDIR = $$OUT_PWD/release
   DSTDIR = $$PWD/../../output
   SRCDIR = $$PWD
-  QMAKE_CXXFLAGS += /Zi /GL
-  QMAKE_LFLAGS += /DEBUG /LTCG /LARGEADDRESSAWARE /OPT:REF /OPT:ICF
+
+  msvc:QMAKE_CXXFLAGS += /Zi /GL
+  msvc:QMAKE_LFLAGS += /DEBUG /LTCG /LARGEADDRESSAWARE /OPT:REF /OPT:ICF
 }
 
 
@@ -120,8 +121,8 @@ INCLUDEPATH += "$${BOOSTPATH}"
 
 LIBS += -luser32 -lshell32 -lole32
 
-QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.dll*) $$quote($$DSTDIR) $$escape_expand(\\n)
-QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.pdb*) $$quote($$DSTDIR) $$escape_expand(\\n)
+QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.dll*) $$quote($$DSTDIR) $$escape_expand(\\n\\t)
+QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.pdb*) $$quote($$DSTDIR) $$escape_expand(\\n\\t)
 QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.lib*) $$quote($$SRCDIR\\..\\plugins\\helloworldcpp) $$escape_expand(\\n)
 
 OTHER_FILES +=\

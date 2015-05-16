@@ -137,12 +137,12 @@ public:
   /**
    * @return the number of leafs in the current node
    **/
-  size_t numLeafs() const { return m_Leafs.size(); }
+  std::size_t numLeafs() const { return m_Leafs.size(); }
 
   /**
    * @return the number of child-nodes in the current node
    **/
-  size_t numNodes() const { return m_Nodes.size(); }
+  std::size_t numNodes() const { return m_Nodes.size(); }
 
   /**
    * @return an iterator to the first leaf
@@ -260,7 +260,7 @@ private:
 template <typename LeafT, typename NodeData>
 MyTree<LeafT, NodeData>::~MyTree()
 {
-  for (std::set<Node*, ByNodeData>::iterator iter = m_Nodes.begin(); iter != m_Nodes.end(); ++iter) {
+  for (typename std::set<Node*, ByNodeData>::iterator iter = m_Nodes.begin(); iter != m_Nodes.end(); ++iter) {
     delete *iter;
   }
   m_Nodes.clear();
@@ -286,7 +286,7 @@ MyTree<LeafT, NodeData> &MyTree<LeafT, NodeData>::operator=(const MyTree<LeafT, 
     m_Data = reference.m_Data;
     m_Leafs = reference.m_Leafs;
 
-    for (std::set<Node*, ByNodeData>::iterator iter = m_Nodes.begin(); iter != m_Nodes.end(); ++iter) {
+    for (typename std::set<Node*, ByNodeData>::iterator iter = m_Nodes.begin(); iter != m_Nodes.end(); ++iter) {
       delete *iter;
     }
     m_Nodes.clear();
@@ -321,7 +321,7 @@ MyTree<LeafT, NodeData> *MyTree<LeafT, NodeData>::copy() const
 template <typename LeafT, typename NodeData>
 bool MyTree<LeafT, NodeData>::addNode(Node *node, bool merge, Overwrites *overwrites)
 {
-  std::pair<std::set<Node*, ByNodeData>::iterator, bool> res = m_Nodes.insert(node);
+  std::pair<typename std::set<Node*, ByNodeData>::iterator, bool> res = m_Nodes.insert(node);
   if (res.second) {
     // no merge required
     node->m_Parent = this;

@@ -3,7 +3,7 @@
 
 
 MOBase::ModRepositoryFileInfo::ModRepositoryFileInfo(const ModRepositoryFileInfo &reference)
-  : name(reference.name), uri(reference.uri), description(reference.description),
+  : QObject(reference.parent()), name(reference.name), uri(reference.uri), description(reference.description),
     version(reference.version), categoryID(reference.categoryID), modName(reference.modName),
     modID(reference.modID), fileID(reference.fileID), fileSize(reference.fileSize),
     fileCategory(reference.fileCategory),
