@@ -62,11 +62,27 @@ public:
   virtual QString displayName(const QString &internalName) const = 0;
 
   /**
+   * @brief retrieve a list of all installed mod names
+   * @return list of mods (internal names)
+   */
+  virtual QStringList allMods() const = 0;
+
+  /**
    * @brief retrieve the state of a mod
    * @param name name of the mod
    * @return a bitset of information about the mod
    */
   virtual ModStates state(const QString &name) const = 0;
+
+  /**
+   * @brief enable or disable a mod
+   * @param name name of the mod
+   * @param active if true the mod is enabled, otherwise it's disabled
+   * @return true on success, false if the mod name is not valid
+   * @note calling this will cause MO to re-evaluate its virtual file system so this is fairly
+   *       expensive
+   */
+  virtual bool setActive(const QString &name, bool active) = 0;
 
   /**
    * @brief retrieve the priority of a mod
