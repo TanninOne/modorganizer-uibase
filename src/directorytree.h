@@ -23,11 +23,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "mytree.h"
 #include "dllimport.h"
+#include "filenamestring.h"
+
 #include <QMetaType>
 #include <QString>
 
 namespace MOBase {
-
 
 class FileTreeInformation {
   friend QDLLEXPORT bool operator<(const FileTreeInformation &LHS, const FileTreeInformation &RHS);
@@ -35,11 +36,11 @@ public:
   FileTreeInformation() : m_Name(), m_Index(0) {}
   FileTreeInformation(const FileTreeInformation &reference) : m_Name(reference.m_Name), m_Index(reference.m_Index) {}
   FileTreeInformation(const QString &name, int index) : m_Name(name), m_Index(index) {}
-  const QString &getName() const { return m_Name; }
+  const FileNameString &getName() const { return m_Name; }
   void setName(const QString &name) { m_Name = name; }
   int getIndex() const { return m_Index; }
 private:
-  QString m_Name;
+  FileNameString m_Name;
   int m_Index;
 };
 
@@ -59,7 +60,7 @@ struct DirectoryTreeInformation {
     return *this;
   }
 
-  QString name;
+  FileNameString name;
   int index;
 };
 

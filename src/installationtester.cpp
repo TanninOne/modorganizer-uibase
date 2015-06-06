@@ -18,6 +18,7 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "installationtester.h"
+#include "filenamestring.h"
 
 #include <QFileInfo>
 
@@ -29,13 +30,13 @@ InstallationTester::InstallationTester()
 }
 
 
-bool InstallationTester::isTopLevelDirectory(const QString &dirName)
+bool InstallationTester::isTopLevelDirectory(const FileNameString &dirName)
 {
   static QString tlDirectoryNames[] = { "distantlod", "facegen", "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders", "sound",
                                         "strings", "textures", "trees", "video", "skse", "obse", "nvse", "fose", "asi", "SkyProc Patchers", "" };
 
   for (int i = 0; tlDirectoryNames[i].length() != 0; ++i) {
-    if (QString::compare(dirName, tlDirectoryNames[i], Qt::CaseInsensitive) == 0) {
+    if (dirName == tlDirectoryNames[i]) {
       return true;
     }
   }
@@ -44,13 +45,13 @@ bool InstallationTester::isTopLevelDirectory(const QString &dirName)
 }
 
 
-bool InstallationTester::isTopLevelDirectoryBain(const QString &dirName)
+bool InstallationTester::isTopLevelDirectoryBain(const FileNameString &dirName)
 {
   static QString tlDirectoryNames[] = { "distantlod", "facegen", "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders", "sound",
                                         "strings", "textures", "trees", "video", "skse", "obse", "nvse", "fose", "asi", "SkyProc Patchers", "Docs", "INI Tweaks", "" };
 
   for (int i = 0; tlDirectoryNames[i].length() != 0; ++i) {
-    if (QString::compare(dirName, tlDirectoryNames[i], Qt::CaseInsensitive) == 0) {
+    if (dirName == tlDirectoryNames[i]) {
       return true;
     }
   }
@@ -59,14 +60,12 @@ bool InstallationTester::isTopLevelDirectoryBain(const QString &dirName)
 }
 
 
-bool InstallationTester::isTopLevelSuffix(const QString &fileName)
+bool InstallationTester::isTopLevelSuffix(const FileNameString &fileName)
 {
-  static QString tlSuffixes[] = { "esp", "esm", "bsa", "" };
-
-  QString suffix = QFileInfo(fileName).suffix();
+  static QString tlSuffixes[] = { ".esp", ".esm", ".bsa", "" };
 
   for (int i = 0; tlSuffixes[i].length() != 0; ++i) {
-    if (QString::compare(suffix, tlSuffixes[i], Qt::CaseInsensitive) == 0) {
+    if (fileName.endsWith(tlSuffixes[i])) {
       return true;
     }
   }

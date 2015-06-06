@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 namespace MOBase {
 
+class FileNameString;
 
 /**
  * @brief Various convenience functions used to determine if a mod directory fulfills certain criteria
@@ -46,7 +47,7 @@ public:
    * @param dirName the directory name to test
    * @return true if the specified directory is a top-level directory
    **/
-  QDLLEXPORT static bool isTopLevelDirectory(const QString &dirName);
+  QDLLEXPORT static bool isTopLevelDirectory(const FileNameString &dirName);
 
   /**
    * test if the specified directory qualifies as a top-level directory. A top-level directory
@@ -58,7 +59,7 @@ public:
    * @param dirName the directory name to test
    * @return true if the specified directory is a top-level directory
    **/
-  QDLLEXPORT static bool isTopLevelDirectoryBain(const QString &dirName);
+  QDLLEXPORT static bool isTopLevelDirectoryBain(const FileNameString &dirName);
 
   /**
    * test if the specified file qualifies as a top-level file. A top-level file is one
@@ -68,7 +69,7 @@ public:
    * @param fileName name of the file to test. It doesn't matter if this is an absolute file name or relative since only the extension is interpreted
    * @return bool
    **/
-  QDLLEXPORT static bool isTopLevelSuffix(const QString &fileName);
+  QDLLEXPORT static bool isTopLevelSuffix(const FileNameString &fileName);
 
 private:
 

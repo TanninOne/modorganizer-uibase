@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef MYTREE_H
 #define MYTREE_H
 
+#include <QString>
+
 #include <list>
 #include <set>
 #include <utility>
@@ -246,6 +248,11 @@ public:
    **/
   const MyTree<LeafT, NodeData> *getParent() const { return m_Parent; }
 
+  /**
+   * @return Full pathname of a node
+   **/
+  QString getFullPath() const;
+
 private:
 
   const MyTree<LeafT, NodeData> *m_Parent;
@@ -342,6 +349,20 @@ bool MyTree<LeafT, NodeData>::addNode(Node *node, bool merge, Overwrites *overwr
   return false;
 }
 
+template <typename LeafT, typename NodeData>
+QString MyTree<LeafT, NodeData>::getFullPath() const
+{
+  QString result(this->getData().name.toQString());
+  const Node *parent = this->getParent();
+  while (parent != nullptr) {
+    if (parent->getParent() != nullptr) {
+      result.prepend("\\");
+    }
+    result.prepend(parent->getData().name.toQString());
+    parent = parent->getParent();
+  }
+  return result;
+}
 
 } // namespace MOBase
 
