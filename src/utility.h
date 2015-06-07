@@ -278,7 +278,7 @@ QDLLEXPORT std::wstring ToWString(const QString &source);
 QDLLEXPORT std::string ToString(const QString &source, bool utf8 = true);
 
 /**
- * @brief convert std::wstring to QString (assuming the string to be utf-8 encoded)
+ * @brief convert std::string to QString (assuming the string to be utf-8 encoded)
  **/
 QDLLEXPORT QString ToQString(const std::string &source);
 
