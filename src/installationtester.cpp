@@ -21,6 +21,7 @@ along with Mod Organizer.  If not, see <http://www.gnu.org/licenses/>.
 #include "filenamestring.h"
 
 #include <QFileInfo>
+#include <set>
 
 namespace MOBase {
 
@@ -62,15 +63,9 @@ bool InstallationTester::isTopLevelDirectoryBain(const FileNameString &dirName)
 
 bool InstallationTester::isTopLevelSuffix(const FileNameString &fileName)
 {
-  static QString tlSuffixes[] = { ".esp", ".esm", ".bsa", "" };
+  static std::set<QString> tlSuffixes { "esp", "esm", "bsa" };
 
-  for (int i = 0; tlSuffixes[i].length() != 0; ++i) {
-    if (fileName.endsWith(tlSuffixes[i])) {
-      return true;
-    }
-  }
-
-  return false;
+  return tlSuffixes.find(QFileInfo(static_cast<QString>(fileName)).suffix()) != tlSuffixes.end();
 }
 
 /*

@@ -43,6 +43,10 @@ class FileNameString {
     return m_Name;
   }
 
+  explicit operator QString() const {
+    return m_Name;
+  }
+
   std::wstring toStdWString() const
   {
     return m_Name.toStdWString();
