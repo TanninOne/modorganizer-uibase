@@ -47,7 +47,8 @@ QString DirectoryTree::getFullPath(FileTreeInformation const *leaf) const
   }
   const Node *parent = this;
   while (parent != nullptr) {
-    if (parent->getParent() != nullptr) {
+    if ((parent->getParent() != nullptr)
+        && !result.isEmpty()) {
       result.prepend("\\");
     }
     result.prepend(parent->getData().name.toQString());
