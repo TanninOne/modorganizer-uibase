@@ -81,6 +81,24 @@ public:
   virtual void addNexusCategory(int categoryID) = 0;
 
   /**
+   * @brief assign a category to the mod. If the named category doesn't exist it is created
+   * @param categoryName name of the new category
+   */
+  virtual void addCategory(const QString &categoryName) = 0;
+
+  /**
+   * @brief unassign a category from this mod.
+   * @param categoryName name of the category to be removed
+   * @return true if the category was removed successfully, false if no such category was assigned
+   */
+  virtual bool removeCategory(const QString &categoryName) = 0;
+
+  /**
+   * @return list of categories assigned to this mod
+   */
+  virtual QStringList categories() = 0;
+
+  /**
    * @brief set the name of this mod
    *
    * set the name of this mod. This will also update the name of the
