@@ -33,39 +33,29 @@ InstallationTester::InstallationTester()
 
 bool InstallationTester::isTopLevelDirectory(const FileNameString &dirName)
 {
-  static QString tlDirectoryNames[] = { "distantlod", "facegen", "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders", "sound",
-                                        "strings", "textures", "trees", "video", "skse", "obse", "nvse", "fose", "asi", "SkyProc Patchers", "" };
+  static std::set<FileNameString> tlDirectoryNames = {
+    "distantlod", "facegen", "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders", "sound",
+    "strings", "textures", "trees", "video", "skse", "obse", "nvse", "fose", "asi", "SkyProc Patchers" };
 
-  for (int i = 0; tlDirectoryNames[i].length() != 0; ++i) {
-    if (dirName == tlDirectoryNames[i]) {
-      return true;
-    }
-  }
-
-  return false;
+  return tlDirectoryNames.count(dirName) != 0;
 }
 
 
 bool InstallationTester::isTopLevelDirectoryBain(const FileNameString &dirName)
 {
-  static QString tlDirectoryNames[] = { "distantlod", "facegen", "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders", "sound",
-                                        "strings", "textures", "trees", "video", "skse", "obse", "nvse", "fose", "asi", "SkyProc Patchers", "Docs", "INI Tweaks", "" };
+  static std::set<FileNameString> tlDirectoryNames = {
+    "distantlod", "facegen", "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders", "sound",
+    "strings", "textures", "trees", "video", "skse", "obse", "nvse", "fose", "asi", "SkyProc Patchers",
+    "Docs", "INI Tweaks" };
 
-  for (int i = 0; tlDirectoryNames[i].length() != 0; ++i) {
-    if (dirName == tlDirectoryNames[i]) {
-      return true;
-    }
-  }
-
-  return false;
+  return tlDirectoryNames.count(dirName) != 0;
 }
 
 
 bool InstallationTester::isTopLevelSuffix(const FileNameString &fileName)
 {
-  static std::set<QString> tlSuffixes { "esp", "esm", "bsa" };
-
-  return tlSuffixes.find(QFileInfo(static_cast<QString>(fileName)).suffix()) != tlSuffixes.end();
+  static std::set<FileNameString> tlSuffixes = { "esp", "esm", "bsa" };
+  return tlSuffixes.count(QFileInfo(fileName.toQString()).suffix()) != 0;
 }
 
 /*

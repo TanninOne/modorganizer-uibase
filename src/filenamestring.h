@@ -27,6 +27,11 @@ class FileNameString {
     m_Name(m_Name)
   {}
 
+  //Should be explicit but it makes initialising std::set<FileNameString> tedious
+  FileNameString(char const *m_Name) :
+    m_Name(m_Name)
+  {}
+
   FileNameString(FileNameString const &other) :
     m_Name(other.m_Name)
   {}
@@ -40,10 +45,6 @@ class FileNameString {
   /** Return the underlying QString. Do not overuse this! */
   QString toQString() const
   {
-    return m_Name;
-  }
-
-  explicit operator QString() const {
     return m_Name;
   }
 
