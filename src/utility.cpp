@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QTextCodec>
+#include <QtDebug>
 #include <QtWinExtras/QtWin>
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -388,24 +389,28 @@ bool fixDirectoryName(QString &name)
 
 QString getDesktopDirectory()
 {
-  std::unique_ptr<wchar_t> desktop(new wchar_t[32768]);
-  SHGetSpecialFolderPathW(nullptr, desktop.get(), CSIDL_DESKTOPDIRECTORY, 0);
-#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
-  return QString::fromWCharArray(desktop.get());
-#else
-  return QString::fromUtf16(desktop.get());
-#endif
+  LPWSTR path;
+  HRESULT res = SHGetKnownFolderPath(FOLDERID_Desktop, 0, nullptr, &path);
+  if (res != S_OK) {
+    qWarning() << "Couldn't get desktop - error " << res;
+    throw std::runtime_error("Couldn't get path to desktop");
+  }
+  QString dir = QString::fromWCharArray(path);
+  CoTaskMemFree(path);
+  return dir;
 }
 
 QString getStartMenuDirectory()
 {
-  std::unique_ptr<wchar_t> desktop(new wchar_t[32768]);
-  SHGetSpecialFolderPathW(nullptr, desktop.get(), CSIDL_STARTMENU, 0);
-#if QT_VERSION >= QT_VERSION_CHECK(5,0,0)
-  return QString::fromWCharArray(desktop.get());
-#else
-  return QString::fromUtf16(desktop.get());
-#endif
+  LPWSTR path;
+  HRESULT res = SHGetKnownFolderPath(FOLDERID_StartMenu, 0, nullptr, &path);
+  if (res != S_OK) {
+    qWarning() << "Couldn't get desktop - error " << res;
+    throw std::runtime_error("Couldn't get path to desktop");
+  }
+  QString dir = QString::fromWCharArray(path);
+  CoTaskMemFree(path);
+  return dir;
 }
 
 bool shellDeleteQuiet(const QString &fileName, QWidget *dialog)
