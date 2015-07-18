@@ -48,11 +48,6 @@ ExecutableInfo &ExecutableInfo::asCustom()
   return *this;
 }
 
-void ExecutableInfo::showInToolbar(bool show)
-{
-  m_ShowInToolbar = show;
-}
-
 bool ExecutableInfo::isValid() const
 {
   return m_Binary.exists();
@@ -91,9 +86,4 @@ QString ExecutableInfo::steamAppID() const
 bool ExecutableInfo::isCustom() const
 {
   return m_Custom;
-}
-
-bool ExecutableInfo::showInToolbar() const
-{
-  return m_ShowInToolbar;
 }

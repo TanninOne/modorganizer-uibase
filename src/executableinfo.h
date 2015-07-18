@@ -36,8 +36,6 @@ public:
 
   ExecutableInfo &asCustom();
 
-  void showInToolbar(bool show);
-
   bool isValid() const;
 
   QString title() const;
@@ -47,7 +45,6 @@ public:
   CloseMOStyle closeMO() const;
   QString steamAppID() const;
   bool isCustom() const;
-  bool showInToolbar() const;
 
 private:
 
@@ -58,7 +55,6 @@ private:
   CloseMOStyle m_CloseMO { CloseMOStyle::DEFAULT_STAY };
   QString m_SteamAppID;
   bool m_Custom { false };
-  bool m_ShowInToolbar { false };
 
 };
 
