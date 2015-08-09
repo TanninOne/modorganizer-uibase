@@ -7,6 +7,7 @@ MOBase::ExecutableInfo::ExecutableInfo(const QString &title, const QFileInfo &bi
   : m_Title(title)
   , m_Binary(binary)
   , m_WorkingDirectory(binary.exists() ? binary.absoluteDir() : QString())
+  , m_CloseMO(CloseMOStyle::DEFAULT_STAY)
   , m_SteamAppID()
 {
 }
@@ -26,6 +27,18 @@ ExecutableInfo &ExecutableInfo::withWorkingDirectory(const QDir &workingDirector
 ExecutableInfo &MOBase::ExecutableInfo::withSteamAppId(const QString &appId)
 {
   m_SteamAppID = appId;
+  return *this;
+}
+
+ExecutableInfo &ExecutableInfo::withDefaultClose()
+{
+  m_CloseMO = CloseMOStyle::DEFAULT_CLOSE;
+  return *this;
+}
+
+ExecutableInfo &ExecutableInfo::withNeverClose()
+{
+  m_CloseMO = CloseMOStyle::NEVER_CLOSE;
   return *this;
 }
 
@@ -58,6 +71,11 @@ QStringList ExecutableInfo::arguments() const
 QDir ExecutableInfo::workingDirectory() const
 {
   return m_WorkingDirectory;
+}
+
+ExecutableInfo::CloseMOStyle ExecutableInfo::closeMO() const
+{
+  return m_CloseMO;
 }
 
 QString ExecutableInfo::steamAppID() const
