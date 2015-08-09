@@ -85,6 +85,11 @@ public:
   virtual QDir gameDirectory() const = 0;
 
   /**
+   * @return directory where the game expects to find its data files
+   */
+  virtual QDir dataDirectory() const = 0;
+
+  /**
    * @brief set the path to the managed game
    * @param path to the game
    * @note this will be called by by MO to set the concrete path of the game. This is particularly
