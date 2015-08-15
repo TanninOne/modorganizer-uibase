@@ -7,7 +7,6 @@ MOBase::ExecutableInfo::ExecutableInfo(const QString &title, const QFileInfo &bi
   : m_Title(title)
   , m_Binary(binary)
   , m_WorkingDirectory(binary.exists() ? binary.absoluteDir() : QString())
-  , m_CloseMO(CloseMOStyle::DEFAULT_STAY)
   , m_SteamAppID()
 {
 }
@@ -32,13 +31,21 @@ ExecutableInfo &MOBase::ExecutableInfo::withSteamAppId(const QString &appId)
 
 ExecutableInfo &ExecutableInfo::withDefaultClose()
 {
-  m_CloseMO = CloseMOStyle::DEFAULT_CLOSE;
+  m_CloseByDefault = true;
   return *this;
 }
 
 ExecutableInfo &ExecutableInfo::withNeverClose()
 {
-  m_CloseMO = CloseMOStyle::NEVER_CLOSE;
+  m_CloseByDefault = false;
+  m_DisableCloseSelection = true;
+  return *this;
+}
+
+ExecutableInfo &ExecutableInfo::withAlwaysClose()
+{
+  m_CloseByDefault = true;
+  m_DisableCloseSelection = true;
   return *this;
 }
 
@@ -73,11 +80,6 @@ QDir ExecutableInfo::workingDirectory() const
   return m_WorkingDirectory;
 }
 
-ExecutableInfo::CloseMOStyle ExecutableInfo::closeMO() const
-{
-  return m_CloseMO;
-}
-
 QString ExecutableInfo::steamAppID() const
 {
   return m_SteamAppID;
@@ -86,4 +88,14 @@ QString ExecutableInfo::steamAppID() const
 bool ExecutableInfo::isCustom() const
 {
   return m_Custom;
+}
+
+bool ExecutableInfo::closeByDefault() const
+{
+  return m_CloseByDefault;
+}
+
+bool ExecutableInfo::disableCloseSelection() const
+{
+  return m_DisableCloseSelection;
 }
