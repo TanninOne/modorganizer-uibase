@@ -123,6 +123,21 @@ public:
    */
   virtual QStringList getPrimaryPlugins() = 0;
 
+  /**
+   * @return list of game variants
+   * @note if there are multiple variants of a game (and the variants make a difference to the
+   *       plugin) like a regular one and a GOTY-edition the plugin can return a list of them and
+   *       the user gets to chose which one he owns.
+   */
+  virtual QStringList gameVariants() const = 0;
+
+  /**
+   * @brief if there are multiple game variants (returned by gameVariants) this will get called
+   *        on start with the user-selected game edition
+   * @param variant the game edition selected by the user
+   */
+  virtual void setGameVariant(const QString &variant) = 0;
+
 protected:
 
   virtual const std::map<std::type_index, boost::any> &featureList() const = 0;
