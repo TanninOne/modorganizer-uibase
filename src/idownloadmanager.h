@@ -4,6 +4,7 @@
 
 #include "dllimport.h"
 #include <QStringList>
+#include <QObject>
 
 
 namespace MOBase {
