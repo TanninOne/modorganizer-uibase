@@ -128,5 +128,6 @@ QT5_USE_MODULES(uibase Widgets Declarative)
 ## Installation
 
 INSTALL(TARGETS uibase
-        RUNTIME DESTINATION bin)
+        RUNTIME DESTINATION bin
+        ARCHIVE DESTINATION libs)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/uibase.pdb DESTINATION pdb)
