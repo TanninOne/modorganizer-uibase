@@ -58,19 +58,4 @@ bool InstallationTester::isTopLevelSuffix(const FileNameString &fileName)
   return tlSuffixes.count(QFileInfo(fileName.toQString()).suffix()) != 0;
 }
 
-/*
-bool InstallationTester::isSuffixAcceptable(const QString &fileName) {
-  static QString acceptableSuffixes[] = { "esp", "esm", "bsa", "txt", "jpg", "png", "" };
-
-  QString suffix = QFileInfo(fileName).suffix();
-
-  for (int i = 0; acceptableSuffixes[i].length() != 0; ++i) {
-    if (QString::compare(suffix, acceptableSuffixes[i], Qt::CaseInsensitive) == 0) {
-      return true;
-    }
-  }
-
-  return false;
-}
-*/
 } // namespace MOBase
