@@ -56,6 +56,15 @@ public:
    */
   virtual QString binaryName() const = 0;
 
+  /**
+   * @return version of game
+   */
+  virtual QString version() const = 0;
+
+  /**
+   * @return version of script extender or empty string
+   */
+  virtual QString extenderVersion() const = 0;
 };
 
 
