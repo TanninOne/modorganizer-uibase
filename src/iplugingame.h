@@ -138,6 +138,11 @@ public:
    */
   virtual void setGameVariant(const QString &variant) = 0;
 
+  /**
+   * @brief Get the name of the executable to run (for NCC as far as I can tell)
+   */
+  virtual QString getBinaryName() const = 0;
+
 protected:
 
   virtual const std::map<std::type_index, boost::any> &featureList() const = 0;

@@ -39,6 +39,7 @@ class IModRepositoryBridge;
 class IDownloadManager;
 class IPluginList;
 class IModList;
+class IPluginGame;
 
 /**
  * @brief Interface to class that provides information about the running session
@@ -101,7 +102,7 @@ public:
    * @param name name of the mod to query
    * @return an interface to the mod or nullptr if there is no mod with the name
    */
-  virtual IModInterface *getMod(const QString &name) = 0;
+  virtual IModInterface *getMod(const QString &name) const = 0;
 
   /**
    * @brief create a new mod with the specified name
@@ -222,17 +223,17 @@ public:
   /**
    * @return interface to the download manager
    */
-  virtual MOBase::IDownloadManager *downloadManager() = 0;
+  virtual MOBase::IDownloadManager *downloadManager() const = 0;
 
   /**
    * @return interface to the list of plugins (esps and esms)
    */
-  virtual MOBase::IPluginList *pluginList() = 0;
+  virtual MOBase::IPluginList *pluginList() const = 0;
 
   /**
    * @return interface to the list of mods
    */
-  virtual MOBase::IModList *modList() = 0;
+  virtual MOBase::IModList *modList() const = 0;
 
   /**
    * @brief starts an application with virtual filesystem active
@@ -281,6 +282,10 @@ public:
    */
   virtual void refreshModList(bool saveChanges = true) = 0;
 
+  /**
+   * @brief get the currently managed game info
+   */
+  virtual MOBase::IPluginGame *managedGame() const = 0;
 };
 
 } // namespace MOBase

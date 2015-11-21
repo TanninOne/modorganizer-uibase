@@ -54,7 +54,7 @@ public:
   /**
    * @return name of the game binary (i.e. TESV.exe)
    */
-  virtual QString binaryName() const = 0;
+  //virtual QString binaryName() const = 0;
 
 };
 
