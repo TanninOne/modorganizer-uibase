@@ -49,7 +49,7 @@ public:
   /**
    * @return the (absolute) path to the game directory
    */
-  virtual QString path() const = 0;
+  //virtual QString path() const = 0;
 
   /**
    * @return name of the game binary (i.e. TESV.exe)
