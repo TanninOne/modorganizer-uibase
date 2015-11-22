@@ -62,7 +62,6 @@ SET(uibase_HDRS
     tutorialcontrol.h
     tutorabledialog.h
     iinstallationmanager.h
-    igameinfo.h
     scopeguard.h
     pluginsetting.h
     iplugindiagnose.h

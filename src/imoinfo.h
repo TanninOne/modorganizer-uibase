@@ -34,7 +34,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 namespace MOBase {
 
 class IModInterface;
-class IGameInfo;
 class IModRepositoryBridge;
 class IDownloadManager;
 class IPluginList;
@@ -61,11 +60,6 @@ public:
 public:
 
   virtual ~IOrganizer() {}
-
-  /**
-   * @return information structure holding information about the game being managed
-   */
-  virtual IGameInfo &gameInfo() const = 0;
 
   /**
    * @return create a new nexus interface class

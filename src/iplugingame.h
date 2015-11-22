@@ -4,9 +4,14 @@
 
 #include "iplugin.h"
 #include <executableinfo.h>
+
+class QIcon;
+class QStringList;
+
 #include <cstdint>
 #include <typeindex>
 #include <unordered_map>
+#include <vector>
 #include <boost/any.hpp>
 
 
@@ -39,7 +44,7 @@ public:
   virtual QString gameName() const = 0;
 
   template <typename T>
-  T *feature() {
+  T *feature() const {
     auto list = featureList();
     auto iter = list.find(typeid(T));
     if (iter != list.end()) {
@@ -110,7 +115,7 @@ public:
   /**
    * @return list of automatically discovered executables of the game itself and tools surrounding it
    */
-  virtual QList<ExecutableInfo> executables() = 0;
+  virtual QList<ExecutableInfo> executables() const = 0;
 
   /**
    * @return steam app id for this game. Should be empty for games not available on steam
@@ -121,7 +126,7 @@ public:
   /**
    * @return list of plugins that are part of the game and not considered optional
    */
-  virtual QStringList getPrimaryPlugins() = 0;
+  virtual QStringList getPrimaryPlugins() const = 0;
 
   /**
    * @return list of game variants
@@ -139,13 +144,23 @@ public:
   virtual void setGameVariant(const QString &variant) = 0;
 
   /**
-   * @brief Get the name of the executable to run (for NCC as far as I can tell)
+   * @brief Get the name of the executable to run
    */
   virtual QString getBinaryName() const = 0;
 
+  /**
+   * @brief Get the identifier used by nexus for this game
+   */
+  virtual QString getNexusName() const = 0;
+
+  /**
+   * @brief Get the list of .ini files this game uses
+   */
+  virtual QStringList getIniFiles() const = 0;
+
 protected:
 
-  virtual const std::map<std::type_index, boost::any> &featureList() const = 0;
+  virtual std::map<std::type_index, boost::any> featureList() const = 0;
 
 };
 

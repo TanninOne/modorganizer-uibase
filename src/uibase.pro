@@ -71,7 +71,6 @@ HEADERS +=\
     tutorialcontrol.h \
     tutorabledialog.h \
     iinstallationmanager.h \
-    igameinfo.h \
     scopeguard.h \
     pluginsetting.h \
     iplugindiagnose.h \
@@ -128,4 +127,5 @@ QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.pdb*) $$quote($$DSTDI
 QMAKE_POST_LINK += xcopy /y /s /I $$quote($$OUTDIR\\uibase.lib*) $$quote($$SRCDIR\\..\\plugins\\helloworldcpp) $$escape_expand(\\n)
 
 OTHER_FILES +=\
-    SConscript
+    SConscript \
+    CMakeLists.txt
