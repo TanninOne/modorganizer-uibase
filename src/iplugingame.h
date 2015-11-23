@@ -158,6 +158,11 @@ public:
    */
   virtual QStringList getIniFiles() const = 0;
 
+  /**
+   * @brief Get a list of esp/esm files that are part of known dlcs
+   */
+  virtual QStringList getDLCPlugins() const = 0;
+
 protected:
 
   virtual std::map<std::type_index, boost::any> featureList() const = 0;
