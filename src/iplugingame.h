@@ -165,6 +165,13 @@ public:
    */
   virtual QStringList getDLCPlugins() const = 0;
 
+  /*
+   * @brief determine the load order mechanism used by this game.
+   *
+   * @note this may throw an exception if the mechanism can't be determined
+   */
+  virtual LoadOrderMechanism getLoadOrderMechanism() const = 0;
+
 protected:
 
   virtual std::map<std::type_index, boost::any> featureList() const = 0;
