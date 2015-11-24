@@ -172,6 +172,16 @@ public:
    */
   virtual LoadOrderMechanism getLoadOrderMechanism() const = 0;
 
+  /**
+   * @brief Get the Nexus ID of Mod Organizer
+   */
+  virtual int getNexusModOrganizerID() const = 0;
+
+  /**
+   * @brief Get the Nexus Game ID
+   */
+  virtual int getNexusGameID() const = 0;
+
 protected:
 
   virtual std::map<std::type_index, boost::any> featureList() const = 0;
