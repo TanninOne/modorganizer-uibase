@@ -41,22 +41,29 @@ SET(uibase_SRCS
   )
 
 SET(uibase_HDRS
+    iplugin.h
+    iplugintool.h
+    iplugininstaller.h
+    iplugininstallersimple.h
+    iplugininstallercustom.h
+    iplugindiagnose.h
+    ipluginproxy.h
+    ipluginlist.h
+    ipluginmodpage.h
+    ipluginpreview.h
+    iplugingame.h
+    ipluginfilemapper.h
     utility.h
     textviewer.h
     finddialog.h
     report.h
-    iplugin.h
     versioninfo.h
     imoinfo.h
-    iplugintool.h
     imodinterface.h
     lineeditclear.h
     dllimport.h
-    iplugininstaller.h
     directorytree.h
     mytree.h
-    iplugininstallersimple.h
-    iplugininstallercustom.h
     installationtester.h
     tutorialmanager.h
     tutorialcontrol.h
@@ -64,27 +71,22 @@ SET(uibase_HDRS
     iinstallationmanager.h
     scopeguard.h
     pluginsetting.h
-    iplugindiagnose.h
     diagnosisreport.h
     guessedvalue.h
-    ipluginproxy.h
     json.h
     imodrepositorybridge.h
     idownloadmanager.h
     nxmurl.h
     taskprogressmanager.h
-    ipluginlist.h
-    ipluginmodpage.h
     questionboxmemory.h
     sortabletreewidget.h
     imodlist.h
     modrepositoryfileinfo.h
-    ipluginpreview.h
-    iplugingame.h
     executableinfo.h
     iprofile.h
     delayedfilewriter.h
-	filenamestring.h
+    filenamestring.h
+    filemapping.h
   )
 
 SET(UIS
