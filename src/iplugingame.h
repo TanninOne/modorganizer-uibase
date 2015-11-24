@@ -155,6 +155,8 @@ public:
 
   /**
    * @brief Get the list of .ini files this game uses
+   *
+   * @note It is important that the 'main' .ini file comes first in this list
    */
   virtual QStringList getIniFiles() const = 0;
 
