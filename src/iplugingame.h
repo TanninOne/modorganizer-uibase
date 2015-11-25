@@ -182,6 +182,16 @@ public:
    */
   virtual int getNexusGameID() const = 0;
 
+  /**
+   * @brief Get the nexus management base URL
+   */
+  virtual QString getNexusManagementURL() const = 0;
+
+  /**
+   * @brief Get the nexus base display URL
+   */
+  virtual QString getNexusDisplayURL() const = 0;
+
 protected:
 
   virtual std::map<std::type_index, boost::any> featureList() const = 0;

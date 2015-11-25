@@ -279,7 +279,7 @@ public:
   /**
    * @brief get the currently managed game info
    */
-  virtual MOBase::IPluginGame *managedGame() const = 0;
+  virtual MOBase::IPluginGame const *managedGame() const = 0;
 };
 
 } // namespace MOBase
