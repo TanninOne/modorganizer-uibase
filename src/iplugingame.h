@@ -3,17 +3,18 @@
 
 
 #include "iplugin.h"
-#include <executableinfo.h>
+#include "executableinfo.h"
 
 class QIcon;
+class QUrl;
 class QStringList;
+
+#include <boost/any.hpp>
 
 #include <cstdint>
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
-#include <boost/any.hpp>
-
 
 namespace MOBase {
 
@@ -183,14 +184,18 @@ public:
   virtual int getNexusGameID() const = 0;
 
   /**
-   * @brief Get the nexus management base URL
-   */
-  virtual QString getNexusManagementURL() const = 0;
-
-  /**
    * @brief Get the nexus base display URL
    */
   virtual QString getNexusDisplayURL() const = 0;
+
+  /**
+   * @brief check if url is for a related mod (i.e. same game)
+   * *
+   * This is partly to cope with nexus changing the URLs for mods from
+   * <game>.nexusmods.com/ to www.nexusmods.com/game/, as a lot of the web pages
+   * still have the old URLs.
+   */
+  virtual bool isRelatedURL(QUrl const &) const = 0;
 
 protected:
 
