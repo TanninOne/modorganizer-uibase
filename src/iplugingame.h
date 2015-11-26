@@ -183,20 +183,6 @@ public:
    */
   virtual int getNexusGameID() const = 0;
 
-  /**
-   * @brief Get the nexus base display URL
-   */
-  virtual QString getNexusDisplayURL() const = 0;
-
-  /**
-   * @brief check if url is for a related mod (i.e. same game)
-   * *
-   * This is partly to cope with nexus changing the URLs for mods from
-   * <game>.nexusmods.com/ to www.nexusmods.com/game/, as a lot of the web pages
-   * still have the old URLs.
-   */
-  virtual bool isRelatedURL(QUrl const &) const = 0;
-
 protected:
 
   virtual std::map<std::type_index, boost::any> featureList() const = 0;
