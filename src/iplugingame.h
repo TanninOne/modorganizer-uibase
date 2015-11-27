@@ -152,7 +152,7 @@ public:
   /**
    * @brief Get the identifier used by nexus for this game
    */
-  virtual QString getNexusName() const = 0;
+  virtual QString getGameShortName() const = 0;
 
   /**
    * @brief Get the list of .ini files this game uses
