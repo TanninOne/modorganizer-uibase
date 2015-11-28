@@ -200,7 +200,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(IPluginGame::ProfileSettings)
 } // namespace MOBase
 
 Q_DECLARE_INTERFACE(MOBase::IPluginGame, "com.tannin.ModOrganizer.PluginGame/1.0")
-//Q_DECLARE_METATYPE(MOBase::IPluginGame*)
 Q_DECLARE_METATYPE(MOBase::IPluginGame const *)
 
 #endif // IPLUGINGAME_H
