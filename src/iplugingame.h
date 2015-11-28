@@ -120,7 +120,8 @@ public:
 
   /**
    * @return steam app id for this game. Should be empty for games not available on steam
-   * @note if a game is available in multiple versions those might have different app ids. the plugin should try to return the right one
+   * @note if a game is available in multiple versions those might have different app ids.
+   *       the plugin should try to return the right one
    */
   virtual QString steamAPPId() const = 0;
 
@@ -145,7 +146,7 @@ public:
   virtual void setGameVariant(const QString &variant) = 0;
 
   /**
-   * @brief Get the name of the executable to run
+   * @brief Get the name of the executable that gets run
    */
   virtual QString getBinaryName() const = 0;
 
@@ -183,6 +184,11 @@ public:
    */
   virtual int getNexusGameID() const = 0;
 
+  /**
+   * @brief See if the supplied directory looks like a valid game
+   */
+  virtual bool looksValid(QDir const &) const = 0;
+
 protected:
 
   virtual std::map<std::type_index, boost::any> featureList() const = 0;
@@ -194,6 +200,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(IPluginGame::ProfileSettings)
 } // namespace MOBase
 
 Q_DECLARE_INTERFACE(MOBase::IPluginGame, "com.tannin.ModOrganizer.PluginGame/1.0")
-Q_DECLARE_METATYPE(MOBase::IPluginGame*)
+//Q_DECLARE_METATYPE(MOBase::IPluginGame*)
+Q_DECLARE_METATYPE(MOBase::IPluginGame const *)
 
 #endif // IPLUGINGAME_H
