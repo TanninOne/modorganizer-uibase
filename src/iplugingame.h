@@ -189,6 +189,11 @@ public:
    */
   virtual bool looksValid(QDir const &) const = 0;
 
+  /**
+   * @brief Get version of program
+   */
+  virtual QString getGameVersion() const = 0;
+
 protected:
 
   virtual std::map<std::type_index, boost::any> featureList() const = 0;
