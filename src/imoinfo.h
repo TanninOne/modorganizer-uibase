@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "versioninfo.h"
 #include "guessedvalue.h"
+#include "iprofile.h"
 #include <QString>
 #include <QStringList>
 #include <QVariant>
@@ -233,6 +234,11 @@ public:
    * @return interface to the list of mods
    */
   virtual MOBase::IModList *modList() = 0;
+
+  /**
+   * @return interface to the active profile
+   */
+  virtual MOBase::IProfile *profile() = 0;
 
   /**
    * @brief starts an application with virtual filesystem active
