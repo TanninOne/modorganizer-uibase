@@ -3,12 +3,18 @@
 
 
 #include "iplugin.h"
-#include <executableinfo.h>
+#include "executableinfo.h"
+
+class QIcon;
+class QUrl;
+class QStringList;
+
+#include <boost/any.hpp>
+
 #include <cstdint>
 #include <typeindex>
 #include <unordered_map>
-#include <boost/any.hpp>
-
+#include <vector>
 
 namespace MOBase {
 
@@ -39,7 +45,7 @@ public:
   virtual QString gameName() const = 0;
 
   template <typename T>
-  T *feature() {
+  T *feature() const {
     auto list = featureList();
     auto iter = list.find(typeid(T));
     if (iter != list.end()) {
@@ -110,18 +116,19 @@ public:
   /**
    * @return list of automatically discovered executables of the game itself and tools surrounding it
    */
-  virtual QList<ExecutableInfo> executables() = 0;
+  virtual QList<ExecutableInfo> executables() const = 0;
 
   /**
    * @return steam app id for this game. Should be empty for games not available on steam
-   * @note if a game is available in multiple versions those might have different app ids. the plugin should try to return the right one
+   * @note if a game is available in multiple versions those might have different app ids.
+   *       the plugin should try to return the right one
    */
   virtual QString steamAPPId() const = 0;
 
   /**
    * @return list of plugins that are part of the game and not considered optional
    */
-  virtual QStringList getPrimaryPlugins() = 0;
+  virtual QStringList getPrimaryPlugins() const = 0;
 
   /**
    * @return list of game variants
@@ -138,9 +145,58 @@ public:
    */
   virtual void setGameVariant(const QString &variant) = 0;
 
+  /**
+   * @brief Get the name of the executable that gets run
+   */
+  virtual QString getBinaryName() const = 0;
+
+  /**
+   * @brief Get the identifier used by nexus for this game
+   */
+  virtual QString getGameShortName() const = 0;
+
+  /**
+   * @brief Get the list of .ini files this game uses
+   *
+   * @note It is important that the 'main' .ini file comes first in this list
+   */
+  virtual QStringList getIniFiles() const = 0;
+
+  /**
+   * @brief Get a list of esp/esm files that are part of known dlcs
+   */
+  virtual QStringList getDLCPlugins() const = 0;
+
+  /*
+   * @brief determine the load order mechanism used by this game.
+   *
+   * @note this may throw an exception if the mechanism can't be determined
+   */
+  virtual LoadOrderMechanism getLoadOrderMechanism() const = 0;
+
+  /**
+   * @brief Get the Nexus ID of Mod Organizer
+   */
+  virtual int getNexusModOrganizerID() const = 0;
+
+  /**
+   * @brief Get the Nexus Game ID
+   */
+  virtual int getNexusGameID() const = 0;
+
+  /**
+   * @brief See if the supplied directory looks like a valid game
+   */
+  virtual bool looksValid(QDir const &) const = 0;
+
+  /**
+   * @brief Get version of program
+   */
+  virtual QString getGameVersion() const = 0;
+
 protected:
 
-  virtual const std::map<std::type_index, boost::any> &featureList() const = 0;
+  virtual std::map<std::type_index, boost::any> featureList() const = 0;
 
 };
 
@@ -149,6 +205,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(IPluginGame::ProfileSettings)
 } // namespace MOBase
 
 Q_DECLARE_INTERFACE(MOBase::IPluginGame, "com.tannin.ModOrganizer.PluginGame/1.0")
-Q_DECLARE_METATYPE(MOBase::IPluginGame*)
+Q_DECLARE_METATYPE(MOBase::IPluginGame const *)
 
 #endif // IPLUGINGAME_H

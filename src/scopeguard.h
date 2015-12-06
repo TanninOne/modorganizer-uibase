@@ -320,7 +320,7 @@ inline ObjScopeGuardImpl2<Obj1,Ret(Obj2::*)(P1a,P2a),P1b,P2b> MakeGuard(Ret(Obj2
 //#define ON_BLOCK_EXIT_OBJ ScopeGuard ANONYMOUS_VARIABLE(scopeGuard) = MakeObjGuard
 
 
-#define UNUSED_VAR(VAR) VAR
+#define UNUSED_VAR(VAR) (void)VAR
 
 namespace MOBase {
 
