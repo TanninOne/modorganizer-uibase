@@ -10,8 +10,8 @@ namespace MOBase {
 /** This class wraps up a QString so the only comparisons are case insensitive
  *
  * \warn YMMV as to whether or not this is a good idea.
- * It might be better to inherit from std::string and then block the things
- * I don't need but it's hard right know to work out what those are.
+ * It might be better to inherit from QString and then block the things
+ * I don't need but it's hard right now to work out what those are.
  */
 class FileNameString {
   friend QDLLEXPORT bool operator<(FileNameString const &lhs, FileNameString const &rhs);
