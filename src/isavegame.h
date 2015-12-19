@@ -15,7 +15,7 @@ public:
   virtual ~ISaveGame() {}
 
   /**
-   * @brief get the name of the save file
+   * @brief get the name of the (main) save file.
    */
   virtual QString getFilename() const = 0;
 
@@ -33,6 +33,13 @@ public:
    * This is normally the pc name for RPG games.
    */
   virtual QString getIdentifier() const = 0;
+
+  /**
+   * @brief Gets all the files related to this save
+   *
+   * Note: This must return the actual list, not the potential list.
+   */
+  virtual QStringList allFiles() const = 0;
 };
 
 }

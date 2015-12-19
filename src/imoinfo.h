@@ -280,6 +280,11 @@ public:
    * @brief get the currently managed game info
    */
   virtual MOBase::IPluginGame const *managedGame() const = 0;
+
+  /**
+   * @brief Get the mod list, sorted by current profile priority
+   */
+  virtual QStringList modsSortedByProfilePriority() const = 0;
 };
 
 } // namespace MOBase
