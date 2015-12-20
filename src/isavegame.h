@@ -32,7 +32,7 @@ public:
    *
    * This is normally the pc name for RPG games.
    */
-  virtual QString getIdentifier() const = 0;
+  virtual QString getSaveGroupIdentifier() const = 0;
 
   /**
    * @brief Gets all the files related to this save
