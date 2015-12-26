@@ -96,7 +96,8 @@ HEADERS +=\
     filenamestring.h \
     isavegame.h \
     isavegameinfowidget.h \
-    filemapping.h
+    filemapping.h \
+    ipluginfilemapper.h
 
 FORMS += \
     textviewer.ui \
