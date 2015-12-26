@@ -233,7 +233,7 @@ public:
   /**
    * @return interface to the active profile
    */
-  virtual MOBase::IProfile *profile() = 0;
+  virtual MOBase::IProfile *profile() const = 0;
 
   /**
    * @brief starts an application with virtual filesystem active
