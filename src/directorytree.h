@@ -35,13 +35,13 @@ class FileTreeInformation {
 public:
   FileTreeInformation() : m_Name(), m_Index(0) {}
   FileTreeInformation(const FileTreeInformation &reference) : m_Name(reference.m_Name), m_Index(reference.m_Index) {}
-  FileTreeInformation(const QString &name, int index) : m_Name(name), m_Index(index) {}
+  FileTreeInformation(const QString &name, size_t index) : m_Name(name), m_Index(index) {}
   const FileNameString &getName() const { return m_Name; }
   void setName(const QString &name) { m_Name = name; }
-  int getIndex() const { return m_Index; }
+  size_t getIndex() const { return m_Index; }
 private:
   FileNameString m_Name;
-  int m_Index;
+  size_t m_Index;
 };
 
 //Q_DECLARE_METATYPE(FileTreeInformation)
