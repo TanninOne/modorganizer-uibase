@@ -95,7 +95,8 @@ HEADERS +=\
     delayedfilewriter.h \
     filenamestring.h \
     isavegame.h \
-    isavegameinfowidget.h
+    isavegameinfowidget.h \
+    filemapping.h
 
 FORMS += \
     textviewer.ui \
