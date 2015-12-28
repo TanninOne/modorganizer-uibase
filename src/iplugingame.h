@@ -128,7 +128,7 @@ public:
   /**
    * @return list of plugins that are part of the game and not considered optional
    */
-  virtual QStringList getPrimaryPlugins() const = 0;
+  virtual QStringList primaryPlugins() const = 0;
 
   /**
    * @return list of game variants
@@ -148,41 +148,41 @@ public:
   /**
    * @brief Get the name of the executable that gets run
    */
-  virtual QString getBinaryName() const = 0;
+  virtual QString binaryName() const = 0;
 
   /**
    * @brief Get the identifier used by nexus for this game
    */
-  virtual QString getGameShortName() const = 0;
+  virtual QString gameShortName() const = 0;
 
   /**
    * @brief Get the list of .ini files this game uses
    *
    * @note It is important that the 'main' .ini file comes first in this list
    */
-  virtual QStringList getIniFiles() const = 0;
+  virtual QStringList iniFiles() const = 0;
 
   /**
    * @brief Get a list of esp/esm files that are part of known dlcs
    */
-  virtual QStringList getDLCPlugins() const = 0;
+  virtual QStringList DLCPlugins() const = 0;
 
   /*
    * @brief determine the load order mechanism used by this game.
    *
    * @note this may throw an exception if the mechanism can't be determined
    */
-  virtual LoadOrderMechanism getLoadOrderMechanism() const = 0;
+  virtual LoadOrderMechanism loadOrderMechanism() const = 0;
 
   /**
    * @brief Get the Nexus ID of Mod Organizer
    */
-  virtual int getNexusModOrganizerID() const = 0;
+  virtual int nexusModOrganizerID() const = 0;
 
   /**
    * @brief Get the Nexus Game ID
    */
-  virtual int getNexusGameID() const = 0;
+  virtual int nexusGameID() const = 0;
 
   /**
    * @brief See if the supplied directory looks like a valid game
@@ -192,7 +192,7 @@ public:
   /**
    * @brief Get version of program
    */
-  virtual QString getGameVersion() const = 0;
+  virtual QString gameVersion() const = 0;
 
 protected:
 
