@@ -33,8 +33,7 @@ public:
    * @param fileID id of the file to download
    * @return an id by which the download will be identified
    */
-  //Apparently not used
-  //virtual int startDownloadNexusFile(int modID, int fileID) = 0;
+  virtual int startDownloadNexusFile(int modID, int fileID) = 0;
 
   /**
    * @brief get the (absolute) file path of the specified download.
