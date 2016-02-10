@@ -21,8 +21,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef IPLUGINLIST_H
 #define IPLUGINLIST_H
 
+#include <QFlags>
 
-#include <QString>
+class QString;
+class QStringList;
+
+#include <functional>
 
 namespace MOBase {
 
