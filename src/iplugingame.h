@@ -151,7 +151,10 @@ public:
   virtual QString binaryName() const = 0;
 
   /**
-   * @brief Get the identifier used by nexus for this game
+   * @brief Get the 'short' name of the game
+   *
+   * the short name of the game is used for - save ames, registry entries and
+   * nexus mod pages as far as I can see.
    */
   virtual QString gameShortName() const = 0;
 

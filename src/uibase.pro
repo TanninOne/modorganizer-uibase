@@ -94,7 +94,10 @@ HEADERS +=\
     iprofile.h \
     delayedfilewriter.h \
     filenamestring.h \
-    isavegame.h
+    isavegame.h \
+    isavegameinfowidget.h \
+    filemapping.h \
+    ipluginfilemapper.h
 
 FORMS += \
     textviewer.ui \
