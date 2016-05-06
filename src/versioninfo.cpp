@@ -349,6 +349,10 @@ QDLLEXPORT bool operator<(const VersionInfo &LHS, const VersionInfo &RHS)
   return LHS.m_Rest < RHS.m_Rest;
 }
 
+QDLLEXPORT bool operator>(const VersionInfo &LHS, const VersionInfo &RHS)
+{
+  return !(LHS <= RHS);
+}
 
 QDLLEXPORT bool operator<=(const VersionInfo &LHS, const VersionInfo &RHS)
 {
@@ -359,7 +363,6 @@ QDLLEXPORT bool operator<=(const VersionInfo &LHS, const VersionInfo &RHS)
     return !(RHS < LHS);
   }
 }
-
 
 QDLLEXPORT bool operator>=(const VersionInfo &LHS, const VersionInfo &RHS)
 {

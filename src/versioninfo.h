@@ -37,6 +37,7 @@ class QDLLEXPORT VersionInfo
 {
 
   friend QDLLEXPORT bool operator<(const VersionInfo &LHS, const VersionInfo &RHS);
+  friend QDLLEXPORT bool operator>(const VersionInfo &LHS, const VersionInfo &RHS);
   friend QDLLEXPORT bool operator<=(const VersionInfo &LHS, const VersionInfo &RHS);
   friend QDLLEXPORT bool operator>=(const VersionInfo &LHS, const VersionInfo &RHS);
   friend QDLLEXPORT bool operator!=(const VersionInfo &LHS, const VersionInfo &RHS);
