@@ -37,7 +37,8 @@ SET(uibase_SRCS
     sortabletreewidget.cpp
     executableinfo.cpp
     delayedfilewriter.cpp
-	filenamestring.cpp
+    filenamestring.cpp
+    safewritefile.cpp
   )
 
 SET(uibase_HDRS
@@ -87,6 +88,7 @@ SET(uibase_HDRS
     delayedfilewriter.h
     filenamestring.h
     filemapping.h
+    safewritefile.h
   )
 
 SET(UIS
