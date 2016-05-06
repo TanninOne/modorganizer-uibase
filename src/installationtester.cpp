@@ -34,8 +34,11 @@ InstallationTester::InstallationTester()
 bool InstallationTester::isTopLevelDirectory(const FileNameString &dirName)
 {
   static std::set<FileNameString> tlDirectoryNames = {
-    "distantlod", "facegen", "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders", "sound",
-    "strings", "textures", "trees", "video", "skse", "obse", "nvse", "fose", "asi", "SkyProc Patchers" };
+    "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders",
+    "sound", "strings", "textures", "trees", "video", "facegen",
+    "skse", "obse", "nvse", "fose", "f4se",
+    "distantlod", "asi", "SkyProc Patchers", "Tools"
+  };
 
   return tlDirectoryNames.count(dirName) != 0;
 }
@@ -44,9 +47,10 @@ bool InstallationTester::isTopLevelDirectory(const FileNameString &dirName)
 bool InstallationTester::isTopLevelDirectoryBain(const FileNameString &dirName)
 {
   static std::set<FileNameString> tlDirectoryNames = {
-    "distantlod", "facegen", "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders", "sound",
-    "strings", "textures", "trees", "video", "skse", "obse", "nvse", "fose", "asi", "SkyProc Patchers",
-    "Docs", "INI Tweaks" };
+    "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders",
+    "sound", "strings", "textures", "trees", "video", "facegen",
+    "skse", "obse", "nvse", "fose", "f4se",
+    "distantlod", "asi", "SkyProc Patchers", "Tools", "Docs", "INI Tweaks" };
 
   return tlDirectoryNames.count(dirName) != 0;
 }
