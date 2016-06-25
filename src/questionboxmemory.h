@@ -22,11 +22,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #define QUESTIONBOXMEMORY_H
 
 #include "dllimport.h"
-#include <QDialog>
-#include <QSettings>
-#include <QDialogButtonBox>
-#include <QMutex>
 
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QObject>
+#include <QString>
+
+class QAbstractButton;
+class QMutex;
+class QSettings;
+class QWidget;
 
 namespace Ui {
   class QuestionBoxMemory;
@@ -46,7 +51,7 @@ public:
 
   static void init(const QString &fileName);
 
-  static QDialogButtonBox::StandardButton query(QWidget *parent, const QString &name,
+  static QDialogButtonBox::StandardButton query(QWidget *parent, const QString &windowName, const QString &fileName,
                                                 const QString &title, const QString &text,
                                                 QDialogButtonBox::StandardButtons buttons = QDialogButtonBox::Yes | QDialogButtonBox::No,
                                                 QDialogButtonBox::StandardButton defaultButton = QDialogButtonBox::NoButton);
@@ -57,7 +62,7 @@ private slots:
 
 private:
 
-  explicit QuestionBoxMemory(QWidget *parent, const QString &title, const QString &text, const QDialogButtonBox::StandardButtons buttons,
+  explicit QuestionBoxMemory(QWidget *parent, const QString &title, const QString &text, const QString &filename, const QDialogButtonBox::StandardButtons buttons,
                              QDialogButtonBox::StandardButton defaultButton);
 
   static void cleanup();
