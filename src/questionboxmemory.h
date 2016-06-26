@@ -51,6 +51,13 @@ public:
 
   static void init(const QString &fileName);
 
+  static void resetDialogs();
+
+  static QDialogButtonBox::StandardButton query(QWidget *parent, const QString &windowName,
+                                                const QString &title, const QString &text,
+                                                QDialogButtonBox::StandardButtons buttons = QDialogButtonBox::Yes | QDialogButtonBox::No,
+                                                QDialogButtonBox::StandardButton defaultButton = QDialogButtonBox::NoButton);
+
   static QDialogButtonBox::StandardButton query(QWidget *parent, const QString &windowName, const QString &fileName,
                                                 const QString &title, const QString &text,
                                                 QDialogButtonBox::StandardButtons buttons = QDialogButtonBox::Yes | QDialogButtonBox::No,
@@ -62,7 +69,7 @@ private slots:
 
 private:
 
-  explicit QuestionBoxMemory(QWidget *parent, const QString &title, const QString &text, const QString &filename, const QDialogButtonBox::StandardButtons buttons,
+  explicit QuestionBoxMemory(QWidget *parent, const QString &title, const QString &text, const QString *filename, const QDialogButtonBox::StandardButtons buttons,
                              QDialogButtonBox::StandardButton defaultButton);
 
   static void cleanup();
@@ -71,6 +78,11 @@ private:
 
   static QMutex s_SettingsMutex;
   static QSettings *s_SettingFile;
+
+  static QDialogButtonBox::StandardButton queryImpl(QWidget *parent, const QString &windowName, const QString *fileName,
+                                                const QString &title, const QString &text,
+                                                QDialogButtonBox::StandardButtons buttons = QDialogButtonBox::Yes | QDialogButtonBox::No,
+                                                QDialogButtonBox::StandardButton defaultButton = QDialogButtonBox::NoButton);
 
   Ui::QuestionBoxMemory *ui;
   QDialogButtonBox::StandardButton m_Button;
