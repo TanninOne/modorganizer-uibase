@@ -21,20 +21,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "questionboxmemory.h"
 #include "ui_questionboxmemory.h"
 
-#include <functional>
-#include <QMessageBox>
+#include <QApplication>            // for QApplication
+#include <QIcon>                   // for QIcon
 #include <QPushButton>
+#include <QMutex>                  // for QMutex
 #include <QMutexLocker>
+#include <QSettings>
+#include <QStyle>                  // for QStyle, etc
 
+#include <stdlib.h>                // for atexit
 
 namespace MOBase {
 
 QSettings *QuestionBoxMemory::s_SettingFile = nullptr;
 QMutex QuestionBoxMemory::s_SettingsMutex;
 
-QuestionBoxMemory::QuestionBoxMemory(QWidget *parent, const QString &title, const QString &text,
+QuestionBoxMemory::QuestionBoxMemory(QWidget *parent, const QString &title, const QString &text, QString const *filename,
                                      const QDialogButtonBox::StandardButtons buttons, QDialogButtonBox::StandardButton defaultButton)
-  : QDialog(parent), ui(new Ui::QuestionBoxMemory)
+  : QDialog(parent)
+  , ui(new Ui::QuestionBoxMemory)
+  , m_Button(QDialogButtonBox::Cancel)
 {
   ui->setupUi(this);
 
@@ -43,6 +49,14 @@ QuestionBoxMemory::QuestionBoxMemory(QWidget *parent, const QString &title, cons
   QIcon icon = QApplication::style()->standardIcon(QStyle::SP_MessageBoxQuestion);
   ui->iconLabel->setPixmap(icon.pixmap(128));
   ui->messageLabel->setText(text);
+  if (filename == nullptr) {
+    //delete the 2nd check box
+    QCheckBox *box = ui->rememberForCheckBox;
+    box->parentWidget()->layout()->removeWidget(box);
+    delete box;
+  } else {
+    ui->rememberForCheckBox->setText(ui->rememberForCheckBox->text() + " " + *filename);
+  }
   ui->buttonBox->setStandardButtons(buttons);
   if (defaultButton != QDialogButtonBox::NoButton) {
     ui->buttonBox->button(defaultButton)->setDefault(true);
@@ -66,6 +80,11 @@ void QuestionBoxMemory::init(const QString &fileName)
   }
 }
 
+void QuestionBoxMemory::resetDialogs()
+{
+  s_SettingFile->remove("DialogChoices");
+}
+
 void QuestionBoxMemory::cleanup()
 {
   QMutexLocker locker(&s_SettingsMutex);
@@ -78,21 +97,47 @@ void QuestionBoxMemory::buttonClicked(QAbstractButton *button)
   m_Button = ui->buttonBox->standardButton(button);
 }
 
-QDialogButtonBox::StandardButton QuestionBoxMemory::query(QWidget *parent, const QString &name,
+QDialogButtonBox::StandardButton QuestionBoxMemory::query(QWidget *parent, const QString &windowName,
+    const QString &title, const QString &text, QDialogButtonBox::StandardButtons buttons,
+    QDialogButtonBox::StandardButton defaultButton)
+{
+  return queryImpl(parent, windowName, nullptr, title, text, buttons, defaultButton);
+}
+
+QDialogButtonBox::StandardButton QuestionBoxMemory::query(QWidget *parent, const QString &windowName, const QString &fileName,
+    const QString &title, const QString &text, QDialogButtonBox::StandardButtons buttons,
+    QDialogButtonBox::StandardButton defaultButton)
+{
+  return queryImpl(parent, windowName, &fileName, title, text, buttons, defaultButton);
+}
+
+QDialogButtonBox::StandardButton QuestionBoxMemory::queryImpl(QWidget *parent, const QString &windowName, const QString *fileName,
     const QString &title, const QString &text, QDialogButtonBox::StandardButtons buttons,
     QDialogButtonBox::StandardButton defaultButton)
 {
   QMutexLocker locker(&s_SettingsMutex);
-  if (s_SettingFile->contains(QString("DialogChoices/") + name)) {
-    return static_cast<QDialogButtonBox::StandardButton>(s_SettingFile->value(QString("DialogChoices/") + name).toInt());
-  } else {
-    QuestionBoxMemory dialog(parent, title, text, buttons, defaultButton);
-    dialog.exec();
-    if (dialog.ui->rememberCheckBox->isChecked()) {
-      s_SettingFile->setValue(QString("DialogChoices/") + name, dialog.m_Button);
+  QString windowSetting("DialogChoices/" + windowName);
+  QString fileSetting;
+  if (fileName != nullptr) {
+    fileSetting = windowSetting + "/" + *fileName;
+    if (s_SettingFile->contains(fileSetting)) {
+      return static_cast<QDialogButtonBox::StandardButton>(s_SettingFile->value(fileSetting).toInt());
     }
-    return dialog.m_Button;
   }
+  if (s_SettingFile->contains(windowSetting)) {
+    return static_cast<QDialogButtonBox::StandardButton>(s_SettingFile->value(windowSetting).toInt());
+  }
+  QuestionBoxMemory dialog(parent, title, text, fileName, buttons, defaultButton);
+  dialog.exec();
+  if (dialog.m_Button != QDialogButtonBox::Cancel) {
+    if (dialog.ui->rememberCheckBox->isChecked()) {
+      s_SettingFile->setValue(windowSetting, dialog.m_Button);
+    }
+    if (fileName != nullptr && dialog.ui->rememberForCheckBox->isChecked()) {
+      s_SettingFile->setValue(fileSetting, dialog.m_Button);
+    }
+  }
+  return dialog.m_Button;
 }
 
 }
