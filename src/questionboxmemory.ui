@@ -81,11 +81,22 @@
       <number>7</number>
      </property>
      <item>
-      <widget class="QCheckBox" name="rememberCheckBox">
-       <property name="text">
-        <string>Remember selection</string>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QCheckBox" name="rememberCheckBox">
+         <property name="text">
+          <string>Remember selection</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="rememberForCheckBox">
+         <property name="text">
+          <string>Remember selection only for</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">
