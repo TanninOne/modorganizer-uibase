@@ -157,6 +157,14 @@ public:
    * nexus mod pages as far as I can see.
    */
   virtual QString gameShortName() const = 0;
+  
+   /**
+   * @brief Get the 'short' name of the game
+   *
+   * the short name of the game is used for - save ames, registry entries and
+   * nexus mod pages as far as I can see.
+   */
+  virtual QString gameNexusName() const = 0;
 
   /**
    * @brief Get the list of .ini files this game uses
